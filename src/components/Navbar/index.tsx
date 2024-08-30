@@ -9,7 +9,6 @@ const Navbar = () => {
         <ul className="flex justify-around gap-2 ">
             <Link to="/"><li className="Home">Home</li></Link>
             <Link to="/create"><li className="Create">Create</li></Link>
-            <Link to="/update"><li className="Update">Update</li></Link>
         </ul>
     </nav>
   )

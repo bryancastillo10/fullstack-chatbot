@@ -1,14 +1,10 @@
 import { useState, useEffect } from "react";
+import { Edit3 } from "lucide-react";
+import { Link } from "react-router-dom";
 import supabase from "../config/supabaseClient";
 
 interface SmoothieData{
   id:number;
-  title:string;
-  method:string;
-  rating:number;
-}
-
-interface SmoothieCardProps{
   title:string;
   method:string;
   rating:number;
@@ -47,6 +43,7 @@ const Home = () => {
         {smoothies.map((sm)=>(
           <SmoothieCard 
             key={sm.id}
+            id={sm.id}
             title={sm.title}
             method={sm.method}
             rating={sm.rating}
@@ -60,15 +57,21 @@ const Home = () => {
 
 export default Home;
 
-const SmoothieCard = ({title,method,rating}:SmoothieCardProps) => {
+const SmoothieCard = ({id,title,method,rating}:SmoothieData) => {
   return(
     <div className="border-2 border-teal-500 rounded-3xl shadow-md p-4 flex justify-between">
       <div className="">
         <h1 className="font-semibold">{title}</h1>
         <p className="text-sm">{method}</p>
-      </div>
+        <Link to={`/${id}`}>
+          <div className="flex items-center gap-2 bg-teal-500 text-white w-fit rounded-2xl px-2 my-2 ">
+              <Edit3 size="14"/><span>Update</span>
+          </div>
+        </Link>
+        </div>
       <div className="mr-2">
-        Rating: {rating}
+        Rating: <p className="flex justify-center  items-center 
+        bg-teal-500 text-white rounded-full size-10">{rating}</p>
       </div>
   </div>
   )

@@ -1,14 +1,14 @@
 import { ChangeEvent, FormEvent, useState, useEffect } from "react";
 import supabase from "../config/supabaseClient";
 
-interface FormDataProps{
+export interface FormDataProps{
   title:string;
   method:string;
   rating:number | null;
 }
 
 
-const initialSmoothieData = {
+export const initialSmoothieData = {
   title:"", method:"", rating:null
 }
 
