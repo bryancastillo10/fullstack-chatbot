@@ -26,7 +26,6 @@ const Home = () => {
         .from('tutorial_table')
         .select()
         
-  console.log(data);
         if(error){
           setErrorState("Failed to fetch the data");
           setSmoothies(null);
