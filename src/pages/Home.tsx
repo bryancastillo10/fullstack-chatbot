@@ -18,9 +18,13 @@ interface SmoothieCardProps{
   onDelete:(id:number)=> void;
 }
 
+ type orderTypes = 'created_at'| 'title' | 'rating';
+
+
 const Home = () => {
   const [errorState, setErrorState] = useState<string|null>(null);
   const [smoothies, setSmoothies] = useState<SmoothieData[]|null>(null);
+  const [orderBy, setOrderBy] = useState<orderTypes>('created_at');
 
 
   const handleDelete = (id:number) => {
@@ -34,6 +38,7 @@ const Home = () => {
       const {data,error} = await supabase
         .from('tutorial_table')
         .select()
+        .order(orderBy, {ascending:false})
         
         if(error){
           setErrorState("Failed to fetch the data");
@@ -46,8 +51,9 @@ const Home = () => {
      }
 
      fetchSmoothies();
-  },[]);
+  },[orderBy]);
   
+
   return (
     <div>
      {errorState && (<p>Something went wrong. Fetch error</p>)}
@@ -65,6 +71,35 @@ const Home = () => {
         ))}
       </div>
      )}
+     <div className="flex flex-col mt-4">
+        <h1>Order by:</h1>
+        <div className="flex gap-3 items-center mt-2">
+          <button
+            className={`border border-teal-500 px-2 py-1 rounded-xl ${
+              orderBy === 'created_at' ? 'bg-teal-500 text-white' : 'text-teal-500'
+            }`}
+            onClick={() => setOrderBy('created_at')}
+          >
+            Time Created At
+          </button>
+          <button
+            className={`border border-teal-500 px-2 py-1 rounded-xl ${
+              orderBy === 'title' ? 'bg-teal-500 text-white' : 'text-teal-500'
+            }`}
+            onClick={() => setOrderBy('title')}
+          >
+            Title
+          </button>
+          <button
+            className={`border border-teal-500 px-2 py-1 rounded-xl ${
+              orderBy === 'rating' ? 'bg-teal-500 text-white' : 'text-teal-500'
+            }`}
+            onClick={() => setOrderBy('rating')}
+          >
+            Rating
+          </button>
+          </div>
+     </div>
     </div>
   )
 }
