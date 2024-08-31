@@ -8,7 +8,7 @@ export interface FormDataProps{
 }
 
 
-export const initialSmoothieData = {
+const initialSmoothieData = {
   title:"", method:"", rating:null
 }
 
