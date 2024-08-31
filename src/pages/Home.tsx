@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Edit3 } from "lucide-react";
+import { Edit3, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 import supabase from "../config/supabaseClient";
 
@@ -34,7 +34,7 @@ const Home = () => {
 
      fetchSmoothies();
   },[]);
-
+  
   return (
     <div>
      {errorState && (<p>Something went wrong. Fetch error</p>)}
@@ -58,6 +58,23 @@ const Home = () => {
 export default Home;
 
 const SmoothieCard = ({id,title,method,rating}:SmoothieData) => {
+  const [deleteStatus, setDeleteStatus] = useState<string|null>(null);
+  
+  const handleDelete = async () =>{
+      const {data, error} = await supabase
+      .from('tutorial_table')
+      .delete()
+      .eq('id', id )
+      .select()
+
+      if(error){
+        setDeleteStatus(error.message);
+      }
+      if(data){
+        setDeleteStatus("The item has been successfully deleted");
+      }
+  }
+
   return(
     <div className="border-2 border-teal-500 rounded-3xl shadow-md p-4 flex justify-between">
       <div className="">
@@ -68,11 +85,18 @@ const SmoothieCard = ({id,title,method,rating}:SmoothieData) => {
               <Edit3 size="14"/><span>Update</span>
           </div>
         </Link>
+          <div 
+            className="mt-2"
+            onClick={handleDelete}
+            >
+            <Trash2 className="text-teal-500 hover:scale-90 cursor-pointer"/>
+          </div>
         </div>
       <div className="mr-2">
         Rating: <p className="flex justify-center  items-center 
         bg-teal-500 text-white rounded-full size-10">{rating}</p>
       </div>
+      {deleteStatus && <p>{deleteStatus}</p>}
   </div>
   )
 }
