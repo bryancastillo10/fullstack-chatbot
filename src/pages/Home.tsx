@@ -10,12 +10,25 @@ interface SmoothieData{
   rating:number;
 }
 
+interface SmoothieCardProps{
+  id:number;
+  title:string;
+  method:string;
+  rating:number;
+  onDelete:(id:number)=> void;
+}
 
 const Home = () => {
   const [errorState, setErrorState] = useState<string|null>(null);
   const [smoothies, setSmoothies] = useState<SmoothieData[]|null>(null);
 
 
+  const handleDelete = (id:number) => {
+      setSmoothies( prevSmoothie => {
+          if(!prevSmoothie) return null;
+        return prevSmoothie?.filter(sm => sm.id !== id)
+      })
+  }
   useEffect(()=>{
      const fetchSmoothies = async () => {
       const {data,error} = await supabase
@@ -47,6 +60,7 @@ const Home = () => {
             title={sm.title}
             method={sm.method}
             rating={sm.rating}
+            onDelete={handleDelete}
           />
         ))}
       </div>
@@ -57,7 +71,7 @@ const Home = () => {
 
 export default Home;
 
-const SmoothieCard = ({id,title,method,rating}:SmoothieData) => {
+const SmoothieCard = ({id,title,method,rating,onDelete}:SmoothieCardProps) => {
   const [deleteStatus, setDeleteStatus] = useState<string|null>(null);
   
   const handleDelete = async () =>{
@@ -72,6 +86,7 @@ const SmoothieCard = ({id,title,method,rating}:SmoothieData) => {
       }
       if(data){
         setDeleteStatus("The item has been successfully deleted");
+        onDelete(id);
       }
   }
 
