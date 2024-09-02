@@ -7,7 +7,10 @@ export default {
   theme: {
     extend: {
       colors:{
-        white:"#F4F3F2"
+        white:"#F4F3F2",
+        black:"#403F4C",
+        primary:"#F9EEE7",
+        secondary:"#0E8173",
       },
       fontFamily:{
         quicksand:["Quicksand","sans-serif"],
