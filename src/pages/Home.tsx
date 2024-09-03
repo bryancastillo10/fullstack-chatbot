@@ -1,10 +1,11 @@
-
+import Navbar from "../components/Navbar";
 
 const Home = () => {
   return (
-    <div>
+    <section>
+      <Navbar/>
       <h1>Home Page</h1>
-    </div>
+    </section>
   )
 }
 
