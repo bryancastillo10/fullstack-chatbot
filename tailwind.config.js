@@ -11,6 +11,7 @@ export default {
         black:"#403F4C",
         primary:"#F9EEE7",
         secondary:"#0E8173",
+        accent:"#E9D417"
       },
       fontFamily:{
         quicksand:["Quicksand","sans-serif"],
