@@ -13,7 +13,7 @@ const Navbar = () => {
 
   return (
     <nav className="p-4 border sticky top-0 bg-primary text-black z-20">
-      <section className="w-full lg:w-[80%] mx-auto flex justify-between items-center">
+      <section className="w-full lg:w-[90%] xl:w-[80%] mx-auto flex justify-between items-center">
         {/* Nav Logo */}
         <div className="flex items-center gap-1">
           <img src={NavLogo} alt="EnviroTech-logo" className="size-10" />
