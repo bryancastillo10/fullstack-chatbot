@@ -11,3 +11,12 @@
 body{
     @apply bg-primary text-black;
 }
+
+@layer utilities{
+    .text-hover-link {
+    @apply leading-loose relative before:content-[''] 
+    before:w-0 before:h-0.5  before:absolute before:bottom-[-0.3rem] before:bg-secondary
+    before:transition-[width] before:duration-[0.2s,left] before:delay-[0.5s] 
+    before:rounded-sm before:left-[0.2] hover:before:w-full hover:before:left-0;
+  }
+}

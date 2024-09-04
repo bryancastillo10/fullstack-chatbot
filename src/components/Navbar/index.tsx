@@ -1,69 +1,42 @@
-import { Link } from "react-router-dom";
-import { House,Info,Leaf,Phone, HandPalm } from "phosphor-react";
+import Linker from "../../reusables/Linker";
+import { NavbarMenuList } from "../../constants/navbarmenu";
 import NavLogo from "/earth.png";
-
-const NavbarMenuList = [
-  {
-    id:1,
-    name:"Home",
-    link:"/",
-    icon:House
-  },
-  {
-    id:2,
-    name:"About",
-    link:"/about",
-    icon:Info
-  },
-  {
-    id:3,
-    name:"Technologies",
-    link:"/tech",
-    icon:Leaf
-  },
-  {
-    id:4,
-    name:"Services",
-    link:"/service",
-    icon:HandPalm
-  },
-  {
-    id:5,
-    name:"Contact",
-    link:"/contact",
-    icon:Phone
-  }
-]
-
 
 
 const Navbar = () => {
   return (
-    <nav className="p-4 border border-black bg-primary flex justify-between items-center">
+    <nav className="p-4 border sticky top-0 bg-primary text-black">
+      <section className="w-[80%] mx-auto flex justify-between items-center">
+        {/* Nav Logo */}
         <div className="flex items-center gap-1">
             <img src={NavLogo} alt="EnviroTech-logo" className="size-10" />
             <h1 className="font-semibold font-quicksand">EnviroTech</h1>
         </div>
-        <ul className="flex justify-around gap-4">
+
+        {/* Nav Links */}
+        <div className="hidden md:flex justify-around gap-4">
           {NavbarMenuList.map((nav)=> {
             const Icon = nav.icon;
             return (
-              <Link key={nav.id} to={nav.link}>
-                <li className="flex items-center gap-0.5">
-                  <span className=""><Icon size="28"/></span>
+              <Linker key={nav.id} href={nav.link}>
+                <div className="group flex items-center gap-0.5">
+                  <span className="group-hover:scale-75 duration-1000 ease-out"><Icon size="28"/></span>
                   {nav.name}
-                </li>
-              </Link>
+                </div>
+              </Linker>          
             )
           })}
-        </ul>
+        </div>
+
+        {/* Auth CTA */}
         <div className="flex items-center gap-x-4 gap-y-2">
           <button className="bg-secondary text-primary font-semibold
           px-3 py-1 rounded-2xl hover:bg-secondary/80">
             Login
           </button>
-          <h1>Sign Up</h1>
+          <Linker href="#"><h1>Sign Up</h1></Linker>
         </div>
+      </section>
     </nav>
   )
 }
