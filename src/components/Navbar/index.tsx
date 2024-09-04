@@ -1,4 +1,4 @@
-import Linker from "../../reusables/Linker";
+import { Button,Linker } from "../../reusables";
 import { NavbarMenuList } from "../../constants/navbarmenu";
 import NavLogo from "/earth.png";
 
@@ -30,10 +30,7 @@ const Navbar = () => {
 
         {/* Auth CTA */}
         <div className="flex items-center gap-x-4 gap-y-2">
-          <button className="bg-secondary text-primary font-semibold
-          px-3 py-1 rounded-2xl hover:bg-secondary/80">
-            Login
-          </button>
+        <Button type="button" variant="primary">Log In</Button>
           <Linker href="#"><h1>Sign Up</h1></Linker>
         </div>
       </section>
