@@ -26,7 +26,7 @@ const Button = ({children,variant,action,loading,type,width = "fit"}:ButtonProps
         <button
         onClick={action}
         type={type}
-        className={`${width} min-w-fit font-semibold px-3 py-1 rounded-2xl
+        className={`${width} font-semibold px-3 py-1 rounded-2xl
         duration-500 ease-in-out
         ${getBtnStyle(variant!)}`}>
                 {loading ? (
