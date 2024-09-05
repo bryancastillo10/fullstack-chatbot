@@ -1,7 +1,8 @@
-import Navbar from "../components/Navbar";
-import Hero from "../components/Hero";
-import About from "../components/About";
-import Technology from "../components/Technology";
+import Navbar from "../landingpage/Navbar";
+import Hero from "../landingpage/Hero";
+import About from "../landingpage/About";
+import Technology from "../landingpage/Technology";
+import Footer from "../landingpage/Footer";
 
 const Home = () => {
   return (
@@ -10,6 +11,7 @@ const Home = () => {
       <Hero/>
       <About/>
       <Technology/>
+      <Footer/>
     </section>
   )
 }
