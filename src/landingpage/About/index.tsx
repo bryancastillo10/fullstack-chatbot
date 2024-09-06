@@ -1,5 +1,5 @@
 import { useState,useEffect } from "react";
-import { SectionContainer } from "../../reusables";
+import { SectionContainer, SectionSubHeader } from "../../reusables";
 import { getImageUrl } from "../../config/api";
 import ImageGrid from "./ImageGrid";
 
@@ -28,9 +28,9 @@ const About = () => {
   return (
     <section className="mt-[-5px] bg-secondary text-primary">
         <SectionContainer>
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-10">
+          <div className="grid grid-cols-1 xl:grid-cols-2 xl:gap-10">
             <div className=" xl:order-1 order-2">
-              <h1 className="font-comfortaa font-semibold mt-2 text-center lg:text-left">Our Story</h1>
+              <SectionSubHeader title="Our Story" />
               <div className="mt-6 xl:mt-10 mb-6">
                 <p className="font-semibold tracking-wider text-[20px] xl:text-[25px] text-center lg:text-left">
                   Providing clients with excellent consultation services in environmental compliances & 

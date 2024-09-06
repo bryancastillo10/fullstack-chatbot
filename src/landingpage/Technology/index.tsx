@@ -1,5 +1,5 @@
 import WaveDown from "../../assets/WaveDown";
-import { SectionContainer } from "../../reusables";
+import { SectionContainer,SectionSubHeader } from "../../reusables";
 
 
 const Technology = () => {
@@ -9,7 +9,7 @@ const Technology = () => {
             <WaveDown/>
         </div>
         <SectionContainer>
-            <h1 className="mt-10">Technology Section Here</h1>
+            <SectionSubHeader title="Technologies"/>
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam vel excepturi a quia magni error 
                 maxime totam saepe dolore, atque beatae quaerat corrupti illo, doloribus numquam tempora, quis cupiditate! 
                 Cumque itaque, nisi iusto iure ipsum tempore 
