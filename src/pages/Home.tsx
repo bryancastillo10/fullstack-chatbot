@@ -2,6 +2,7 @@ import Navbar from "../landingpage/Navbar";
 import Hero from "../landingpage/Hero";
 import About from "../landingpage/About";
 import Technology from "../landingpage/Technology";
+import Services from "../landingpage/Services";
 import Footer from "../landingpage/Footer";
 
 const Home = () => {
@@ -11,6 +12,7 @@ const Home = () => {
       <Hero/>
       <About/>
       <Technology/>
+      <Services/>
       <Footer/>
     </section>
   )
