@@ -1,4 +1,4 @@
-import { Drop, Wind, Trash } from "phosphor-react";
+import {Wind, Drop, Trash} from "@phosphor-icons/react";
 
 export const envitechlist = [
     {
