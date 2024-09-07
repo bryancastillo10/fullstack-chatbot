@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Button, Linker } from "../../reusables";
 import { NavbarMenuList } from "../../constants/navbarmenu";
 import NavLogo from "/earth.png";
-import { List, X } from "phosphor-react";
+import { List, X } from "@phosphor-icons/react";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState<boolean>(false);

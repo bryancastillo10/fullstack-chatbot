@@ -1,4 +1,4 @@
-import { House,Info,Leaf,Phone, HandPalm } from "phosphor-react";
+import { House,Info,Leaf,Phone, HandPalm } from "@phosphor-icons/react";
 
 export const NavbarMenuList = [
     {

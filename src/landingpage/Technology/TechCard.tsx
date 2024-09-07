@@ -1,6 +1,6 @@
 import { ForwardRefExoticComponent, useState,useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Share, IconProps } from "phosphor-react";
+import { Share, IconProps } from "@phosphor-icons/react";
 import { getImageUrl } from "../../config/api";
 
 interface TechCardProps{
