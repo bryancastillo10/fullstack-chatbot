@@ -1,13 +1,13 @@
-import { ForwardRefExoticComponent, useState,useEffect } from "react";
+import {  useState,useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Share, IconProps } from "@phosphor-icons/react";
+import { Share, Icon } from "@phosphor-icons/react";
 import { getImageUrl } from "../../config/api";
 
 interface TechCardProps{
     id:number;
     name:string;
     imgPath:string;
-    enviMedia:ForwardRefExoticComponent<IconProps & React.RefAttributes<SVGSVGElement>> ;
+    enviMedia: Icon;
     tag:string;
     description:string;
     efficiency:string;
