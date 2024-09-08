@@ -1,5 +1,5 @@
 <div>
-  <div id="desc">
+  <div>
     <p>
       Air Scrubbers represent a revolutionary approach to air purification, specifically designed to enhance indoor air quality by eliminating a wide range of contaminants. The technology incorporates a combination of high-efficiency particulate air (HEPA) filters, activated carbon filters, and UV light to effectively remove pollutants such as dust, pollen, mold spores, bacteria, viruses, smoke, and chemical fumes from the air. Unlike traditional air filters, air scrubbers actively capture and neutralize airborne contaminants, even those that are microscopic in size.
     </p>
