@@ -23,12 +23,6 @@ export default {
       semibold: '600',
       bold:'800'
     },
-    fontSize: {
-      xs: '10px',
-      sm: '12px',
-      base: '16px',
-      md: '22px',
-    },
   },
   plugins: [],
 }

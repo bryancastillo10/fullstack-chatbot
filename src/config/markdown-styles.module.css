@@ -1,0 +1,91 @@
+.reactMarkDown{
+    display:flex;
+    width:100%;
+}
+
+/* Headers */
+.reactMarkDown h2{
+    margin:12px 0;
+    font-weight:600;
+    font-size:22px;
+    color:#0E8173;
+}
+
+.reactMarkDown h3{
+    font-weight:700;
+    margin:8px 0;
+    color:#0E8173;
+}
+
+.reactMarkDown h4{
+    margin-top:14px;
+    font-size:14px;
+    text-align:center;
+}
+
+/* Descriptions */
+.reactMarkDown p{
+    font-size:18px;
+    text-align:justify;
+    line-height:1.25;
+    margin-bottom:4px;
+}
+
+/* Unordered Lists */
+
+.reactMarkDown ul li span{
+    font-weight:600;
+    margin-right:4px;
+}
+
+
+/* Table Stylings */
+.reactMarkDown table{
+    background-color:#F4F3F2;
+    border-collapse:collapse;
+    margin-bottom: 20px; 
+}
+
+.reactMarkDown table tr{
+    border: 1px solid #403F4C;
+}
+
+.reactMarkDown table thead {
+    background-color: #0E8173;
+}
+
+.reactMarkDown table thead {
+    background-color: #0E8173;
+    color:#F9EEE7;
+}
+
+.reactMarkDown table tbody tr {
+    border: 1px solid #403F4C; 
+    transition: background-color 0.3s ease;
+}
+
+.reactMarkDown table tbody tr:hover {
+    background-color: #E6E6E6;
+}
+
+/* Table data cell styling */
+.reactMarkDown table td {
+    padding: 10px; 
+    text-align: left; 
+    border: 1px solid #403F4C;
+    vertical-align: top; 
+}
+
+.reactMarkDown table td span {
+    font-weight: 600; 
+}
+
+@media (max-width: 768px) {
+    .reactMarkDown h2,
+    .reactMarkDown h3,
+    .reactMarkDown h4,
+    .reactMarkDown p,
+    .reactMarkDown ul li {
+        text-align: center; 
+    }
+}
