@@ -21,6 +21,7 @@ const TechCard = ({
     enviMedia:EnviMedia,
     tag,
     description,
+    efficiency
 }:TechCardProps) => {
 
     const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
@@ -44,13 +45,16 @@ const TechCard = ({
                 <h1 className="font-semibold">{name}</h1>
             </div>
             <div className="bg-secondary px-3 py-1 rounded-3xl w-fit">
-                <h1 className="font-light text-primary text-sm">{tag}</h1>
+                <h1 className="font-light text-primary text-[12px]">{tag}</h1>
             </div>
             <div className="mt-2 text-xs ">
                 <p className="text-balance line-clamp-3">
                 {description}
                 </p>
-                <Link to={`/tech/${id}`}>
+                <Link 
+                    to={`/tech/${id}`}
+                    state={{ name, tag, imageUrl, efficiency }}
+                    >
                     <p className="mt-3 mb-6 flex w-fit items-center gap-2 text-hover-link">Read More                        
                         <span>
                             <Share size="14"/>
