@@ -10,7 +10,6 @@ interface TechCardProps{
     enviMedia: Icon;
     tag:string;
     description:string;
-    efficiency:string;
 }
 
 
@@ -21,7 +20,6 @@ const TechCard = ({
     enviMedia:EnviMedia,
     tag,
     description,
-    efficiency
 }:TechCardProps) => {
 
     const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
@@ -53,7 +51,6 @@ const TechCard = ({
                 </p>
                 <Link 
                     to={`/tech/${id}`}
-                    state={{ name, tag, imageUrl, efficiency }}
                     >
                     <p className="mt-3 mb-6 flex w-fit items-center gap-2 text-hover-link">Read More                        
                         <span>

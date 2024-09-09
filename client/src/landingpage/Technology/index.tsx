@@ -24,7 +24,6 @@ const Technology = () => {
                     enviMedia={media}
                     tag={tech.tag}
                     description={tech.description}
-                    efficiency={tech.efficiency}
                 />
                 )
               })}

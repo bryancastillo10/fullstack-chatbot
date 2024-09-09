@@ -1,19 +1,25 @@
 import { useEffect, useState } from 'react';
-import { useParams, useLocation, Link } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { List, X, ArrowLeft, CaretDown } from '@phosphor-icons/react';
 import { envitechlist } from '../constants/envitechnology';
+import { getImageUrl } from '../config/api';
 import NavLogo from "/earth.png";
 import ReactMarkdown from 'react-markdown';
 import rehypeRaw from 'rehype-raw';
 import rehypeSanitize from 'rehype-sanitize';
 import style from '../config/markdown-styles.module.css';
 
+type TechDataType = {
+  name:string;
+  tag:string;
+  efficiency:string;
+}
+
 const TechPage = () => {
   const {id} = useParams<{id:string}>();
-  const  location = useLocation();
 
-  const {name, tag, imageUrl, efficiency} = location.state || "";
-
+  const [techData, setTechData] = useState<TechDataType|null>(null);
+  const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
   const [openMenu, setOpenMenu] = useState<boolean>(false);
   const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const [markdownContent, setMarkdownContent] = useState<string>('');
@@ -33,11 +39,26 @@ const TechPage = () => {
     }
   };
 
+
+
   useEffect(()=>{
     const tech = envitechlist.find((tech) => tech.id === Number(id));
+    
+    const fetchImageUrl = async () => {
+      const url = await getImageUrl("project-assets",tech?.imgPath!);
+      setImageUrl(url);
+    }
 
     if(tech){
       renderMarkdown(tech.mdPath);
+      setTechData(
+        {
+          name: tech.techname!,
+          tag: tech.tag!,
+          efficiency:tech.efficiency!
+        }
+      )
+      fetchImageUrl();
     }
   },[id]);
 
@@ -71,11 +92,11 @@ const TechPage = () => {
         <div className="p-8 m-2 border w-[95%] xl:w-[80%] flex flex-col items-center mx-auto border-black">
           <div className="flex justify-evenly gap-10 items-center">
             <div className="">
-              <h1 className='font-semibold text-2xl'>{name}</h1>
-              <p className='my-4 bg-black text-primary px-3 py-1 w-fit rounded-2xl shadow-md text-center'>{tag}</p>
-              <p>Tech. Efficiency: <span className='font-semibold text-secondary'>{efficiency}</span></p>
+              <h1 className='font-semibold text-2xl'>{techData?.name}</h1>
+              <p className='my-4 bg-black text-primary px-3 py-1 w-fit rounded-2xl shadow-md text-center'>{techData?.tag}</p>
+              <p>Tech. Efficiency: <span className='font-semibold text-secondary'>{techData?.efficiency}</span></p>
             </div>
-            <img src={imageUrl} alt="tech-card-img" />
+            <img src={imageUrl!} alt="tech-card-img" />
           </div>
           <div className="mt-10">
             <ReactMarkdown 
