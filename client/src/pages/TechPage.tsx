@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { List, X, ArrowLeft, CaretDown } from '@phosphor-icons/react';
+import { List, X, ArrowLeft } from '@phosphor-icons/react';
+import ReactMarkdown from 'react-markdown';
+
+
 import { envitechlist } from '../constants/envitechnology';
 import { getImageUrl } from '../config/api';
-import NavLogo from "/earth.png";
-import ReactMarkdown from 'react-markdown';
+import DropDown from '../reusables/DropDown';
+import { AirMenu, WaterMenu, SolidWasteMenu } from '../reusables/ui-elements/DropDownSubMenu';
+
 import rehypeRaw from 'rehype-raw';
 import rehypeSanitize from 'rehype-sanitize';
+import NavLogo from "/earth.png";
 import style from '../config/markdown-styles.module.css';
 
 type TechDataType = {
@@ -21,7 +26,6 @@ const TechPage = () => {
   const [techData, setTechData] = useState<TechDataType|null>(null);
   const [imageUrl, setImageUrl] = useState<string | undefined>(undefined);
   const [openMenu, setOpenMenu] = useState<boolean>(false);
-  const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);
   const [markdownContent, setMarkdownContent] = useState<string>('');
 
   const renderMarkdown = async (mdPath:string) =>{
@@ -66,9 +70,6 @@ const TechPage = () => {
     setOpenMenu(!openMenu);
   }
 
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -111,28 +112,10 @@ const TechPage = () => {
           openMenu ? "translate-x-0" : "translate-x-full"
         }`}>
           <nav>
-            <ul className="space-y-4">
-            <li>
-                <button onClick={toggleDropdown} className="flex justify-between items-center w-full text-left">
-                  Water
-                    <span
-                      className={`transform transition-transform duration-300 ${
-                        dropdownOpen ? '-rotate-180' : 'rotate-0'
-                      }`}
-                    >
-                      <CaretDown size={20} />
-                    </span>
-                </button>
-                {dropdownOpen && (
-                  <ul className="ml-4 mt-2 space-y-2">
-                    <li className='hover:underline'><Link to={`/tech/2`}>FBC</Link></li>
-                    <li className='hover:underline'><Link to={`/tech/5`}>Aerobic Treatment</Link></li>
-                  </ul>
-                )}
-              </li>
-              <li>Wastewater</li>
-              <li>Air/Atmosphere</li>
-              <li>Solid Waste</li>
+            <ul className="mt-10 space-y-4">
+              <DropDown menuName="Water & Wastewater"  subMenu={WaterMenu} />
+              <DropDown menuName="Air/Atmosphere"  subMenu={AirMenu} />
+              <DropDown menuName="Solid Waste"  subMenu={SolidWasteMenu} />
             </ul>
           </nav>
         </div>
