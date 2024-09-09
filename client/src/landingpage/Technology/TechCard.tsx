@@ -33,7 +33,7 @@ const TechCard = ({
       fetchImageUrl();
     }, [imgPath]);
   return (
-    <div className="w-[240px] h-[360px] rounded-2xl shadow-md border border-secondary hover:scale-110 duration-500 ease-out">
+    <div className="w-[240px] h-[360px] rounded-2xl shadow-md border border-black bg-[#E8D9D0] hover:border-secondary hover:scale-110 duration-500 ease-out">
         <div className="px-5 pt-[30px]">
             <img src={imageUrl} alt="sample-card-pic" />
         </div>
