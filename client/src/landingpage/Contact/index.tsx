@@ -1,6 +1,7 @@
 import WaveDown from "../../assets/WaveDown";
 import { SectionContainer, SectionSubHeader } from "../../reusables";
 import ContactForm from "./ContactForm";
+import ContactInfo from "./ContactInfo";
 
 const Contact = () => {
   return (
@@ -12,7 +13,7 @@ const Contact = () => {
             <SectionSubHeader title="Contact Us" caption="We're here to help with your environmental challenges. Reach out today!"/>
             <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 my-8">
               <ContactForm/>
-              <div className="w-[80%] h-[550px] bg-black"/>
+              <ContactInfo/>
             </div>
         </SectionContainer>
 
