@@ -11,7 +11,7 @@ const Contact = () => {
         </div>
         <SectionContainer>
             <SectionSubHeader title="Contact Us" caption="We're here to help with your environmental challenges. Reach out today!"/>
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 my-8">
+            <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 my-8">
               <ContactForm/>
               <ContactInfo/>
             </div>

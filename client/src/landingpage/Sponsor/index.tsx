@@ -21,12 +21,13 @@ const Sponsor = () => {
         }
 
         fetchImages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
 
 
   return (
     <section className="mt-10">
-        <h1 className="text-center font-semibold text-2xl">Building a Greener Future with Trusted Partners</h1>
+        <h1 className="w-[90%] mx-auto md:w-full text-center font-semibold text-xl lg:text-2xl">Building a Greener Future with Trusted Partners</h1>
         <div className="flex justify-center items-center gap-28 mt-5 bg-black h-[140px] overflow-x-hidden">
             {companyLogo.map((logo,index)=> (
                 <img key={index} 
