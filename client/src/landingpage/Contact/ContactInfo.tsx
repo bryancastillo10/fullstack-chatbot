@@ -58,7 +58,7 @@ const ContactInfo = () => {
         </article>
         {/* Lower Section */}
         <article className="grid grid-cols-1 xl:grid-cols-[1fr_1fr]">
-            <div className="grid grid-cols-1 px-12 xl:px-4 mx-auto xl:mx-0 border border-black shadow-md">
+            <div className="grid grid-cols-1 px-12 xl:px-4 mx-auto lg:mx-0 border border-black shadow-md">
                 {/* Lower Left Section */}
                 <div className="text-center xl:text-left my-4">
                     <h1 className="text-base w-fit leading-none">Located near Rizal Park, just a 5-minute walk from the Manila Ocean Park</h1>

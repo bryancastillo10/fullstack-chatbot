@@ -8,15 +8,15 @@ interface CompanyStatisticsProps{
 
 const CompanyStatistics = ({figures, upperCaption, lowerCaption, description}:CompanyStatisticsProps) => {
   return (
-    <section className="flex items-center justify-between">
+    <section className="flex flex-col md:flex-row items-center justify-between">
         <div className="flex flex-col">
             <div className="flex items-baseline">
                 <span className="text-[38px] font-semibold">{figures}</span>
-                <span className="text-[32px] ml-2 text-accent">{upperCaption}</span>
+                <span className="text-[24px] xl:text-[32px] ml-2 text-accent">{upperCaption}</span>
             </div>
-            <span className="text-[32px] text-accent">{lowerCaption}</span>
+            <span className="text-[24px] xl:text-[32px] text-accent">{lowerCaption}</span>
         </div>
-        <div className="ml-4 text-right w-[300px] xl:max-w-[250px]">
+        <div className="ml-4 text-center md:text-right w-[300px] xl:max-w-[250px]">
         <p className="text-base font-comfortaa">{description}</p>
       </div>
     </section>
