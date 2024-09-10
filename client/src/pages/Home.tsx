@@ -4,6 +4,7 @@ import About from "../landingpage/About";
 import Technology from "../landingpage/Technology";
 import Services from "../landingpage/Services";
 import Contact from "../landingpage/Contact";
+import Sponsor from "../landingpage/Sponsor";
 import Footer from "../landingpage/Footer";
 
 const Home = () => {
@@ -15,6 +16,7 @@ const Home = () => {
       <Technology/>
       <Services/>
       <Contact/>
+      <Sponsor/>
       <Footer/>
     </section>
   )
