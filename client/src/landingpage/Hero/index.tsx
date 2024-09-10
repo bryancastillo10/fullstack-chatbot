@@ -28,7 +28,7 @@ const Hero = () => {
                 </div>
             </div>
        </SectionContainer>
-       <div className="pt-56 xl:pt-72 h-auto">
+       <div className="pt-28 xl:pt-72 h-auto">
         <WaveUp/>
         </div>
     </section>
