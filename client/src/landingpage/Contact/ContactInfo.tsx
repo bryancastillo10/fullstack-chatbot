@@ -37,21 +37,23 @@ const ContactInfo = () => {
   return (
     <section className="">
         {/* Upper Section */}
-        <article className="grid grid-cols-2 xl:grid-cols-[2fr_1fr]  border border-black border-b-0 shadow-md">
+        <article className="grid grid-cols-1 xl:grid-cols-[2fr_1fr]  border border-black border-b-0 shadow-md">
             {/* Map */}
-            <img className=" h-full" src={Map} alt="mnl-map" />
-            <div className="grid grid-cols-1 items-center gap-y-4">
+            <div className="mb-4 xl:mb-0 h-full">
+                <img className="object-cover" src={Map} alt="mnl-map" />
+            </div>
+            <div className="grid grid-cols-1 p-3 xl:p-0 justify-between items-center">
                 {/* Contact Info */}
                 <div className="flex flex-col justify-center items-center gap-2">
                     <img src={Logo} alt="EnviroTech-logo" className="size-10" />
                     <h1 className="font-semibold font-quicksand">EnviroTech</h1>
                 </div>
                 <div className="grid grid-cols-2 xl:mr-4">
-                    <MapPin className="size-[50px] place-self-center"/>
+                    <MapPin className="size-[30px] xl:size-[50px] place-self-center"/>
                     <p className="text-xs text-balance ">1230 Taft Avenue, Ermita, Manila, 1000, Metro Manila, Philippines</p>
                 </div>        
                 <div className="grid grid-cols-2 xl:mr-4">
-                    <Clock className="size-[50px] place-self-center"/>
+                    <Clock className="size-[30px] xl:size-[50px] place-self-center"/>
                     <p className="text-xs text-left text-balance">Mon to Fri 9am to 6pm (GMT +8)</p>
                 </div>  
             </div>
@@ -76,7 +78,7 @@ const ContactInfo = () => {
                 </div>
             </div>
             {/* Lower Right Section */}
-            <div className="xl:w-[360px] bg-black text-primary p-4 xl:p-1">
+            <div className="xl:w-max bg-black text-primary p-4 xl:p-1">
                 <div className="p-2">
                     <ContactInfoHeader icon={PaperPlaneTilt} text="E-mail addresses"/>
                     <div className="grid grid-cols-2 gap-x-4 mr-2">
