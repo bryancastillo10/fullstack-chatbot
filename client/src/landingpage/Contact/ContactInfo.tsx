@@ -37,9 +37,9 @@ const ContactInfo = () => {
   return (
     <section className="col-span-2">
         {/* Upper Section */}
-        <article className="grid grid-cols-1 md:grid-cols-[2fr_1fr]  border border-black border-b-0 xl:border-b xl:shadow-md">
+        <article className="grid grid-cols-1 md:grid-cols-[2fr_1fr] border border-black border-b-0 xl:border-b xl:shadow-md">
             {/* Map */}
-            <div className="mb-4 xl:mb-0 h-full order-2 md:order-none">
+            <div className="mb-4 xl:mb-0 w-full h-full order-2 md:order-none">
                 <img className="object-cover" src={Map} alt="mnl-map" />
             </div>
             <div className="grid grid-cols-1 p-3 xl:p-0 justify-between items-center">
@@ -78,7 +78,7 @@ const ContactInfo = () => {
                 </div>
             </div>
             {/* Lower Right Section */}
-            <div className="xl:w-max bg-black text-primary p-4 xl:p-1">
+            <div className="bg-black text-primary p-4 xl:p-1">
                 <div className="p-2">
                     <ContactInfoHeader icon={PaperPlaneTilt} text="E-mail addresses"/>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-x-4 mr-2">
