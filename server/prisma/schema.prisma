@@ -15,8 +15,8 @@ datasource db {
 
 model Users {
   userId Int @id @default(autoincrement())
-  username String
-  email String
+  username String @unique
+  email String @unique
   password String
   profilePicture String
   createdAt DateTime @default(now())

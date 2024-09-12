@@ -17,6 +17,7 @@ app.get("/", (req,res)=> {
 
 // Middleware
 app.use(express.json());
+app.use("/assets", express.static("assets"));
 app.use(cookieParser());
 
 // Routes
