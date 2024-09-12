@@ -13,34 +13,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Users {
-  userId Int @id @default(autoincrement())
+model User {
+  userId String @id @default(uuid()) @unique
   username String @unique
   email String @unique
   password String
   profilePicture String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  appointments Appointment[]
 }
 
 
 model Appointment {
-  appointment_id Int @id @default(autoincrement())
-  user_id Int @unique @db.Integer
-  consultant_id Int @unique @db.Integer
-  service_id Int @unique @db.Integer
+  appointment_id String @id @default(uuid()) @unique
+  user_id String @unique
+  consultant_id String @unique
+  service_id String @unique
   topic String
   message String
-  dateCreated DateTime
+  createdAt DateTime @default(now())
   status String
 
-  consultant Consultants[]
-  service Service[]
-
+  user User @relation(fields:[user_id],references: [userId])
+  consultant Consultant @relation(fields: [consultant_id],references: [consultant_id])
+  service Service @relation(fields: [service_id],references: [service_id])
 }
 
-model Consultants{
-  consultant_id Int @id @default(autoincrement())
+model Consultant{
+  consultant_id String @id @default(uuid()) @unique
   name String
   position String
   expertise String[]
@@ -48,30 +50,27 @@ model Consultants{
   email String 
   rating Float
 
-  consultantperservice ConsultantService[]
-
-  consultant Appointment @relation(fields: [consultant_id],references: [consultant_id])  
+  appointments Appointment[]
+  consultantServices ConsultantService[]
 }
 
 
 model ConsultantService{
-  consultant_service_id Int @id @default(autoincrement())
-  consultant_id Int @unique @db.Integer 
-  service_id Int @unique @db.Integer 
+  consultant_service_id String @id @default(uuid()) @unique
+  consultant_id String @unique 
+  service_id String @unique 
 
-  consultant Consultants @relation(fields: [consultant_id], references: [consultant_id])
+  consultant Consultant @relation(fields: [consultant_id], references: [consultant_id])
   service Service @relation(fields: [service_id], references: [service_id])
-
 }
 
 model Service {
-  service_id Int @id @default(autoincrement())
+  service_id String @id @default(uuid()) @unique
   name String
   description String
   price Float
   duration Int
 
-  consultantperservice ConsultantService[]
-
-  service Appointment @relation(fields: [service_id], references: [service_id])
+  appointments Appointment[]
+  consultantServices ConsultantService[]
 }
