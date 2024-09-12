@@ -1,0 +1,77 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  userId Int @id @default(autoincrement())
+  username String
+  email String
+  password String
+  profilePicture String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Appointment {
+  appointment_id Int @id @default(autoincrement())
+  user_id Int @unique @db.Integer
+  consultant_id Int @unique @db.Integer
+  service_id Int @unique @db.Integer
+  topic String
+  message String
+  dateCreated DateTime
+  status String
+
+  consultant Consultants[]
+  service Service[]
+
+}
+
+model Consultants{
+  consultant_id Int @id @default(autoincrement())
+  name String
+  position String
+  expertise String[]
+  profilePicture String
+  email String 
+  rating Float
+
+  consultantperservice ConsultantService[]
+
+  consultant Appointment @relation(fields: [consultant_id],references: [consultant_id])  
+}
+
+
+model ConsultantService{
+  consultant_service_id Int @id @default(autoincrement())
+  consultant_id Int @unique @db.Integer 
+  service_id Int @unique @db.Integer 
+
+  consultant Consultants @relation(fields: [consultant_id], references: [consultant_id])
+  service Service @relation(fields: [service_id], references: [service_id])
+
+}
+
+model Service {
+  service_id Int @id @default(autoincrement())
+  name String
+  description String
+  price Float
+  duration Int
+
+  consultantperservice ConsultantService[]
+
+  service Appointment @relation(fields: [service_id], references: [service_id])
+}
