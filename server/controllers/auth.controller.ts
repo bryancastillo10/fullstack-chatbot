@@ -1,6 +1,7 @@
 import {Request,Response} from "express";
 import bcrypt from "bcryptjs";
 import { PrismaClient } from "@prisma/client";
+import generateTokenAndSetCookie from "../utils/generateToken";
 
 const prisma = new PrismaClient();
 
@@ -50,9 +51,10 @@ export const userSignIn = async (req: Request, res: Response): Promise<void> => 
             },
           });
 
-        // Add Generate and Set Cookies
-        // Provide utility function
-        res.status(201).json({message:"User sign up is successful", user: newUser});
+        if(newUser){
+            generateTokenAndSetCookie(newUser.userId, res);
+            res.status(201).json({message:"User sign up is successful", user: newUser});
+        }
     }
     catch(error){
         console.error("Error at sign up controller", error.message);
@@ -76,8 +78,7 @@ export const userSignUp= async (req: Request, res: Response): Promise<void> => {
             res.status(401).json({error:"Invalid password. Please try again."});
         }
 
-        // Add Generate and Set Cookies
-        // Provide utility function
+        generateTokenAndSetCookie(user.userId,res);
         res.status(200).json({
             id: user.userId,
             username:user.username,
