@@ -52,7 +52,7 @@ export const userSignIn = async (req: Request, res: Response): Promise<void> => 
           });
 
         if(newUser){
-            generateTokenAndSetCookie(newUser.userId, res);
+            generateTokenAndSetCookie(newUser.user_id, res);
             res.status(201).json({message:"User sign up is successful", user: newUser});
         }
     }
@@ -62,7 +62,7 @@ export const userSignIn = async (req: Request, res: Response): Promise<void> => 
     }
 };
 
-// Sign In
+// Sign Up
 export const userSignUp= async (req: Request, res: Response): Promise<void> => {
     try{
         const {username,password} = req.body;
@@ -78,9 +78,9 @@ export const userSignUp= async (req: Request, res: Response): Promise<void> => {
             res.status(401).json({error:"Invalid password. Please try again."});
         }
 
-        generateTokenAndSetCookie(user.userId,res);
+        generateTokenAndSetCookie(user.user_id,res);
         res.status(200).json({
-            id: user.userId,
+            id: user.user_id,
             username:user.username,
             email: user.email,
             profilePicture:user.profilePicture

@@ -14,7 +14,7 @@ datasource db {
 }
 
 model User {
-  userId String @id @default(uuid()) @unique
+  user_id String @id @default(uuid()) @unique
   username String @unique
   email String @unique
   password String
@@ -36,7 +36,7 @@ model Appointment {
   createdAt DateTime @default(now())
   status String
 
-  user User @relation(fields:[user_id],references: [userId])
+  user User @relation(fields:[user_id],references: [user_id])
   consultant Consultant @relation(fields: [consultant_id],references: [consultant_id])
   service Service @relation(fields: [service_id],references: [service_id])
 }
