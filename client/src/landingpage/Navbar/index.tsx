@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Linker } from "../../reusables";
 import { NavbarMenuList } from "../../constants/navbarmenu";
 import NavLogo from "/earth.png";
@@ -6,6 +7,7 @@ import { List, X } from "@phosphor-icons/react";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
+  const navigate= useNavigate();
 
   const toggleNavMenu = () => {
     setShowMenu(!showMenu);
@@ -39,8 +41,8 @@ const Navbar = () => {
 
         {/* Auth CTA */}
         <div className="hidden md:flex items-center gap-x-4 gap-y-2">
-          <Button type="button" variant="primary">Log In</Button>
-          <Linker href="#"><h1>Sign Up</h1></Linker>
+          <Button type="button" action={()=>navigate("/signin")} variant="primary">Log In</Button>
+          <Linker href="/signup"><h1>Sign Up</h1></Linker>
         </div>
 
         {/* Mobile NavMenu */}
@@ -77,8 +79,8 @@ const Navbar = () => {
               })}
               {/* Add Auth CTA in Mobile View */}
               <div className="mt-4 grid grid-cols-2 items-end gap-8">
-                <Button type="button" variant="primary">Log In</Button>
-                <Linker href="#"><h1>Sign Up</h1></Linker>
+                <Button type="button" action={()=>navigate("/signin")} variant="primary">Log In</Button>
+                <Linker href="/signup"><h1>Sign Up</h1></Linker>
               </div>
             </div>
           </div>
