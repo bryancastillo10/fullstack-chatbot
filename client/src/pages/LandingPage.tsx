@@ -7,7 +7,7 @@ import Contact from "../landingpage/Contact";
 import Sponsor from "../landingpage/Sponsor";
 import Footer from "../landingpage/Footer";
 
-const Home = () => {
+const LandingPage = () => {
   return (
     <section>
       <Navbar/>
@@ -22,4 +22,4 @@ const Home = () => {
   )
 }
 
-export default Home;
+export default LandingPage;
