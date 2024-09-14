@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button, Linker } from "../../reusables";
 import { NavbarMenuList } from "../../constants/navbarmenu";
 import NavLogo from "/earth.png";
@@ -6,6 +7,7 @@ import { List, X } from "@phosphor-icons/react";
 
 const Navbar = () => {
   const [showMenu, setShowMenu] = useState<boolean>(false);
+  const navigate= useNavigate();
 
   const toggleNavMenu = () => {
     setShowMenu(!showMenu);
@@ -25,7 +27,7 @@ const Navbar = () => {
           {NavbarMenuList.map((nav) => {
             const Icon = nav.icon;
             return (
-              <Linker key={nav.id} href={nav.link}>
+              <Linker isScroll key={nav.id} offset={nav.offset} href={nav.link}>
                 <div className="group flex items-center gap-0.5">
                   <span className="md:hidden lg:block group-hover:scale-75 duration-1000 ease-out">
                     <Icon size="28" />
@@ -39,8 +41,8 @@ const Navbar = () => {
 
         {/* Auth CTA */}
         <div className="hidden md:flex items-center gap-x-4 gap-y-2">
-          <Button type="button" variant="primary">Log In</Button>
-          <Linker href="#"><h1>Sign Up</h1></Linker>
+          <Button type="button" action={()=>navigate("/signin")} variant="primary">Log In</Button>
+          <Linker href="/signup"><h1>Sign Up</h1></Linker>
         </div>
 
         {/* Mobile NavMenu */}
@@ -67,7 +69,7 @@ const Navbar = () => {
               {NavbarMenuList.map((nav) => {
                 const Icon = nav.icon;
                 return (
-                  <Linker key={nav.id} href={nav.link}>
+                  <Linker isScroll offset={nav.offset} key={nav.id} href={nav.link}>
                     <div className="group flex items-center gap-4">
                       <span className="group-hover:scale-75 duration-1000 ease-out"><Icon size="28" /></span>
                       {nav.name}
@@ -77,8 +79,8 @@ const Navbar = () => {
               })}
               {/* Add Auth CTA in Mobile View */}
               <div className="mt-4 grid grid-cols-2 items-end gap-8">
-                <Button type="button" variant="primary">Log In</Button>
-                <Linker href="#"><h1>Sign Up</h1></Linker>
+                <Button type="button" action={()=>navigate("/signin")} variant="primary">Log In</Button>
+                <Linker href="/signup"><h1>Sign Up</h1></Linker>
               </div>
             </div>
           </div>

@@ -5,7 +5,7 @@
 @tailwind utilities;
 
 *{
-    @apply font-quicksand font-base;
+    @apply font-quicksand font-base scroll-smooth;
 }
 
 body{

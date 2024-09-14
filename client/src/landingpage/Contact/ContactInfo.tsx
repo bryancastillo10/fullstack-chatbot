@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import Logo from "/earth.png";
 import Map from "/images/MNLMap.png";
 import { MapPin,Clock, PaperPlaneTilt, Phone, UsersThree, Icon} from "@phosphor-icons/react";
@@ -34,6 +35,7 @@ const EmailAddresses = ({email,section}:EmailAddressesProps) => {
 }
 
 const ContactInfo = () => {
+  const navigate = useNavigate();
   return (
     <section className="col-span-2">
         {/* Upper Section */}
@@ -68,11 +70,11 @@ const ContactInfo = () => {
                 <div>
                     <div className="text-center xl:text-left space-y-2 my-4">
                         <p className="text-xs text-balance">Curious about the latest technologies for the environment?</p>
-                        <Button type="button" variant="primary">Read More</Button>
+                        <Button type="button" action={()=>navigate("/tech/1")} variant="primary">Read More</Button>
                     </div>
                     <div className="text-center xl:text-left space-y-2 my-4">
                         <p className="text-xs text-balance">Need a consultation on your environmental concerns?</p>
-                        <Button type="button" variant="primary">Get Started</Button>
+                        <Button type="button" action={()=>navigate("/signin")} variant="primary">Get Started</Button>
                         <p className="text-xs text-justify leading-none max-w-[80%] w-fit pt-4">Book a free consultation with our experts today</p>
                     </div>
                 </div>

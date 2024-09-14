@@ -4,31 +4,36 @@ export const NavbarMenuList = [
     {
       id:1,
       name:"Home",
-      link:"/",
+      link:"/hero",
+      offset:0,
       icon:House
     },
     {
       id:2,
       name:"About",
       link:"/about",
+      offset:-80,
       icon:Info
     },
     {
       id:3,
       name:"Technologies",
-      link:"/tech",
+      link:"/techcards",
+      offset:-185,
       icon:Leaf
     },
     {
       id:4,
       name:"Services",
-      link:"/service",
+      link:"/services",
+      offset:-80,
       icon:HandPalm
     },
     {
       id:5,
       name:"Contact",
       link:"/contact",
+      offset:180,
       icon:Phone
     }
   ]
