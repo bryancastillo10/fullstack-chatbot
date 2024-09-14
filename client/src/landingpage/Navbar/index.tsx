@@ -27,7 +27,7 @@ const Navbar = () => {
           {NavbarMenuList.map((nav) => {
             const Icon = nav.icon;
             return (
-              <Linker key={nav.id} href={nav.link}>
+              <Linker isScroll key={nav.id} href={nav.link}>
                 <div className="group flex items-center gap-0.5">
                   <span className="md:hidden lg:block group-hover:scale-75 duration-1000 ease-out">
                     <Icon size="28" />

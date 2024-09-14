@@ -26,7 +26,7 @@ const About = () => {
   },[]);
 
   return (
-    <section className="mt-[-5px] bg-secondary text-primary">
+    <section id="/about" className="mt-[-5px] bg-secondary text-primary">
         <SectionContainer>
           <div className="grid grid-cols-1 xl:grid-cols-2 xl:gap-10">
             <div className=" xl:order-1 order-2">
