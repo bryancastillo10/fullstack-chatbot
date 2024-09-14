@@ -10,7 +10,7 @@ const Hero = () => {
       };
   
   return (
-    <section className="pt-20 w-full min-h-screen" style={backgroundStyle}>
+    <section id="/hero" className="pt-20 w-full min-h-screen" style={backgroundStyle}>
        <SectionContainer>
             <div className="mt-0 lg:mt-20 text-primary text-center xl:text-left xl:max-w-[50%] flex flex-col gap-10 xl:gap-5">
                 <h1 className="font-semibold text-[40px] md:text-[44px] xl:text-[48px] leading-none tracking-wider">

@@ -6,11 +6,12 @@ interface LinkerProps{
     href:string;
     children:ReactNode;
     isScroll?:boolean;
+    offset?:number;
 }
 
-const Linker = ({href,children, isScroll=false}:LinkerProps) => {
+const Linker = ({href,children, offset=50, isScroll=false}:LinkerProps) => {
   return isScroll ? (
-    <ScrollLink to={href}>
+    <ScrollLink smooth={true} offset={offset} to={href}>
         <div className="cursor-pointer text-hover-link">
             {children}
         </div>

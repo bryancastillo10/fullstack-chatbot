@@ -5,7 +5,7 @@ import ContactInfo from "./ContactInfo";
 
 const Contact = () => {
   return (
-    <section className="mt-[-5px]">
+    <section id="/contact" className="mt-[-5px]">
         <div className="w-full pb-14">
             <WaveDown/>
         </div>

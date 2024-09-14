@@ -12,7 +12,7 @@ const Technology = () => {
         </div>
         <SectionContainer>
             <SectionSubHeader title="Technologies" caption="Get to know the latest trends in the industry"/>
-            <div className="grid grid-cols-1 place-items-center md:grid-cols-2 xl:grid-cols-3 gap-y-12">
+            <div id="/techcards" className="grid grid-cols-1 place-items-center md:grid-cols-2 xl:grid-cols-3 gap-y-12">
               {envitechlist.map((tech)=>{
                 const media = tech.enviMedia;
                 return (
