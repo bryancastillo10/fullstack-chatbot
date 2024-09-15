@@ -4,12 +4,14 @@ import { addAppointment,
         updateAppointment, 
         deleteAppointment 
         } from "../controllers/appointment.controller";
+import protectRoute from "../middleware/protectRoute";
+
 const router = express.Router();
 
 // Endpoints
-router.post("/create", addAppointment);
-router.get("/view", getAppointment);
-router.put("/update/:id", updateAppointment);
-router.delete("/delete/:id", deleteAppointment);
+router.post("/create", protectRoute,addAppointment);
+router.get("/view", protectRoute,getAppointment);
+router.put("/update/:id", protectRoute,updateAppointment);
+router.delete("/delete/:id", protectRoute,deleteAppointment);
 
 export default router;
