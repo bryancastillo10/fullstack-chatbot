@@ -32,11 +32,11 @@ async function deleteAllData(orderedFileNames: string[]) {
   
     const orderedFileNames = [
         "user.json",
-        "appointments.json",
+        "consultant.json",
+        "service.json",
         "consultantService.json",
-        "consultants.json",
-        "services.json",
-        "newsfeed.json",
+        "appointment.json",
+        "newsFeed.json",
         "testimonials.json"
     ];
   
