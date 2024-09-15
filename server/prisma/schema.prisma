@@ -74,3 +74,20 @@ model Service {
   appointments Appointment[]
   consultantServices ConsultantService[]
 }
+
+model NewsFeed{
+  newsfeed_id String @id @default(uuid()) @unique
+  title String
+  content String
+  createdAt DateTime
+  likes Int
+  imgPath String
+}
+
+model Testimonials{
+  testimonials_id String @id @default(uuid()) @unique
+  icon String
+  author String
+  author_title String
+  comments String 
+}

@@ -1,0 +1,44 @@
+[
+    {
+      "testimonials_id": "d1e2f3a4-b5c6-4d5e-a6b7-c8d9e0f1a2b3",
+      "icon": "Factory",
+      "author": "John Smith",
+      "author_title": "CEO, GreenTech Industries",
+      "comments": "Envirotech Inc. transformed our manufacturing process. Their air quality management solutions not only brought us into full compliance but also significantly reduced our carbon footprint. Truly exceptional work!"
+    },
+    {
+      "testimonials_id": "e2f3a4b5-c6d7-5e6f-b7c8-d9e0f1a2b3c4",
+      "icon": "Droplet",
+      "author": "Maria Rodriguez",
+      "author_title": "Director of Public Works, Coastal City",
+      "comments": "The water quality management team at Envirotech Inc. provided invaluable expertise in addressing our city's complex water treatment challenges. Their innovative solutions have made a remarkable difference in our community's water safety."
+    },
+    {
+      "testimonials_id": "f3a4b5c6-d7e8-6f7a-c8d9-e0f1a2b3c4d5",
+      "icon": "Sun",
+      "author": "Dr. Aisha Patel",
+      "author_title": "Research Director, SunPower Innovations",
+      "comments": "Envirotech's renewable energy consultants are second to none. Their in-depth knowledge and creative approaches helped us optimize our solar farm design, resulting in a 30% increase in energy output. Highly recommended!"
+    },
+    {
+      "testimonials_id": "a4b5c6d7-e8f9-7a8b-d9e0-f1a2b3c4d5e6",
+      "icon": "Leaf",
+      "author": "Robert Chen",
+      "author_title": "Environmental Officer, EcoFriendly Corp",
+      "comments": "Working with Envirotech Inc. on our company's sustainability initiatives was a game-changer. Their holistic approach to environmental management helped us achieve our green goals while improving our bottom line."
+    },
+    {
+      "testimonials_id": "b5c6d7e8-f9a0-8b9c-e0f1-a2b3c4d5e6f7",
+      "icon": "Buildings",
+      "author": "Emma Larsson",
+      "author_title": "Urban Planner, Metropolitan Development Agency",
+      "comments": "Envirotech's expertise in environmental impact assessments was crucial for our city's expansion project. Their thorough analysis and actionable recommendations ensured we developed sustainably without compromising on progress."
+    },
+    {
+      "testimonials_id": "c6d7e8f9-a0b1-9c0d-f1a2-b3c4d5e6f7a8",
+      "icon": "Wind",
+      "author": "Carlos Mendoza",
+      "author_title": "Operations Manager, CleanAir Manufacturing",
+      "comments": "The team at Envirotech Inc. provided us with cutting-edge solutions for emissions reduction. Their tailored approach not only helped us meet regulatory standards but also positioned us as industry leaders in environmental responsibility."
+    }
+  ]
