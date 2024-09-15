@@ -4,6 +4,7 @@ import cookieParser from "cookie-parser";
 import { PrismaClient } from '@prisma/client';
 
 import authRoutes from "./routes/auth.routes";
+import appointmentRoutes from "./routes/appointment.routes";
 
 const app = express();
 const prisma = new PrismaClient();
@@ -22,6 +23,7 @@ app.use(cookieParser());
 
 // Routes
 app.use("/auth",authRoutes);
+app.use("/appointments",appointmentRoutes);
 
 
 // Activate Server
