@@ -1,0 +1,42 @@
+[
+  {
+    "newsfeed_id": "e1f2a3b4-c5d6-4e5f-a6b7-c8d9e0f1a2b3",
+    "title": "Revolutionary Solar Paint Turns Any Surface into a Power Generator",
+    "content": "Scientists at the University of Melbourne have developed a new 'solar paint' that can absorb water vapor and split it to generate hydrogen — the cleanest source of energy. This breakthrough could allow us to turn any surface into a source of clean energy production.",
+    "createdAt": "2024-09-10T09:15:00Z",
+    "likes": 1250,
+    "imgPath": "assets/blogImage/image1.png"
+  },
+  {
+    "newsfeed_id": "f2a3b4c5-d6e7-5f6a-b7c8-d9e0f1a2b3c4",
+    "title": "AI-Powered Drones Revolutionize Reforestation Efforts",
+    "content": "A startup in San Francisco has launched a fleet of AI-powered drones capable of planting trees at ten times the rate of human planters. These drones use advanced imaging and machine learning algorithms to identify optimal planting locations and monitor forest health.",
+    "createdAt": "2024-09-11T14:30:00Z",
+    "likes": 980,
+    "imgPath": "assets/blogImage/image2.png"
+  },
+  {
+    "newsfeed_id": "a3b4c5d6-e7f8-6a7b-c8d9-e0f1a2b3c4d5",
+    "title": "Breakthrough in Carbon Capture: New Material Absorbs CO2 at Record Rates",
+    "content": "Researchers at MIT have engineered a new material that can absorb carbon dioxide from the air at unprecedented rates. This innovation could be a game-changer in the fight against climate change, potentially removing billions of tons of CO2 from the atmosphere annually.",
+    "createdAt": "2024-09-12T11:45:00Z",
+    "likes": 1540,
+    "imgPath": "assets/blogImage/image3.png"
+  },
+  {
+    "newsfeed_id": "b4c5d6e7-f8a9-7b8c-d9e0-f1a2b3c4d5e6",
+    "title": "Ocean Cleanup Array 2.0 Launches, Promises to Clear Pacific Garbage Patch",
+    "content": "The Ocean Cleanup project has launched its next-generation cleanup array, designed to remove plastic waste from the Great Pacific Garbage Patch. The new system is projected to clean up 50% of the patch every five years, a significant improvement over previous models.",
+    "createdAt": "2024-09-13T16:20:00Z",
+    "likes": 2100,
+    "imgPath": "assets/blogImage/image4.png"
+  },
+  {
+    "newsfeed_id": "c5d6e7f8-a9b0-8c9d-e0f1-a2b3c4d5e6f7",
+    "title": "Vertical Farming Skyscraper Opens in Singapore, Heralds New Era of Urban Agriculture",
+    "content": "Singapore has unveiled the world's first vertical farming skyscraper, capable of producing over 1,000 tons of vegetables annually. The 30-story building uses advanced hydroponics and AI-controlled environmental systems to maximize yield while minimizing resource use.",
+    "createdAt": "2024-09-14T08:00:00Z",
+    "likes": 1780,
+    "imgPath": "assets/blogImage/image5.png"
+  }
+]

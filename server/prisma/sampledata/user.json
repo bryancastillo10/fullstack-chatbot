@@ -1,0 +1,29 @@
+[
+  {
+    "user_id": "u1a2b3c4-d5e6-4f7g-h8i9-j0k1l2m3n4o5",
+    "username": "eco_enthusiast",
+    "email": "sarah@example.com",
+    "password": "hashedpassword1",
+    "profilePicture": "/assets/defaultprofilepic.png",
+    "createdAt": "2024-08-15T10:30:00Z",
+    "updatedAt": "2024-09-10T14:45:00Z"
+  },
+  {
+    "user_id": "u2b3c4d5-e6f7-5g8h-i9j0-k1l2m3n4o5p6",
+    "username": "green_innovator",
+    "email": "michael@example.com",
+    "password": "hashedpassword2",
+    "profilePicture": "/assets/defaultprofilepic.png",
+    "createdAt": "2024-07-20T09:15:00Z",
+    "updatedAt": "2024-09-12T11:30:00Z"
+  },
+  {
+    "user_id": "u3c4d5e6-f7g8-6h9i-j0k1-l2m3n4o5p6q7",
+    "username": "sustainability_pro",
+    "email": "elena@example.com",
+    "password": "hashedpassword3",
+    "profilePicture": "/assets/defaultprofilepic.png",
+    "createdAt": "2024-09-01T16:45:00Z",
+    "updatedAt": "2024-09-14T08:20:00Z"
+  }
+]
