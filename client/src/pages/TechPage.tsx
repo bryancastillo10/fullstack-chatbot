@@ -49,6 +49,7 @@ const TechPage = () => {
     const tech = envitechlist.find((tech) => tech.id === Number(id));
     
     const fetchImageUrl = async () => {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
       const url = await getImageUrl("project-assets",tech?.imgPath!);
       setImageUrl(url);
     }
