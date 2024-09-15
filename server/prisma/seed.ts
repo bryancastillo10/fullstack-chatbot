@@ -1,8 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 import fs from "fs";
 import path from "path";
+import { fileURLToPath } from 'url';
 
 const prisma = new PrismaClient();
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 async function deleteAllData(orderedFileNames: string[]) {
     const modelNames = orderedFileNames.map((fileName) => {
@@ -24,7 +28,7 @@ async function deleteAllData(orderedFileNames: string[]) {
   }
 
   async function main() {
-    const dataDirectory = path.join(__dirname, "sampleData");
+    const dataDirectory = path.join(__dirname, "sampledata");
   
     const orderedFileNames = [
         "user.json",
