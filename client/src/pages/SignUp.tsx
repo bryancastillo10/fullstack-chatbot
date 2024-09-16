@@ -38,10 +38,39 @@ const SignUp = () => {
       <article className="w-fit">
         <h1 className="mt-10 xl:mt-0 mb-3 font-semibold text-3xl xl:text-4xl">Get Started at <span className="text-secondary">EnviroTech</span></h1>
         <form onSubmit={()=>{}} className="flex flex-col">
-          <Input id="username" type="text" label="Username" icon={User}/>
-          <Input id="email" type="email" label="Email" icon={Envelope}/>
-          <Input id="password" label="Password" icon={Key} />
-          <Input id="confirmPassword" label="Confirm Password" icon={ShieldCheck} />
+          <Input 
+            id="username"  
+            type="text" 
+            label="Username" 
+            icon={User}
+            validationMessage="Greater than 5 alphanumeric characters"
+            />
+
+          <Input 
+            id="email" 
+            type="email" 
+            label="Email" 
+            icon={Envelope}
+            validationMessage="Valid email address (eg. envirotech@domain.com)"
+          />
+
+          <Input 
+            id="password" 
+            type="password" 
+            label="Password" 
+            icon={Key} 
+            isPassword
+            validationMessage="At least one uppercase, lowercase, and a numeric character"
+          />
+
+          <Input 
+            id="confirmPassword" 
+            type="password" 
+            label="Confirm Password" 
+            icon={ShieldCheck} 
+            isPassword
+            validationMessage="Retype password for validation"
+          />
 
           <p>Already have an account? <span className="text-secondary text-lg font-semibold">Login</span></p>
           <div className="my-4">

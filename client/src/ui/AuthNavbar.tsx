@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const AuthNavbar = () => {
   return (
-    <nav className="p-4 border border-black sticky top-0 bg-primary text-black z-20"
+    <nav className="p-4 border border-black bg-primary text-black z-20"
     >
        <div className='flex justify-between xl:px-4 items-center gap-10'>
           <Link to="/" className="flex flex-col items-center text-hover-link">

@@ -1,4 +1,5 @@
-import { Icon } from "@phosphor-icons/react";
+import { useState } from "react";
+import { Icon, Eye, EyeSlash } from "@phosphor-icons/react";
 
 interface InputProps{
     id:string;
@@ -6,16 +7,34 @@ interface InputProps{
     label:string;
     disabled?:boolean;
     required?:boolean;
+    isPassword?:boolean;
     icon?:Icon;
+    validationMessage?:string;
 }
 
 
-const Input = ({id,type="text",label, disabled,required,icon:Icon}:InputProps) => {
+const Input = ({
+    id,
+    type="text",
+    label, 
+    disabled,
+    isPassword=false,
+    required,
+    icon:Icon,
+    validationMessage
+}:InputProps) => {
+
+  const [isVisible, setIsVisible] = useState<boolean>(false);
+
+  const toggleVisible = () => {
+    setIsVisible(!isVisible);
+  }
+
   return (
     <div className="relative my-8">
     <input
         id={id}
-        type={type}
+        type={type === "password" ? ( isVisible ? "text":"password") : type}
         disabled={disabled}
         required={required}
         placeholder=" "
@@ -30,6 +49,12 @@ const Input = ({id,type="text",label, disabled,required,icon:Icon}:InputProps) =
             {label}
         </label>
     </div>
+    {isPassword && (<div onClick={toggleVisible} className="absolute z-10 top-2.5 right-4 cursor-pointer">
+        {isVisible ? <EyeSlash size="24"/> : <Eye size="24"/>}
+    </div>)}
+    { validationMessage &&  (<div className="mt-1">
+        <p className="indent-2 text-xs">{validationMessage}</p>
+    </div>)}
 </div>
   )
 }
