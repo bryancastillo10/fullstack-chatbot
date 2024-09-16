@@ -16,7 +16,10 @@ const LandingPage = () => {
       <Technology/>
       <Services/>
       <Contact/>
-      <Sponsor/>
+      <Sponsor
+        header="Building a Greener Future with Trusted Partners"
+        backgroundClass="bg-black"
+        />
       <Footer/>
     </section>
   )

@@ -86,7 +86,10 @@ const SignUp = () => {
     </main>
 
     {/* Sponsor Footer */}
-    <Sponsor/>
+    <Sponsor
+      header="Trusted by World Class Organizations"
+      backgroundClass="bg-secondary"
+    />
     </section>
   )
 }
