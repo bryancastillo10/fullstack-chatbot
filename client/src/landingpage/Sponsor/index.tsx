@@ -1,7 +1,12 @@
 import { useState, useEffect } from "react";
 import { getImageUrl } from "../../config/api";
 
-const Sponsor = () => {
+interface SponsorProps{
+    header:string;
+    backgroundClass:string;
+}
+
+const Sponsor = ({header,backgroundClass}:SponsorProps) => {
     const [companyLogo, setCompanyLogo] = useState<(string|undefined)[]>([]);
 
     const imageFilePaths = [
@@ -27,8 +32,10 @@ const Sponsor = () => {
 
   return (
     <section className="mt-10">
-        <h1 className="w-[90%] mx-auto md:w-full text-center font-semibold text-xl lg:text-2xl">Building a Greener Future with Trusted Partners</h1>
-        <div className="flex justify-center items-center gap-28 mt-5 bg-black h-[140px] overflow-x-hidden">
+        <h1 className="w-[90%] mx-auto md:w-full text-center font-semibold text-xl lg:text-2xl">
+            {header}
+        </h1>
+        <div className={`flex justify-center items-center gap-28 mt-5 h-[140px] overflow-x-hidden ${backgroundClass}`}>
             {companyLogo.map((logo,index)=> (
                 <img key={index} 
                  src={logo}

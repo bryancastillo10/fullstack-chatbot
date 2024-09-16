@@ -27,7 +27,10 @@ const AuthForm = ({formHeader,formBody, isSignUp}:AuthFormProps) => {
             </p>)
         }
       <div className="my-4">
-      <Button type="submit" width="w-[100%]" variant="primary">SignUp</Button>
+      {isSignUp ? 
+        (<Button type="submit" width="w-[100%]" variant="primary">SignUp</Button>)
+        : (<Button type="submit" width="w-[100%]" variant="primary">Log In</Button>)
+        }
       </div>
     </form>
   </article>
