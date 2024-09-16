@@ -6,7 +6,7 @@ import { User, Envelope,Key,ShieldCheck } from "@phosphor-icons/react";
 
 const SignUp = () => {
   const header = (
-    <h1 className="p-2 text-2xl font-semibold text-center xl:text-left">Why Do You Need to Create an Account?</h1>
+    <h1 className="p-2 text-2xl font-semibold text-center">Why Do You Need to Create an Account?</h1>
   )
 
   const featureList = (  
@@ -34,7 +34,7 @@ const SignUp = () => {
 
       {/* Sign In Form */}
       <article className="w-fit">
-        <h1 className="mt-10 xl:mt-0 mb-3 font-semibold text-3xl xl:text-4xl">Get Started at <span className="text-secondary">EnviroTech</span></h1>
+        <h1 className="mt-10 xl:mt-0 mb-3 font-base text-3xl xl:text-4xl">Get Started at <span className="text-secondary font-bold">EnviroTech</span></h1>
         <form onSubmit={()=>{}} className="flex flex-col">
           <Input 
             id="username"  
