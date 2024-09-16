@@ -78,11 +78,11 @@ const SignUp = () => {
           secondImage="/images/signUpImg2.png"
         />      
    
-      <AuthForm
-          formHeader={formHeader}
-          formBody={formBody}
-          isSignUp
-      />
+        <AuthForm
+            formHeader={formHeader}
+            formBody={formBody}
+            isSignUp
+        />
     </main>
 
     {/* Sponsor Footer */}

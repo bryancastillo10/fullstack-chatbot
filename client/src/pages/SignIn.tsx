@@ -1,16 +1,46 @@
+import { Input } from "../reusables";
 import AuthFiller from "../ui/AuthFiller";
 import AuthNavbar from "../ui/AuthNavbar";
+import AuthForm from "../ui/AuthForm";
+import { User,Key } from "@phosphor-icons/react";
+import Sponsor from "../landingpage/Sponsor";
 
 
 const SignIn = () => {
   const header = (
     <h1 className="p-2 text-2xl font-semibold text-center">Welcome Back to EnviroTech</h1>
-  )
+  );
+
   const adStatements = (
     <div className="px-4">
       <p className="text-base mb-2">Your trusted partner in sustainable solutions</p>
       <p className="text-justify"><span className="font-semibold text-secondary">Log in</span> to continue your journey towards a greener, more sustainable future.</p>
     </div>
+  );
+
+  const formHeader= (
+    <>
+    Login at <span className="text-secondary font-bold">EnviroTech</span>
+    </>
+  );
+
+  const formBody = (
+    <>
+        <Input 
+          id="username"  
+          type="text" 
+          label="Username" 
+          icon={User}
+          />
+
+        <Input 
+          id="password" 
+          type="password" 
+          label="Password" 
+          icon={Key} 
+          isPassword
+        />
+    </>
   )
 
   return (
@@ -25,7 +55,18 @@ const SignIn = () => {
         secondImage="/images/signInImg2.png"
         contents={adStatements}
       />
+
+      <AuthForm 
+        formHeader={formHeader}
+        formBody={formBody}
+        isSignUp={false}
+      />
       </main>
+      {/* Sponsor Footer */}
+      <Sponsor
+        header="Collaboration with Trusted Partners Towards Sustainability"
+        backgroundClass="bg-secondary"
+      />
     </section>
   )
 }
