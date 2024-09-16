@@ -21,7 +21,7 @@ const AuthFiller = ({header,firstImage,secondImage, contents}:AuthFillerProps) =
 
     {/* Second Image */}
     <div className="flex xl:row-start-2 justify-center lg:justify-start items-center">
-      <img src={secondImage} alt="filler-image2" className="object-cover  lg:rounded-bl-2xl" />
+      <img src={secondImage} alt="filler-image2" className="object-cover rounded-tr-2xl md:rounded-none lg:rounded-bl-2xl" />
     </div>
 
     <div className="col-span-2 order-3 lg:order-none lg:col-span-1 flex justify-center items-start lg:items-center mb-4">
