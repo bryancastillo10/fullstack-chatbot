@@ -1,8 +1,22 @@
 import AuthNavbar from "../ui/AuthNavbar";
+import AuthFiller from "../ui/AuthFiller";
 import { Input, Button } from "../reusables";
 import { User, Envelope,Key,ShieldCheck } from "@phosphor-icons/react";
 
+
 const SignUp = () => {
+  const header = (
+    <h1 className="p-2 text-2xl font-semibold text-center xl:text-left">Why Do You Need to Create an Account?</h1>
+  )
+
+  const featureList = (  
+      <ul className="text-center lg:text-left lg:list-disc space-y-2 text-sm xl:text-base">
+        <li>Broaden your knowledge about the environment</li>
+        <li>Consult with credible experts</li>
+        <li>Access Exclusive Resources</li>
+        <li>Join the community</li>
+      </ul>
+  )
   return (
     <section>
     {/* Nav Header */}
@@ -10,30 +24,14 @@ const SignUp = () => {
 
     {/* Sections */}
     <main className="mt-10 grid grid-cols-1 lg:grid-cols-2 justify-items-center items-center overflow-x-hidden">
-      {/* Images Bento */}
-    <article className="grid grid-cols-2 gap-4 w-[90%] border border-black">
-      <div className="col-span-2 order-2 lg:order-none lg:col-span-1 flex justify-center items-start lg:items-center">
-        <h1 className="p-2 text-2xl font-semibold text-center xl:text-left">Why Do You Need to Create an Account?</h1>
-      </div>
-      {/* First Image */}
-      <div className="flex md:justify-center lg:justify-end items-center">
-        <img src="https://placehold.co/200x200" alt="Team Discussion" className="xl:ml-8 object-cover rounded" />
-      </div>
+        <AuthFiller
+          header={header}
+          contents={featureList}
+          firstImage="/images/signUpImg1.png"
+          secondImage="/images/signUpImg2.png"
+        />      
 
-      {/* Second Image */}
-      <div className="flex xl:row-start-2 justify-center lg:justify-start items-center">
-        <img src="https://placehold.co/260x185" alt="Environment" className="object-cover rounded" />
-      </div>
 
-      <div className="col-span-2 order-3 lg:order-none lg:col-span-1 flex justify-center items-start lg:items-center mb-4">
-        <ul className="text-center lg:text-left lg:list-disc space-y-2 text-sm xl:text-base">
-          <li>Broaden your knowledge about the environment</li>
-          <li>Consult with credible experts</li>
-          <li>Access Exclusive Resources</li>
-          <li>Join the community</li>
-        </ul>
-      </div>
-    </article>
       {/* Sign In Form */}
       <article className="w-fit">
         <h1 className="mt-10 xl:mt-0 mb-3 font-semibold text-3xl xl:text-4xl">Get Started at <span className="text-secondary">EnviroTech</span></h1>
