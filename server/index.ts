@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import cookieParser from "cookie-parser";
 import { PrismaClient } from '@prisma/client';
+import cors from "cors";
 
 import authRoutes from "./routes/auth.routes";
 import appointmentRoutes from "./routes/appointment.routes";
@@ -17,6 +18,10 @@ app.get("/", (req,res)=> {
 });
 
 // Middleware
+app.use(cors({
+    origin:"http://localhost:5173",
+    credentials:true
+}))
 app.use(express.json());
 app.use("/assets", express.static("assets"));
 app.use(cookieParser());

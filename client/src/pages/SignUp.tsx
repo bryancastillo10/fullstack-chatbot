@@ -1,5 +1,4 @@
 import { useState, ChangeEvent, FormEvent } from "react";
-import { useAppSelector } from "../redux/hooks";
 import { useNavigate } from "react-router-dom";
 import { setCurrentUser } from "../redux/userSlice";
 import { useSignUpMutation } from "../redux/rtkquery";
@@ -14,7 +13,6 @@ import { User, Envelope,Key,ShieldCheck } from "@phosphor-icons/react";
 const SignUp = () => {
   // Sign Up State
   const [signUp, {isLoading}] = useSignUpMutation(); 
-  const currentUser = useAppSelector((state)=> state.user);
   const navigate = useNavigate();
   const [signUpData, setSignUpData] = useState({
     username: "",
@@ -32,8 +30,13 @@ const SignUp = () => {
     e.preventDefault();
     try{
         const res = await signUp(signUpData).unwrap();
-        setCurrentUser(res.user);
-        if (res && res.user){
+        if (res.error) {
+          toast.error(res.error);
+          return;
+        }
+        setCurrentUser(res.user!);
+        if (res?.user){
+          toast.success(res.message);
           navigate("/user");
         }
     }
@@ -42,8 +45,7 @@ const SignUp = () => {
       toast.error("Something went wrong");
     }
   };
-  console.log(isLoading);
-  console.log(currentUser);
+
   // JSX Elements
   const header = (
     <h1 className="p-2 text-2xl font-semibold text-center">Why Do You Need to Create an Account?</h1>

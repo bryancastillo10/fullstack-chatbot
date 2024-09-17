@@ -11,8 +11,8 @@ export interface SignInRequest {
 }
 
 export interface SignUpResponse {
-    message: string;
-    user: {
+    message?: string;
+    user?: {
       user_id: string;
       username: string;
       email: string;
@@ -20,8 +20,8 @@ export interface SignUpResponse {
       createdAt: string;
       updatedAt: string;
     };
+    error?:string;
   }
-  
 export interface SignInResponse {
     message: string;
     user: {
