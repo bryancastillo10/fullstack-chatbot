@@ -105,14 +105,15 @@ export const userSignIn= async (req: Request, res: Response): Promise<void> => {
         if(!isPasswordCorrect){
             res.status(401).json({error:"Invalid password. Please try again."});
         }
-
-        generateTokenAndSetCookie(user.user_id,res);
-        res.status(200).json({
+        const authUser = {
             id: user.user_id,
             username:user.username,
             email: user.email,
             profilePicture:user.profilePicture
-        })
+        }
+        
+        generateTokenAndSetCookie(user.user_id,res);
+        res.status(200).json({message:"User just logged in successfully", user: authUser})
     }
     catch(error){
         console.error("Error at sign in controller", error.message);

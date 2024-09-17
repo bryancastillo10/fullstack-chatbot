@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, ChangeEvent } from "react";
 import { Icon, Eye, EyeSlash } from "@phosphor-icons/react";
 
 interface InputProps{
@@ -7,6 +7,7 @@ interface InputProps{
     label:string;
     disabled?:boolean;
     required?:boolean;
+    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
     isPassword?:boolean;
     icon?:Icon;
     validationMessage?:string;
@@ -16,7 +17,8 @@ interface InputProps{
 const Input = ({
     id,
     type="text",
-    label, 
+    label,
+    onChange, 
     disabled,
     isPassword=false,
     required,
@@ -35,6 +37,7 @@ const Input = ({
     <input
         id={id}
         type={type === "password" ? ( isVisible ? "text":"password") : type}
+        onChange={onChange}
         disabled={disabled}
         required={required}
         placeholder=" "

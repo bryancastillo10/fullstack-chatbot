@@ -1,20 +1,22 @@
-import { ReactNode } from "react";
+import { ReactNode,FormEvent } from "react";
 import { Button } from "../reusables";
 import { Link } from "react-router-dom";
 
 interface AuthFormProps{
     isSignUp:boolean;
+    loading:boolean;
     formHeader: ReactNode;
     formBody:ReactNode;
+    onSubmit:(e: FormEvent<HTMLFormElement>) => void;
 }
 
-const AuthForm = ({formHeader,formBody, isSignUp}:AuthFormProps) => {
+const AuthForm = ({formHeader,formBody, isSignUp,onSubmit, loading}:AuthFormProps) => {
   return (
     <article className="w-fit">
     <h1 className="mt-10 xl:mt-0 mb-3 font-base text-3xl xl:text-4xl">
         {formHeader}
     </h1>
-    <form onSubmit={()=>{}} className="flex flex-col">
+    <form onSubmit={onSubmit} className="flex flex-col">
      {formBody}
 
       { isSignUp ? 
@@ -28,7 +30,14 @@ const AuthForm = ({formHeader,formBody, isSignUp}:AuthFormProps) => {
         }
       <div className="my-4">
       {isSignUp ? 
-        (<Button type="submit" width="w-[100%]" variant="primary">SignUp</Button>)
+        (<Button 
+            type="submit" 
+            width="w-[100%]" 
+            variant="primary"
+            loading={loading}
+          >
+            SignUp
+          </Button>)
         : (<Button type="submit" width="w-[100%]" variant="primary">Log In</Button>)
         }
       </div>

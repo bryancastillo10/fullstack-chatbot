@@ -1,12 +1,52 @@
-import AuthNavbar from "../ui/AuthNavbar";
-import AuthFiller from "../ui/AuthFiller";
-import AuthForm from "../ui/AuthForm";
+import { useState, ChangeEvent, FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import { setCurrentUser } from "../redux/userSlice";
+import { useSignUpMutation } from "../redux/rtkquery";
+import { toast } from "sonner";
+
+import { AuthNavbar, AuthFiller, AuthForm } from "../ui";
 import { Input } from "../reusables";
 import Sponsor from "../landingpage/Sponsor";
 import { User, Envelope,Key,ShieldCheck } from "@phosphor-icons/react";
 
 
 const SignUp = () => {
+  // Sign Up State
+  const [signUp, {isLoading}] = useSignUpMutation(); 
+  const navigate = useNavigate();
+  const [signUpData, setSignUpData] = useState({
+    username: "",
+    email:"",
+    password: "",
+    confirmPassword: "",
+  });
+
+  // Handling Form
+  const handleSignUpInput = (e: ChangeEvent<HTMLInputElement>) => {
+    setSignUpData({...signUpData, [e.target.id]:e.target.value});
+  }
+
+  const handleSubmit = async (e:FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try{
+        const res = await signUp(signUpData).unwrap();
+        if (res.error) {
+          toast.error(res.error);
+          return;
+        }
+        setCurrentUser(res.user!);
+        if (res?.user){
+          toast.success(res.message);
+          navigate("/user");
+        }
+    }
+    catch(error){
+      console.error("Failed to sign up", error);
+      toast.error("Something went wrong");
+    }
+  };
+
+  // JSX Elements
   const header = (
     <h1 className="p-2 text-2xl font-semibold text-center">Why Do You Need to Create an Account?</h1>
   );
@@ -31,7 +71,9 @@ const SignUp = () => {
         <Input 
           id="username"  
           type="text" 
-          label="Username" 
+          label="Username"
+          disabled={isLoading}
+          onChange={handleSignUpInput}  
           icon={User}
           validationMessage="Greater than 5 alphanumeric characters"
           />
@@ -39,7 +81,9 @@ const SignUp = () => {
         <Input 
           id="email" 
           type="email" 
-          label="Email" 
+          label="Email"
+          disabled={isLoading}
+          onChange={handleSignUpInput} 
           icon={Envelope}
           validationMessage="Valid email address (eg. envirotech@domain.com)"
         />
@@ -47,7 +91,9 @@ const SignUp = () => {
         <Input 
           id="password" 
           type="password" 
-          label="Password" 
+          label="Password"
+          disabled={isLoading}
+          onChange={handleSignUpInput}   
           icon={Key} 
           isPassword
           validationMessage="At least one uppercase, lowercase, and a numeric character"
@@ -56,7 +102,9 @@ const SignUp = () => {
         <Input 
           id="confirmPassword" 
           type="password" 
-          label="Confirm Password" 
+          label="Confirm Password"
+          disabled={isLoading}
+          onChange={handleSignUpInput}  
           icon={ShieldCheck} 
           isPassword
           validationMessage="Retype password for validation"
@@ -81,6 +129,8 @@ const SignUp = () => {
         <AuthForm
             formHeader={formHeader}
             formBody={formBody}
+            onSubmit={handleSubmit}
+            loading={isLoading}
             isSignUp
         />
     </main>

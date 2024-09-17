@@ -1,7 +1,6 @@
+import { FormEvent } from "react";
 import { Input } from "../reusables";
-import AuthFiller from "../ui/AuthFiller";
-import AuthNavbar from "../ui/AuthNavbar";
-import AuthForm from "../ui/AuthForm";
+import { AuthNavbar, AuthFiller, AuthForm } from "../ui";
 import { User,Key } from "@phosphor-icons/react";
 import Sponsor from "../landingpage/Sponsor";
 
@@ -29,14 +28,16 @@ const SignIn = () => {
         <Input 
           id="username"  
           type="text" 
-          label="Username" 
+          label="Username"
+          onChange={()=>{}}  
           icon={User}
           />
 
         <Input 
           id="password" 
           type="password" 
-          label="Password" 
+          label="Password"
+          onChange={()=>{}} 
           icon={Key} 
           isPassword
         />
@@ -60,6 +61,8 @@ const SignIn = () => {
         formHeader={formHeader}
         formBody={formBody}
         isSignUp={false}
+        onSubmit={(e:FormEvent<HTMLFormElement>)=>{e.preventDefault()}}
+        loading={false}
       />
       </main>
       {/* Sponsor Footer */}
