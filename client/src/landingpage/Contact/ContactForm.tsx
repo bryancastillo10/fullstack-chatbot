@@ -4,9 +4,9 @@ import { User,Envelope,ChatDots,PencilSimpleLine } from "@phosphor-icons/react";
 const ContactForm = () => {
   return (
     <form className="flex flex-col" onSubmit={()=>{}}>
-        <Input id="name" label="Name" icon={User} />
-        <Input id="email" label="Email" icon={Envelope} />
-        <Input id="subject" label="Subject" icon={ChatDots} />
+        <Input onChange={()=>{}} id="name" label="Name" icon={User} />
+        <Input onChange={()=>{}} id="email" label="Email" icon={Envelope} />
+        <Input onChange={()=>{}} id="subject" label="Subject" icon={ChatDots} />
 
         {/* TextArea */}
         <div className="relative w-full mt-8 mb-2">
