@@ -1,4 +1,3 @@
-
 import { AuthNavbar, AuthFiller, AuthForm } from "../ui";
 import { Input } from "../reusables";
 import Sponsor from "../landingpage/Sponsor";
