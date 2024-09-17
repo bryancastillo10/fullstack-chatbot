@@ -1,3 +1,4 @@
+
 import { AuthNavbar, AuthFiller, AuthForm } from "../ui";
 import { Input } from "../reusables";
 import Sponsor from "../landingpage/Sponsor";
@@ -5,6 +6,8 @@ import { User, Envelope,Key,ShieldCheck } from "@phosphor-icons/react";
 
 
 const SignUp = () => {
+
+  
   const header = (
     <h1 className="p-2 text-2xl font-semibold text-center">Why Do You Need to Create an Account?</h1>
   );
