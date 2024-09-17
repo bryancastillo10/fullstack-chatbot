@@ -1,7 +1,5 @@
 import { Input } from "../reusables";
-import AuthFiller from "../ui/AuthFiller";
-import AuthNavbar from "../ui/AuthNavbar";
-import AuthForm from "../ui/AuthForm";
+import { AuthNavbar, AuthFiller, AuthForm } from "../ui";
 import { User,Key } from "@phosphor-icons/react";
 import Sponsor from "../landingpage/Sponsor";
 
