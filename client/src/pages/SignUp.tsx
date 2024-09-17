@@ -1,19 +1,24 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { setCurrentUser } from "../redux/userSlice";
-import { useSignUpMutation } from "../redux/rtkquery";
-import { toast } from "sonner";
 
+import { setCurrentUser } from "../redux/userSlice";
+import { useAppDispatch } from "../redux/hooks";
+import { useSignUpMutation } from "../redux/rtkquery";
+import { FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
+
+import { toast } from "sonner";
 import { AuthNavbar, AuthFiller, AuthForm } from "../ui";
 import { Input } from "../reusables";
 import Sponsor from "../landingpage/Sponsor";
 import { User, Envelope,Key,ShieldCheck } from "@phosphor-icons/react";
 
-
 const SignUp = () => {
-  // Sign Up State
+  // Hooks
   const [signUp, {isLoading}] = useSignUpMutation(); 
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  // Sign Up State
   const [signUpData, setSignUpData] = useState({
     username: "",
     email:"",
@@ -26,26 +31,32 @@ const SignUp = () => {
     setSignUpData({...signUpData, [e.target.id]:e.target.value});
   }
 
-  const handleSubmit = async (e:FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try{
-        const res = await signUp(signUpData).unwrap();
-        if (res.error) {
-          toast.error(res.error);
-          return;
-        }
-        setCurrentUser(res.user!);
-        if (res?.user){
-          toast.success(res.message);
-          navigate("/user");
-        }
-    }
-    catch(error){
-      console.error("Failed to sign up", error);
-      toast.error("Something went wrong");
+    
+    try {
+      const res = await signUp(signUpData);
+  
+      // Handle if the response has an error
+      if (res.error) {
+        const errorData = res.error as FetchBaseQueryError; 
+        const errorMessage = errorData.data?.error || "An unknown error occurred";
+        toast.error(errorMessage);  
+        return;
+      }
+  
+      // Handle successful response
+      if (res.data) {
+        const data = res.data;  
+        toast.success(data.message || "Sign up successful");
+        dispatch(setCurrentUser(data.user!));  
+        navigate("/user");  
+      }
+    } catch (error) {
+      console.error("Error during sign up:", error);
+      toast.error("Something went wrong. Please try again.");
     }
   };
-
   // JSX Elements
   const header = (
     <h1 className="p-2 text-2xl font-semibold text-center">Why Do You Need to Create an Account?</h1>

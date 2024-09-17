@@ -4,7 +4,7 @@ import { LandingPage,
           PageNotFound, 
           SignIn, SignUp, 
           TechPage } from "./pages";
-
+import PrivateRoute from "./config/PrivateRoute";
 const App = () => {
   return (
         <Routes>
@@ -14,8 +14,13 @@ const App = () => {
         <Route path="/tech" element={<TechPage/>}>
             <Route path=":id" />
         </Route>
-        <Route path="user" element={<AppLayout/>}>
-            <Route path="home" index element={<p>Home</p>}/>
+        <Route element={<PrivateRoute/>}>
+          <Route path="user" element={<AppLayout/>}>
+            <Route path="profile" index element={<p>Home Page</p>}/>
+            <Route path="appointments" index element={<p>Appointment Page</p>}/>
+            <Route path="consultants" index element={<p>Consultants Page</p>}/>
+            <Route path="settings" index element={<p>Settings</p>}/>
+          </Route>
         </Route>
         <Route path="*" element={<PageNotFound />} />     
       </Routes>
