@@ -102,7 +102,7 @@ const SignIn = () => {
       {/* Nav Header */}
       <AuthNavbar/>
       {/* Sections */}
-      <main className="mt-10 grid grid-cols-1 lg:grid-cols-2 justify-items-center items-center overflow-x-hidden">
+      <main className="mt-10 grid grid-cols-1 lg:grid-cols-2 xl:h-[70vh] justify-items-center items-center overflow-x-hidden">
       <AuthFiller
         header={header}
         firstImage="/images/signInImg1.png"
