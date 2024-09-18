@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { SignUpRequest, SignUpResponse, SignInRequest, SignInResponse } from "../types/auth";
+import { SignUpRequest,  SignInRequest, AuthSuccessResponse } from "../types/auth";
 
 const BASE_API = import.meta.env.VITE_REACT_BASE_API_URL
 
@@ -10,14 +10,14 @@ export const authApi = createApi({
       credentials:'include'
     }), 
     endpoints: (builder) => ({
-      signUp: builder.mutation<SignUpResponse, SignUpRequest>({
+      signUp: builder.mutation<AuthSuccessResponse, SignUpRequest>({
         query: (data) => ({
           url: '/auth/signup',
           method: 'POST',
           body: data,
         }),
       }),
-      signIn: builder.mutation<SignInResponse, SignInRequest>({
+      signIn: builder.mutation<AuthSuccessResponse, SignInRequest>({
         query: (data) => ({
           url: '/auth/signin',
           method: 'POST',

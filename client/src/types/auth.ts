@@ -6,11 +6,11 @@ export interface SignUpRequest {
 }
 
 export interface SignInRequest {
-  email: string;
+  username: string;
   password: string;
 }
 
-export interface SignUpResponse {
+export interface AuthSuccessResponse {
     message?: string;
     user?: {
       user_id: string;
@@ -22,12 +22,10 @@ export interface SignUpResponse {
     };
     error?:string;
   }
-export interface SignInResponse {
-    message: string;
-    user: {
-      id: string;
-      username: string;
-      email: string;
-      profilePicture: string;
-    };
+
+export interface AuthError {
+  status?:number;
+  data?:{
+    error?:string;
   }
+}
