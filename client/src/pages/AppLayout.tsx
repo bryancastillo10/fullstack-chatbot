@@ -1,10 +1,11 @@
 import AppNavbar from "../app/Navbar";
+import Sidebar from "../app/Sidebar";
 import { Outlet } from "react-router-dom";
 
 const AppLayout = () => {
   return (
     <div className="flex w-full min-h-screen">
-      Sidebar
+      <Sidebar/>
       <main className="flex flex-col w-full h-full pb-4">
         <AppNavbar/>
        
