@@ -31,10 +31,3 @@ export interface SignInResponse {
       profilePicture: string;
     };
   }
-
-export interface AuthError {
-    status?: number;
-    data?: {
-      error?: string;
-    };
-  }
