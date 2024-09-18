@@ -1,4 +1,12 @@
-import { FormEvent } from "react";
+import { useState, ChangeEvent,FormEvent } from "react";
+import { useNavigate } from "react-router-dom";
+
+import { setCurrentUser } from "../redux/userSlice";
+import { useAppDispatch } from "../redux/hooks";
+import { useSignInMutation } from "../redux/rtkquery";
+import { AuthError } from "../types/auth";
+
+import { toast } from "sonner";
 import { Input } from "../reusables";
 import { AuthNavbar, AuthFiller, AuthForm } from "../ui";
 import { User,Key } from "@phosphor-icons/react";
@@ -6,6 +14,51 @@ import Sponsor from "../landingpage/Sponsor";
 
 
 const SignIn = () => {
+    // Hooks
+    const [signIn, {isLoading}] = useSignInMutation(); 
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+
+    // Sign In State
+    const [signInData, setSignInData] = useState({
+      username:"",
+      password:""
+    });
+
+    // Handling Form
+    const handleSignInInput = (e:ChangeEvent<HTMLInputElement>) => {
+      setSignInData({...signInData, [e.target.id]:e.target.value});
+    }
+
+    const handleSubmit = async (e:FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+
+      try {
+        const res = await signIn(signInData).unwrap();
+        
+        if (res.user) {
+          dispatch(setCurrentUser(res.user));
+          toast.success(res.message || "Logged in successfully");
+          navigate("/user");
+        } else {
+          throw new Error("User data not found in response");
+        }
+      } catch (error: unknown) {
+        if (typeof error === 'object' && error !== null) {
+          const apiError = error as AuthError;
+          if (apiError.status === 400 && apiError.data?.error) {
+            toast.error(apiError.data.error);
+          } else {
+            toast.error("Invalid username or password. Please try again.");
+          }
+        } else {
+          toast.error("An unexpected error occurred. Please try again.");
+        }
+        console.error("Sign up error:", error);
+      }
+    };
+
+  // JSX Elements
   const header = (
     <h1 className="p-2 text-2xl font-semibold text-center">Welcome Back to EnviroTech</h1>
   );
@@ -29,7 +82,7 @@ const SignIn = () => {
           id="username"  
           type="text" 
           label="Username"
-          onChange={()=>{}}  
+          onChange={handleSignInInput}  
           icon={User}
           />
 
@@ -37,7 +90,7 @@ const SignIn = () => {
           id="password" 
           type="password" 
           label="Password"
-          onChange={()=>{}} 
+          onChange={handleSignInInput} 
           icon={Key} 
           isPassword
         />
@@ -61,8 +114,8 @@ const SignIn = () => {
         formHeader={formHeader}
         formBody={formBody}
         isSignUp={false}
-        onSubmit={(e:FormEvent<HTMLFormElement>)=>{e.preventDefault()}}
-        loading={false}
+        onSubmit={handleSubmit}
+        loading={isLoading}
       />
       </main>
       {/* Sponsor Footer */}
