@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { setCurrentUser } from "../redux/userSlice";
 import { useAppDispatch } from "../redux/hooks";
 import { useSignUpMutation } from "../redux/rtkquery";
-import { FetchBaseQueryError } from "@reduxjs/toolkit/query/react";
+import { AuthError } from "../types/auth";
 
 import { toast } from "sonner";
 import { AuthNavbar, AuthFiller, AuthForm } from "../ui";
@@ -33,30 +33,32 @@ const SignUp = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     try {
-      const res = await signUp(signUpData);
-  
-      // Handle if the response has an error
-      if (res.error) {
-        const errorData = res.error as FetchBaseQueryError; 
-        const errorMessage = errorData.data?.error || "An unknown error occurred";
-        toast.error(errorMessage);  
-        return;
+      const res = await signUp(signUpData).unwrap();
+      
+      if (res.user) {
+        dispatch(setCurrentUser(res.user));
+        toast.success(res.message || "Sign up successful");
+        navigate("/user");
+      } else {
+        throw new Error("User data not found in response");
       }
-  
-      // Handle successful response
-      if (res.data) {
-        const data = res.data;  
-        toast.success(data.message || "Sign up successful");
-        dispatch(setCurrentUser(data.user!));  
-        navigate("/user");  
+    } catch (error: unknown) {
+      if (typeof error === 'object' && error !== null) {
+        const apiError = error as AuthError;
+        if (apiError.status === 400 && apiError.data?.error) {
+          toast.error(apiError.data.error);
+        } else {
+          toast.error("Something went wrong. Please try again.");
+        }
+      } else {
+        toast.error("An unexpected error occurred. Please try again.");
       }
-    } catch (error) {
-      console.error("Error during sign up:", error);
-      toast.error("Something went wrong. Please try again.");
+      console.error("Sign up error:", error);
     }
   };
+
   // JSX Elements
   const header = (
     <h1 className="p-2 text-2xl font-semibold text-center">Why Do You Need to Create an Account?</h1>
