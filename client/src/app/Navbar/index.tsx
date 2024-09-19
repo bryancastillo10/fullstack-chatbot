@@ -1,12 +1,18 @@
 import { List } from "@phosphor-icons/react";
 
-const AppNavbar = () => {
+interface AppNavbarProps{
+  toggleSidebar: () => void;
+}
+
+const AppNavbar = ({toggleSidebar}:AppNavbarProps) => {
+
+
   return (
-    <nav className="px-2 py-4 flex justify-between items-center sticky top-0 z-20 bg-black text-primary">
+    <nav className="flex justify-between items-center px-12 py-4 sticky top-0 z-20 bg-secondary text-primary">
         <div className="flex justify-between items-center gap-5">
           <div
           className="p-3.5 cursor-pointer bg-primary text-black rounded-full hover:bg-cream"
-          onClick={()=>{}}
+          onClick={toggleSidebar}
           >            
            <List className="size-5" /> 
           </div>

@@ -1,19 +1,28 @@
+import SidebarHeader from "./SidebarHeader";
+import SidebarMenu from "./SidebarMenu";
 
+import { User, CalendarCheck, HardHat, Gear } from "@phosphor-icons/react";
+interface SidebarProps{
+  isSidebarCollapsed:boolean;
+  toggleSidebar: () => void;
+}
 
-const Sidebar = () => {
+const Sidebar = ({toggleSidebar,isSidebarCollapsed}:SidebarProps) => {
+  console.log(isSidebarCollapsed);
   return (
-    <section className={`fixed flex flex-col bg-black text-primary
-    transition-all duration-500 overflow-hidden shadow-md h-full z-10`}>
-        {/* Change to z-40 when adding state */}
-        <div className="">Header</div>
+    <section className={`fixed flex flex-col transition-all duration-500 
+    overflow-hidden h-full shadow-md z-40 bg-cream text-black
+    ${isSidebarCollapsed ? 'w-0 md:w-16':'w-72 md:w-64'}
+    `}>
+
         <div className="">
-            <ul>
-                <li>Home</li>
-                <li>News</li>
-                <li>Appointments</li>
-                <li>Consultants</li>
-                <li>Settings</li>
-            </ul>
+          <SidebarHeader isSidebarCollapsed={isSidebarCollapsed} toggle={toggleSidebar}/>
+        </div>
+        <div className={`flex-grow mt-8 ${isSidebarCollapsed ? "px-0":"px-8"}`}>
+          <SidebarMenu id="/user/profile" name="Home" icon={User} isSidebarCollapsed={isSidebarCollapsed}  />
+          <SidebarMenu id="/user/appointments" name="Appointments" icon={CalendarCheck} isSidebarCollapsed={isSidebarCollapsed}  />
+          <SidebarMenu id="/user/consultants" name="Consultants" icon={HardHat} isSidebarCollapsed={isSidebarCollapsed}  />
+          <SidebarMenu id="/user/settings" name="Settings" icon={Gear} isSidebarCollapsed={isSidebarCollapsed}  />
         </div>
     </section>
   )

@@ -12,7 +12,7 @@ export default {
         primary:"#F9EEE7",
         secondary:"#0E8173",
         accent:"#E9D417",
-        cream:"#E8D9D0"
+        cream:"#E4D7CF"
       },
       fontFamily:{
         quicksand:["Quicksand","sans-serif"],
