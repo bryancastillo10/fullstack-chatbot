@@ -1,11 +1,19 @@
+interface SidebarProps{
+  isSidebarCollapsed:boolean;
+  toggleSidebar: () => void;
+}
 
-
-const Sidebar = () => {
+const Sidebar = ({toggleSidebar,isSidebarCollapsed}:SidebarProps) => {
+  console.log(isSidebarCollapsed);
   return (
-    <section className={`fixed flex flex-col bg-black text-primary
-    transition-all duration-500 overflow-hidden shadow-md h-full z-10`}>
-        {/* Change to z-40 when adding state */}
-        <div className="">Header</div>
+    <section className={`fixed flex flex-col transition-all duration-500 
+    overflow-hidden h-full shadow-md z-40 bg-cream text-black
+    ${isSidebarCollapsed ? 'w-0 md:w-16':'w-72 md:w-64'}
+    `}>
+
+        <div className="">
+          <button onClick={toggleSidebar}>Header</button>
+        </div>
         <div className="">
             <ul>
                 <li>Home</li>
