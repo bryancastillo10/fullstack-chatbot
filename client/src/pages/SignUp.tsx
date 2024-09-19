@@ -1,8 +1,8 @@
 import { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { setCurrentUser } from "../redux/userSlice";
-import { useAppDispatch } from "../redux/hooks";
+import { setCurrentUser } from "../redux/reducer";
+import { useAppDispatch } from "../redux/Provider";
 import { useSignUpMutation } from "../redux/rtkquery";
 import { AuthError } from "../types/auth";
 
