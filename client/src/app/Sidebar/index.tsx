@@ -1,3 +1,4 @@
+import SidebarHeader from "./SidebarHeader";
 interface SidebarProps{
   isSidebarCollapsed:boolean;
   toggleSidebar: () => void;
@@ -12,7 +13,7 @@ const Sidebar = ({toggleSidebar,isSidebarCollapsed}:SidebarProps) => {
     `}>
 
         <div className="">
-          <button onClick={toggleSidebar}>Header</button>
+          <SidebarHeader isSidebarCollapsed={isSidebarCollapsed} toggle={toggleSidebar}/>
         </div>
         <div className="">
             <ul>
