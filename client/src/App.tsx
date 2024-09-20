@@ -9,7 +9,9 @@ import PrivateRoute from "./config/PrivateRoute";
 
 // App Pages
 import HomePage from "./app/Home";
-
+import Appointments from "./app/Appointments";
+import Consultants from "./app/Consultants";
+import Settings from "./app/Settings";
 
 const App = () => {
   return (
@@ -23,9 +25,9 @@ const App = () => {
         <Route element={<PrivateRoute/>}>
           <Route path="user" element={<AppLayout/>}>
             <Route path="" index element={<HomePage/>}/>
-            <Route path="appointments" index element={<p>Appointment Page</p>}/>
-            <Route path="consultants" index element={<p>Consultants Page</p>}/>
-            <Route path="settings" index element={<p>Settings</p>}/>
+            <Route path="appointments" index element={<Appointments/>}/>
+            <Route path="consultants" index element={<Consultants/>}/>
+            <Route path="settings" index element={<Settings/>}/>
           </Route>
         </Route>
         <Route path="*" element={<PageNotFound />} />     
