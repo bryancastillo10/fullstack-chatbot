@@ -19,7 +19,7 @@ const Sidebar = ({toggleSidebar,isSidebarCollapsed}:SidebarProps) => {
           <SidebarHeader isSidebarCollapsed={isSidebarCollapsed} toggle={toggleSidebar}/>
         </div>
         <div className={`flex-grow mt-8 ${isSidebarCollapsed ? "px-0":"px-8"}`}>
-          <SidebarMenu id="/user/profile" name="Home" icon={User} isSidebarCollapsed={isSidebarCollapsed}  />
+          <SidebarMenu id="/user" name="Home" icon={User} isSidebarCollapsed={isSidebarCollapsed}  />
           <SidebarMenu id="/user/appointments" name="Appointments" icon={CalendarCheck} isSidebarCollapsed={isSidebarCollapsed}  />
           <SidebarMenu id="/user/consultants" name="Consultants" icon={HardHat} isSidebarCollapsed={isSidebarCollapsed}  />
           <SidebarMenu id="/user/settings" name="Settings" icon={Gear} isSidebarCollapsed={isSidebarCollapsed}  />
