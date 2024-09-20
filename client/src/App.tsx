@@ -1,10 +1,16 @@
 import { Routes,Route } from "react-router-dom";
+// Main Pages
 import { LandingPage, 
           AppLayout,
           PageNotFound, 
           SignIn, SignUp, 
           TechPage } from "./pages";
 import PrivateRoute from "./config/PrivateRoute";
+
+// App Pages
+import HomePage from "./app/Home";
+
+
 const App = () => {
   return (
         <Routes>
@@ -16,7 +22,7 @@ const App = () => {
         </Route>
         <Route element={<PrivateRoute/>}>
           <Route path="user" element={<AppLayout/>}>
-            <Route path="profile" index element={<p>Home Page</p>}/>
+            <Route path="" index element={<HomePage/>}/>
             <Route path="appointments" index element={<p>Appointment Page</p>}/>
             <Route path="consultants" index element={<p>Consultants Page</p>}/>
             <Route path="settings" index element={<p>Settings</p>}/>
