@@ -8,7 +8,6 @@ interface SidebarProps{
 }
 
 const Sidebar = ({toggleSidebar,isSidebarCollapsed}:SidebarProps) => {
-  console.log(isSidebarCollapsed);
   return (
     <section className={`fixed flex flex-col transition-all duration-500 
     overflow-hidden h-full shadow-md z-40 bg-cream text-black

@@ -39,7 +39,7 @@ const ContactInfo = () => {
   return (
     <section className="col-span-2">
         {/* Upper Section */}
-        <article className="grid grid-cols-1 md:grid-cols-[2fr_1fr] border border-black border-b-0 xl:border-b xl:shadow-md">
+        <article className="grid grid-cols-1 md:grid-cols-[2fr_1fr] bg-cream border border-black border-b-0 xl:border-b xl:shadow-md">
             {/* Map */}
             <div className="mb-4 xl:mb-0 w-full h-full order-2 md:order-none">
                 <img className="object-cover" src={Map} alt="mnl-map" />
@@ -62,7 +62,7 @@ const ContactInfo = () => {
         </article>
         {/* Lower Section */}
         <article className="grid grid-cols-1 lg:grid-cols-[1fr_1fr]">
-            <div className="grid grid-cols-1 px-12 xl:px-4 mx-auto lg:mx-0 border border-black border-t-0 shadow-none xl:shadow-md">
+            <div className="bg-cream grid grid-cols-1 px-12 xl:px-4 mx-auto lg:mx-0 border border-black border-t-0 shadow-none xl:shadow-md">
                 {/* Lower Left Section */}
                 <div className="text-center xl:text-left lg:my-4">
                     <h1 className="text-base w-fit leading-none">Located near Rizal Park, just a 5-minute walk from the Manila Ocean Park</h1>

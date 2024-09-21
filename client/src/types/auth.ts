@@ -22,7 +22,9 @@ export interface AuthSuccessResponse {
     };
     error?:string;
   }
-
+export interface LogoutResponse {
+    message: string;
+  }
 export interface AuthError {
   status?:number;
   data?:{
