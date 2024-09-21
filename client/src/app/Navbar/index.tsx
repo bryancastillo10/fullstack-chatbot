@@ -1,17 +1,46 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { List, ChatCircle, Gear, Bell } from "@phosphor-icons/react";
+
+// Children Components
 import NavIcons from "./NavIcons";
+
+// State Management
+import { useSignOutMutation } from "../../redux/rtkquery";
+import { useAppDispatch } from "../../redux/Provider";
+import { clearCurrentUser } from "../../redux/reducer";
+import { toast } from "sonner";
 interface AppNavbarProps{
   toggleSidebar: () => void;
 }
 
+// AppNavbar Component
 const AppNavbar = ({toggleSidebar}:AppNavbarProps) => {
+  // Hooks
+  const [signOut] = useSignOutMutation();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  // Handle Logout
+  const handleLogout = async () => {
+    try{
+        await signOut().unwrap();
+        dispatch(clearCurrentUser());
+        navigate("/");
+        toast.success("You have been logged out successfully");
+    }
+    catch(error){
+      console.error('Failed to log out:',error)
+    }
+};
+
+  // JSX Elements
   const settingsMenu = (
     <>
-      Go to Settings
+      <span className="hover:text-accent">
+        <Link to="settings">Go to settings</Link>
+      </span>
       <hr className=" my-1"/>
-      Logout
     </>
   )
 
@@ -31,9 +60,10 @@ const AppNavbar = ({toggleSidebar}:AppNavbarProps) => {
       <Link to="appointments">Set your Appointment</Link>
       </span>
       <hr className="my-1"/>
-      <span>Logout</span>
+      <span className="hover:text-accent cursor-pointer" 
+        onClick={handleLogout}>Logout</span>
    </>
-  )
+  );
 
   // Toggle Menu State
   const [openMenuIndex, setOpenMenuIndex] = useState<number | null>(null);
@@ -71,8 +101,7 @@ const AppNavbar = ({toggleSidebar}:AppNavbarProps) => {
             isMenuOpen={openMenuIndex === 2}
             toggle={()=>toggleMenu(2)}
           />
-     
-          
+
           <NavIcons
             MenuIcon={Bell}
             MenuContent={notifcationMenu}
