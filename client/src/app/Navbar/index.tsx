@@ -4,12 +4,15 @@ import { List, ChatCircle, Gear, Bell } from "@phosphor-icons/react";
 
 // Children Components
 import NavIcons from "./NavIcons";
+import MessageBox from "./MessageBox";
+import NotificationBox from "./NotificationBox";
 
 // State Management
 import { useSignOutMutation } from "../../redux/rtkquery";
 import { useAppDispatch } from "../../redux/Provider";
 import { clearCurrentUser } from "../../redux/reducer";
 import { toast } from "sonner";
+
 interface AppNavbarProps{
   toggleSidebar: () => void;
 }
@@ -40,13 +43,10 @@ const AppNavbar = ({toggleSidebar}:AppNavbarProps) => {
       <span className="hover:text-accent">
         <Link to="settings">Go to settings</Link>
       </span>
-      <hr className=" my-1"/>
-    </>
-  )
-
-  const notifcationMenu = (
-    <>
-      <span>Notfications Here</span>
+      <hr className="my-1"/>
+      <span className="hover:text-accent">
+        <Link to="/user">Home</Link>
+      </span>
     </>
   )
 
@@ -95,7 +95,7 @@ const AppNavbar = ({toggleSidebar}:AppNavbarProps) => {
 
           <NavIcons
             MenuIcon={ChatCircle}
-            MenuContent={settingsMenu}
+            MenuContent={<MessageBox/>}
             pointerPos="left-0 top-9"
             bodyPos="right-0 top-10"
             isMenuOpen={openMenuIndex === 2}
@@ -104,7 +104,7 @@ const AppNavbar = ({toggleSidebar}:AppNavbarProps) => {
 
           <NavIcons
             MenuIcon={Bell}
-            MenuContent={notifcationMenu}
+            MenuContent={<NotificationBox/>}
             pointerPos="left-0 top-9"
             bodyPos="right-2 top-10"
             isMenuOpen={openMenuIndex === 3}
