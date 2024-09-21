@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { SignUpRequest,  SignInRequest, AuthSuccessResponse } from "../types/auth";
+import { SignUpRequest,  SignInRequest, LogoutResponse, AuthSuccessResponse } from "../types/auth";
 
 const BASE_API = import.meta.env.VITE_REACT_BASE_API_URL
 
@@ -24,6 +24,12 @@ export const authApi = createApi({
           body: data,
         }),
       }),
+      signOut: builder.mutation<LogoutResponse, void>({
+        query:() => ({
+          url:'/auth/logout',
+          method:'POST'
+        }),
+      })
     }),
   });
 
