@@ -109,13 +109,44 @@ export const getAppointment = async (req: CustomGetAppointmentRequest, res: Resp
     res.status(200).json(appointments);
   } catch (error) {
     console.error("Error at the getAppointment controller", error.message);
-    res.status(500).json({ error: 'Internal server error.' });
+    res.status(500).json({ error: "Internal server error" });
   }
 };
 
 // Update Appointment
 export const updateAppointment = async (req: Request, res:Response) => {
-    res.send("Update Appointment endpoint");
+    try{
+      const {id} = req.params;
+
+      const {topic, message, startDate, endDate, appointmentTime,status} = req.body;
+
+      const existingAppointment = await  prisma.appointment.findUnique({
+        where: { appointment_id: id },
+      });
+
+      if (!existingAppointment) {
+        res.status(404).json({ error: 'Appointment not found.' });
+        return;
+      }
+
+      const updatedAppointment = await prisma.appointment.update({
+        where: { appointment_id: id },
+        data: {
+          topic,
+          message,
+          startDate: startDate ? new Date(startDate) : undefined,
+          endDate: endDate ? new Date(endDate) : undefined,
+          appointmentTime,
+          status,
+        },
+      });
+
+      res.status(200).json(updatedAppointment);
+
+    } catch(error){
+      console.error("Error at updateAppointment controller",error.message);
+      res.status(500).json({error:"Internal server error"});
+    }
 }
 
 // Delete Appointment
