@@ -23,6 +23,7 @@ model User {
   updatedAt DateTime @updatedAt
 
   appointments Appointment[]
+  newsFeed NewsFeed[]
 }
 
 
@@ -70,12 +71,15 @@ model Service {
 
 model NewsFeed{
   newsfeed_id String @id @default(uuid()) @unique
+  user_id String
   title String
   content String
   createdAt DateTime
   updatedAt DateTime
   likes Int
   imgPath String
+
+  user User @relation(fields:[user_id],references: [user_id])
 }
 
 model Testimonials{
