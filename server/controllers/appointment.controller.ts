@@ -1,8 +1,10 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import { CustomGetAppointmentRequest } from "./type";
 
 const prisma = new PrismaClient();
 
+// Create Appointment
 export const addAppointment = async (req: Request, res: Response) => {
     try {
       const { user_id, consultant_id, service_id, topic, message, startDate, endDate, appointmentTime } = req.body;
@@ -54,8 +56,7 @@ export const addAppointment = async (req: Request, res: Response) => {
         res.status(400).json({ error: 'Appointment already reserved. Try another date or time.' });
         return;
       }
-  
-      // Create the new appointment
+
       const newAppointment = await prisma.appointment.create({
         data: {
           user_id,
@@ -73,19 +74,51 @@ export const addAppointment = async (req: Request, res: Response) => {
       res.status(201).json(newAppointment);
       
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal server error.' });
+      console.error("Error at addAppointment controller",error.message);
+      res.status(500).json({ error: "Internal server error" });
     }
   };
 
-export const getAppointment = async (req: Request, res: Response) =>{
-    res.send("Get Appointment endpoint");
-}
+// Get Appointment by User
+export const getAppointment = async (req: CustomGetAppointmentRequest, res: Response) => {
+  try {
+    const user_id = req.user?.user_id;
 
+    if (!user_id) {
+      res.status(401).json({ error: 'Unauthorized access.' });
+      return;
+    }
+
+    const appointments = await prisma.appointment.findMany({
+      where: { user_id },
+      include: {
+        consultant: {
+          select:{name:true}
+        },
+        service:{
+          select:{name:true},
+        },
+      },
+    });
+
+    if (appointments.length === 0) {
+      res.status(200).json({ message: 'No appointments found.' });
+      return;
+    }
+
+    res.status(200).json(appointments);
+  } catch (error) {
+    console.error("Error at the getAppointment controller", error.message);
+    res.status(500).json({ error: 'Internal server error.' });
+  }
+};
+
+// Update Appointment
 export const updateAppointment = async (req: Request, res:Response) => {
     res.send("Update Appointment endpoint");
 }
 
+// Delete Appointment
 export const deleteAppointment = async(req: Request, res: Response) => {
     res.send("Delete Appointment endpoint");
 }
