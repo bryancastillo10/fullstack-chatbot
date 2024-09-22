@@ -7,7 +7,14 @@ const prisma = new PrismaClient();
 // Create Appointment
 export const addAppointment = async (req: Request, res: Response) => {
     try {
-      const { user_id, consultant_id, service_id, topic, message, startDate, endDate, appointmentTime } = req.body;
+      const { user_id, 
+              consultant_id, 
+              service_id, 
+              topic, 
+              message, 
+              startDate, 
+              endDate, 
+              appointmentTime } = req.body;
 
       if (!user_id || !consultant_id || !service_id || !topic || !message || !startDate || !endDate || !appointmentTime) {
         res.status(400).json({ error: 'All fields are required.' });
@@ -141,7 +148,10 @@ export const updateAppointment = async (req: Request, res:Response) => {
         },
       });
 
-      res.status(200).json(updatedAppointment);
+      res.status(200).json({
+        message:"Appointment was updated",
+        updatedAppointment,
+      });
 
     } catch(error){
       console.error("Error at updateAppointment controller",error.message);
@@ -151,5 +161,32 @@ export const updateAppointment = async (req: Request, res:Response) => {
 
 // Delete Appointment
 export const deleteAppointment = async(req: Request, res: Response) => {
-    res.send("Delete Appointment endpoint");
+    try{
+      const {id} = req.params;
+
+      if(!id){
+        res.status(404).json({error:"Appointment was not found"});
+      }
+
+      const existingAppointment = await prisma.appointment.findUnique({
+        where: { appointment_id: id },
+      });
+  
+      if (!existingAppointment) {
+        return res.status(404).json({ error: "Appointment not found" });
+      }
+
+      const appointmentToDelete = await prisma.appointment.delete({
+        where:{appointment_id:id}
+      })
+
+      res.status(200).json({
+        message:"Appointment was successfully deleted", 
+        deletedAppointment:appointmentToDelete
+      });
+
+    }catch(error){
+      console.error("Error at deleteAppointment controller",error.message);
+      res.status(500).json({error:"Internal server error"});
+    }
 }
