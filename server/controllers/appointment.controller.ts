@@ -1,11 +1,20 @@
 import { Request, Response } from "express";
 import { PrismaClient } from "@prisma/client";
+import { CustomGetAppointmentRequest } from "./type";
 
 const prisma = new PrismaClient();
 
+// Create Appointment
 export const addAppointment = async (req: Request, res: Response) => {
     try {
-      const { user_id, consultant_id, service_id, topic, message, startDate, endDate, appointmentTime } = req.body;
+      const { user_id, 
+              consultant_id, 
+              service_id, 
+              topic, 
+              message, 
+              startDate, 
+              endDate, 
+              appointmentTime } = req.body;
 
       if (!user_id || !consultant_id || !service_id || !topic || !message || !startDate || !endDate || !appointmentTime) {
         res.status(400).json({ error: 'All fields are required.' });
@@ -54,8 +63,7 @@ export const addAppointment = async (req: Request, res: Response) => {
         res.status(400).json({ error: 'Appointment already reserved. Try another date or time.' });
         return;
       }
-  
-      // Create the new appointment
+
       const newAppointment = await prisma.appointment.create({
         data: {
           user_id,
@@ -73,19 +81,112 @@ export const addAppointment = async (req: Request, res: Response) => {
       res.status(201).json(newAppointment);
       
     } catch (error) {
-      console.error(error);
-      res.status(500).json({ error: 'Internal server error.' });
+      console.error("Error at addAppointment controller",error.message);
+      res.status(500).json({ error: "Internal server error" });
     }
   };
 
-export const getAppointment = async (req: Request, res: Response) =>{
-    res.send("Get Appointment endpoint");
-}
+// Get Appointment by User
+export const getAppointment = async (req: CustomGetAppointmentRequest, res: Response) => {
+  try {
+    const user_id = req.user?.user_id;
 
+    if (!user_id) {
+      res.status(401).json({ error: 'Unauthorized access.' });
+      return;
+    }
+
+    const appointments = await prisma.appointment.findMany({
+      where: { user_id },
+      include: {
+        consultant: {
+          select:{name:true}
+        },
+        service:{
+          select:{name:true},
+        },
+      },
+    });
+
+    if (appointments.length === 0) {
+      res.status(200).json({ message: 'No appointments found.' });
+      return;
+    }
+
+    res.status(200).json(appointments);
+  } catch (error) {
+    console.error("Error at the getAppointment controller", error.message);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
+
+// Update Appointment
 export const updateAppointment = async (req: Request, res:Response) => {
-    res.send("Update Appointment endpoint");
+    try{
+      const {id} = req.params;
+
+      const {topic, message, startDate, endDate, appointmentTime,status} = req.body;
+
+      const existingAppointment = await  prisma.appointment.findUnique({
+        where: { appointment_id: id },
+      });
+
+      if (!existingAppointment) {
+        res.status(404).json({ error: 'Appointment not found.' });
+        return;
+      }
+
+      const updatedAppointment = await prisma.appointment.update({
+        where: { appointment_id: id },
+        data: {
+          topic,
+          message,
+          startDate: startDate ? new Date(startDate) : undefined,
+          endDate: endDate ? new Date(endDate) : undefined,
+          appointmentTime,
+          status,
+        },
+      });
+
+      res.status(200).json({
+        message:"Appointment was updated",
+        updatedAppointment,
+      });
+
+    } catch(error){
+      console.error("Error at updateAppointment controller",error.message);
+      res.status(500).json({error:"Internal server error"});
+    }
 }
 
+// Delete Appointment
 export const deleteAppointment = async(req: Request, res: Response) => {
-    res.send("Delete Appointment endpoint");
+    try{
+      const {id} = req.params;
+
+      if(!id){
+        res.status(404).json({error:"Appointment was not found"});
+      }
+
+      const existingAppointment = await prisma.appointment.findUnique({
+        where: { appointment_id: id },
+      });
+  
+      if (!existingAppointment) {
+        return res.status(404).json({ error: "Appointment not found" });
+      }
+
+      const appointmentToDelete = await prisma.appointment.delete({
+        where:{appointment_id:id}
+      })
+
+      res.status(200).json({
+        message:"Appointment was successfully deleted", 
+        deletedAppointment:appointmentToDelete
+      });
+
+    }catch(error){
+      console.error("Error at deleteAppointment controller",error.message);
+      res.status(500).json({error:"Internal server error"});
+    }
 }
