@@ -34,6 +34,9 @@ model Appointment {
   topic String
   message String
   createdAt DateTime @default(now())
+  startDate DateTime
+  endDate DateTime
+  appointmentTime String
   status String
 
   user User @relation(fields:[user_id],references: [user_id])
@@ -51,17 +54,7 @@ model Consultant{
   rating Float
 
   appointments Appointment[]
-  consultantServices ConsultantService[]
-}
-
-
-model ConsultantService{
-  consultant_service_id String @id @default(uuid()) @unique
-  consultant_id String  
-  service_id String  
-
-  consultant Consultant @relation(fields: [consultant_id], references: [consultant_id])
-  service Service @relation(fields: [service_id], references: [service_id])
+  services Service[] @relation("ConsultantServices")
 }
 
 model Service {
@@ -72,7 +65,7 @@ model Service {
   duration Int
 
   appointments Appointment[]
-  consultantServices ConsultantService[]
+  consultants   Consultant[] @relation("ConsultantServices")
 }
 
 model NewsFeed{
@@ -80,6 +73,7 @@ model NewsFeed{
   title String
   content String
   createdAt DateTime
+  updatedAt DateTime
   likes Int
   imgPath String
 }
