@@ -8,7 +8,7 @@ const prisma = new PrismaClient();
 // Sign Up
 export const userSignUp = async (req: Request, res: Response): Promise<void> => {
     try{
-        const { username, email, password, confirmPassword} = req.body;
+        const { user_id, username, email, password, confirmPassword} = req.body;
 
         // Missing Fields Validation
         if(!username || !email || !password || !confirmPassword){
@@ -17,7 +17,7 @@ export const userSignUp = async (req: Request, res: Response): Promise<void> => 
         }
 
         // Username Validation
-        const usernameRegex = /^[a-zA-Z0-9]{5,}$/;
+        const usernameRegex = /^[a-zA-Z0-9 ]{5,}$/;
         if (!usernameRegex.test(username)) {
             res.status(400).json({ error: "Username must be greater than 5 alphanumeric characters." });
             return;
@@ -70,6 +70,7 @@ export const userSignUp = async (req: Request, res: Response): Promise<void> => 
         // Adding a new user to the Database
         const newUser = await prisma.user.create({
             data: {
+            user_id: user_id,
               username,
               email,
               password: hashedPassword,
