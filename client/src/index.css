@@ -19,4 +19,18 @@ body{
     before:transition-[width] before:duration-[0.2s,left] before:delay-[0.5s] 
     before:rounded-sm before:left-[0.2] hover:before:w-full hover:before:left-0;
   }
+  .calendar{
+    @apply bg-cream text-black rounded-2xl shadow-md;
+  }
 }
+
+/* Custom styles for react-calendar */
+.react-calendar__tile--active {
+    background-color: #0E8173 !important; 
+    color: white !important; 
+  }
+
+  .react-calendar__tile:hover {
+    background-color: #F9EEE7 !important; 
+    color:"#403F4C" !important;
+  }
