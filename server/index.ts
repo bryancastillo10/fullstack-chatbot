@@ -7,6 +7,7 @@ import cors from "cors";
 import authRoutes from "./routes/auth.routes";
 import appointmentRoutes from "./routes/appointment.routes";
 import userRoutes from "./routes/user.routes";
+import servicesRoutes from "./routes/services.routes";
 
 const app = express();
 const prisma = new PrismaClient();
@@ -31,6 +32,7 @@ app.use(cookieParser());
 app.use("/auth",authRoutes);
 app.use("/user",userRoutes)
 app.use("/appointments",appointmentRoutes);
+app.use("/services",servicesRoutes);
 
 
 // Activate Server
