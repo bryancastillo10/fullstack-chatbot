@@ -34,6 +34,7 @@ async function deleteAllData(orderedFileNames: string[]) {
         // "user.json",
         "consultant.json",
         "service.json",
+        "consultantService.json",
         "appointment.json",
         "newsFeed.json",
         "testimonials.json"
