@@ -46,28 +46,36 @@ model Appointment {
   service Service @relation(fields: [service_id],references: [service_id])
 }
 
-model Consultant{
-  consultant_id String @id @default(uuid()) @unique
-  name String
-  position String
-  expertise String[]
+model Consultant {
+  consultant_id  String       @id @default(uuid()) @unique
+  name           String
+  position       String
+  expertise      String[]
   profilePicture String
-  email String 
-  rating Float
-
-  appointments Appointment[]
-  services Service[] @relation("ConsultantServices")
+  email          String
+  rating         Float
+  appointments   Appointment[]
+  consultantServices ConsultantService[]
 }
 
 model Service {
-  service_id String @id @default(uuid()) @unique
-  name String
-  description String
-  price Float
-  duration Int
-
+  service_id   String       @id @default(uuid()) @unique
+  name         String
+  description  String
+  price        Float
+  duration     Int
   appointments Appointment[]
-  consultants   Consultant[] @relation("ConsultantServices")
+  consultantServices ConsultantService[]
+}
+
+model ConsultantService {
+  consultant    Consultant @relation(fields: [consultant_id], references: [consultant_id])
+  consultant_id  String
+  service       Service    @relation(fields: [service_id], references: [service_id])
+  service_id     String
+
+  @@id([consultant_id, service_id])
+  @@index([service_id])
 }
 
 model NewsFeed{

@@ -8,6 +8,7 @@ import authRoutes from "./routes/auth.routes";
 import appointmentRoutes from "./routes/appointment.routes";
 import userRoutes from "./routes/user.routes";
 import servicesRoutes from "./routes/services.routes";
+import consultantRoutes from "./routes/consultant.routes";
 
 const app = express();
 const prisma = new PrismaClient();
@@ -33,6 +34,7 @@ app.use("/auth",authRoutes);
 app.use("/user",userRoutes)
 app.use("/appointments",appointmentRoutes);
 app.use("/services",servicesRoutes);
+app.use("/consultant",consultantRoutes);
 
 
 // Activate Server
