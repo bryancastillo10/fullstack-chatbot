@@ -1,6 +1,6 @@
 import { useState,useEffect } from "react";
 import { SectionContainer, SectionSubHeader } from "../../reusables";
-import { getImageUrl } from "../../config/api";
+import { getImageUrl } from "../../api/imageUrl";
 import ImageGrid from "./ImageGrid";
 
 const About = () => {

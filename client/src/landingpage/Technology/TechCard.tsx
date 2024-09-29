@@ -1,7 +1,7 @@
 import {  useState,useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Share, Icon } from "@phosphor-icons/react";
-import { getImageUrl } from "../../config/api";
+import { getImageUrl } from "../../api/imageUrl";
 
 interface TechCardProps{
     id:number;

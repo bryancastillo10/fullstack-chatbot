@@ -1,4 +1,4 @@
-import supabase from "./supabaseClient";
+import supabase from "../config/supabaseClient";
 
 // GET Public Image URL
 export const getImageUrl = async (bucket:string, filePath:string): Promise<string|undefined> => {
