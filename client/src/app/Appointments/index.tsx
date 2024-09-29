@@ -1,7 +1,14 @@
 import { Input } from "../../reusables";
-import { Cloud } from "@phosphor-icons/react";
+import { Cloud, BookOpen } from "@phosphor-icons/react";
+import CustomSelect from "../../reusables/CustomSelect";
 
 const Appointments = () => {
+  const testOptions = [
+    {value:"Option 1", label:"Label 1"},
+    {value:"Option 2", label:"Label 2"},
+    {value:"Option 3", label:"Label 3"},
+  ]
+   
   return (
     <section className="grid grid-cols-2">
         <div className="border border-black">
@@ -17,6 +24,14 @@ const Appointments = () => {
               {/* Message : TextArea */}
 
               {/* Service : Select */}
+              <CustomSelect
+                label="Test Select"
+                icon={BookOpen}
+                value="Test Value"
+                option={testOptions}
+                onChange={()=>{}}
+                validationMessage="Test message to describe select component"
+              />
 
               {/* Consultant: Select */}
 
