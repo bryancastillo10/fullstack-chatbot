@@ -2,23 +2,24 @@ import Select from "react-select";
 import selectStyles from "../config/selectStyle";
 import { Icon } from "@phosphor-icons/react";
 
-interface CustomSelectProps{
+interface CustomSelectProps<T> {
   icon: Icon;
-  label:string;
-  validationMessage:string;
-  value:string;
-  option:{value:string; label:string}[];
-  onChange:()=>void;
+  label: string;
+  validationMessage: string;
+  value: T | null;
+  option: { value: T; label: string }[];
+  onChange: (value: T | null) => void;
 }
 
-const CustomSelect = ({
+
+const CustomSelect = <T,>({
   icon:Icon,
   label,
   validationMessage,
   value,
   option,
   onChange
-}:CustomSelectProps) => {
+}:CustomSelectProps<T>) => {
 
     return (
     <div className="relative my-8">
@@ -33,9 +34,9 @@ const CustomSelect = ({
               disabled:opacity-50 disabled:cursor-not-allowed indent-2 bg-primary text-black 
               `}
             placeholder=" "
-            value={value}
-            onChange={onChange}
             options={option}
+            value={option.find(opt => opt.value === value) || null}
+            onChange={(newValue) => onChange(newValue ? (newValue as { value: T }).value : null)}
             styles={selectStyles}
         />
         <div className="mt-1">
