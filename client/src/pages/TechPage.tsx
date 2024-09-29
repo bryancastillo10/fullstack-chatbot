@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown';
 
 
 import { envitechlist } from '../constants/envitechnology';
-import { getImageUrl } from '../config/api';
+import { getImageUrl } from '../api/imageUrl';
 import DropDown from '../reusables/DropDown';
 import { AirMenu, WaterMenu, SolidWasteMenu } from '../reusables/ui-elements/DropDownSubMenu';
 

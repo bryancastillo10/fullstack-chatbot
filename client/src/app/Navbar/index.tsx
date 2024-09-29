@@ -8,7 +8,7 @@ import MessageBox from "./MessageBox";
 import NotificationBox from "./NotificationBox";
 
 // State Management
-import { useSignOutMutation } from "../../redux/rtkquery";
+import { useSignOutMutation } from "../../api/auth";
 import { useAppDispatch } from "../../redux/Provider";
 import { clearCurrentUser } from "../../redux/reducer";
 import { toast } from "sonner";

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { getImageUrl } from "../../config/api";
+import { getImageUrl } from "../../api/imageUrl";
 
 interface SponsorProps{
     header:string;

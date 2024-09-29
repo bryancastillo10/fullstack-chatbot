@@ -1,7 +1,7 @@
 
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import globalReducer from "./reducer";
-import { authApi } from "./rtkquery";
+import { authApi } from "../api/auth";
 
 import {
   persistReducer,
@@ -18,13 +18,15 @@ import createWebStorage from "redux-persist/lib/storage/createWebStorage";
 /* REDUX PERSISTENCE */
 const createNoopStorage = () => {
   return {
-    getItem(_key: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    getItem(_key: unknown) {
       return Promise.resolve(null);
     },
-    setItem(_key: any, value: any) {
+    setItem(_key: unknown, value: unknown) {
       return Promise.resolve(value);
     },
-    removeItem(_key: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    removeItem(_key: unknown) {
       return Promise.resolve();
     },
   };

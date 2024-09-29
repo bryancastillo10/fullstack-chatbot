@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { setCurrentUser } from "../redux/reducer";
 import { useAppDispatch } from "../redux/Provider";
-import { useSignUpMutation } from "../redux/rtkquery";
+import { useSignUpMutation } from "../api/auth";
 import { AuthError } from "../types/auth";
 
 import { toast } from "sonner";
