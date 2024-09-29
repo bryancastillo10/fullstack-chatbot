@@ -1,6 +1,7 @@
-import { Input } from "../../reusables";
-import { Cloud, BookOpen } from "@phosphor-icons/react";
-import CustomSelect from "../../reusables/CustomSelect";
+import { useState } from "react";
+import { Input, CustomSelect, TextArea } from "../../reusables";
+import { Cloud, BookOpen, Wrench } from "@phosphor-icons/react";
+
 
 const Appointments = () => {
   const testOptions = [
@@ -9,6 +10,8 @@ const Appointments = () => {
     {value:"Option 3", label:"Label 3"},
   ]
    
+  const [message,setMessage] = useState<string|null>(null);
+  
   return (
     <section className="grid grid-cols-2">
         <div className="border border-black">
@@ -23,6 +26,13 @@ const Appointments = () => {
               />
               {/* Message : TextArea */}
 
+              <TextArea 
+                onChange={()=>setMessage(message)}
+                id="message" 
+                value={message!}
+                label="Message" 
+                icon={Wrench}
+              />
               {/* Service : Select */}
               <CustomSelect
                 label="Test Select"
