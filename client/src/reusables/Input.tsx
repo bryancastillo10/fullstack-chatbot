@@ -34,24 +34,24 @@ const Input = ({
 
   return (
     <div className="relative my-8">
-    <input
-        id={id}
-        type={type === "password" ? ( isVisible ? "text":"password") : type}
-        onChange={onChange}
-        disabled={disabled}
-        required={required}
-        placeholder=" "
-        className={`peer w-full p-2 caret-light-secondary border-2  rounded-xl outline-none transition 
-        disabled:opacity-50 disabled:cursor-not-allowed indent-2 bg-primary text-black border-black
-        `}
-        />
-    <div className="absolute z-10 top-2 left-4 origin-[0] duration-150 flex items-center gap-2
-    transform -translate-y-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0">
-        {Icon && <Icon size="24"/>}
-        <label className={` text-lg  font-semibold text-black`}>
-            {label}
-        </label>
-    </div>
+        <input
+            id={id}
+            type={type === "password" ? ( isVisible ? "text":"password") : type}
+            onChange={onChange}
+            disabled={disabled}
+            required={required}
+            placeholder=" "
+            className={`peer w-full p-2 caret-secondary border  rounded-xl outline-none transition 
+            disabled:opacity-50 disabled:cursor-not-allowed indent-2 bg-primary text-black border-black focus:border-secondary
+            `}
+            />
+        <div className="absolute z-10 top-2 left-4 origin-[0] duration-150 flex items-center gap-2
+        transform -translate-y-10 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0">
+            {Icon && <Icon size="24"/>}
+            <label className={` text-lg  font-semibold text-black`}>
+                {label}
+            </label>
+        </div>
     {isPassword && (<div onClick={toggleVisible} className="absolute z-10 top-2.5 right-4 cursor-pointer">
         {isVisible ? <EyeSlash size="24"/> : <Eye size="24"/>}
     </div>)}
