@@ -1,17 +1,22 @@
 import { useState } from "react";
 import { Input, CustomSelect, TextArea } from "../../reusables";
-import { Cloud, BookOpen, Wrench } from "@phosphor-icons/react";
 
+import { Cloud, BookOpen, Wrench } from "@phosphor-icons/react";
+import { useGetServicesQuery } from "../../api/appointment";
+import { GetServiceResponse } from "../../types/appointment";
 
 const Appointments = () => {
-  const testOptions = [
-    {value:"Option 1", label:"Label 1"},
-    {value:"Option 2", label:"Label 2"},
-    {value:"Option 3", label:"Label 3"},
-  ]
-   
-  const [message,setMessage] = useState<string|null>(null);
-  
+  const {data:services } = useGetServicesQuery();
+
+  const serviceOptions = services?.map((service: GetServiceResponse) => ({
+    value: service.name, 
+    label: service.name,
+  })) || [];
+
+
+  const [message,setMessage] = useState<string|undefined>(undefined);
+  const [selectedService, setSelectedService] = useState<string | null>(null);
+
   return (
     <section className="grid grid-cols-2">
         <div className="border border-black">
@@ -34,12 +39,12 @@ const Appointments = () => {
                 icon={Wrench}
               />
               {/* Service : Select */}
-              <CustomSelect
-                label="Test Select"
+              <CustomSelect<string>
+                label="Services Offered"
                 icon={BookOpen}
-                value="Test Value"
-                option={testOptions}
-                onChange={()=>{}}
+                value={selectedService}
+                option={serviceOptions}
+                onChange={(value:string|null)=>{setSelectedService(value)}}
                 validationMessage="Test message to describe select component"
               />
 
