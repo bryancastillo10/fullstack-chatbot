@@ -5,13 +5,15 @@ import { Cloud, BookOpen, ChatDots, HardHat } from "@phosphor-icons/react";
 import { useGetServicesQuery, useGetConsultantsQuery } from "../../api/appointment";
 import { GetConsultantsResponse, GetServiceResponse } from "../../types/appointment";
 import Calendar from "react-calendar";
-import TimeSelector from "../../reusables/TimeSelector";
+import TimeSelector from "./TimeSelector";
 
 const Appointments = () => {
   const [message,setMessage] = useState<string|undefined>(undefined);
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const [selectedConsultant, setSelectedConsultant] = useState<string|null>(null);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(null);
+  // const [startDate, setStartDate] = useState<Date | null>(null);
+  // const [endDate, setEndDate] = useState<Date | null>(null);
 
   const timeSlots = [
     "9:00 am to 10:00 am",
@@ -21,6 +23,7 @@ const Appointments = () => {
     "2:00 pm to 3:00 pm",
     "3:00 pm to 4:00 pm",
   ];
+
 
   const queryTerm = useMemo(() => {
     return selectedService ? selectedService.split(' ')[0] : undefined;
@@ -97,7 +100,8 @@ const Appointments = () => {
                         className="calendar"
                         tileClassName="calendar-tiles"
                         tileContent=""
-                        value={new Date()}
+                        selectRange
+                        defaultValue={undefined}
                       />
                     </div>
                     <div className="my-4">
