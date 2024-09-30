@@ -1,21 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Input, CustomSelect, TextArea } from "../../reusables";
 
-import { Cloud, BookOpen, Wrench } from "@phosphor-icons/react";
-import { useGetServicesQuery } from "../../api/appointment";
-import { GetServiceResponse } from "../../types/appointment";
+import { Cloud, BookOpen, ChatDots, HardHat } from "@phosphor-icons/react";
+import { useGetServicesQuery, useGetConsultantsQuery } from "../../api/appointment";
+import { GetConsultantsResponse, GetServiceResponse } from "../../types/appointment";
 
 const Appointments = () => {
+  const [message,setMessage] = useState<string|undefined>(undefined);
+  const [selectedService, setSelectedService] = useState<string | null>(null);
+  const [selectedConsultant, setSelectedConsultant] = useState<string|null>(null);
+
+  const queryTerm = useMemo(() => {
+    return selectedService ? selectedService.split(' ')[0] : undefined;
+  }, [selectedService]);
+
   const {data:services } = useGetServicesQuery();
+  const { data: consultants, isLoading: isConsultantsLoading} = useGetConsultantsQuery(queryTerm|| undefined, {
+    skip: !queryTerm
+  });
 
   const serviceOptions = services?.map((service: GetServiceResponse) => ({
     value: service.name, 
     label: service.name,
   })) || [];
 
+  const consultantOptions = consultants?.map((consultant: GetConsultantsResponse)=>({
+      value: consultant.consultant_id,
+      label:consultant.name
+  }))|| [];
 
-  const [message,setMessage] = useState<string|undefined>(undefined);
-  const [selectedService, setSelectedService] = useState<string | null>(null);
+
+  useEffect(()=>{
+    setSelectedConsultant(null);
+  }, [selectedService])
 
   return (
     <section className="grid grid-cols-2">
@@ -29,14 +46,13 @@ const Appointments = () => {
               icon={Cloud}
               onChange={()=>{}} 
               />
-              {/* Message : TextArea */}
-
+              
               <TextArea 
                 onChange={()=>setMessage(message)}
                 id="message" 
                 value={message!}
                 label="Message" 
-                icon={Wrench}
+                icon={ChatDots}
               />
               {/* Service : Select */}
               <CustomSelect<string>
@@ -49,6 +65,17 @@ const Appointments = () => {
               />
 
               {/* Consultant: Select */}
+              <CustomSelect<string>
+                label="Consultants"
+                icon={HardHat}
+                value={selectedConsultant}
+                option={consultantOptions}
+                onChange={(value: string | null) => setSelectedConsultant(value)}
+                validationMessage="Please select a consultant"
+                isLoading={isConsultantsLoading}
+
+                disabled={!selectedService}
+              />
 
               {/* Appointment Time */}
               <div className="m-4 border border-black bg-secondary text-primary

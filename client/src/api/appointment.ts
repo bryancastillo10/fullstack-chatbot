@@ -1,12 +1,12 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { GetServiceResponse, GetConsultantsResponse } from '../types/appointment';
 
-import { GetServiceResponse } from '../types/appointment';
 
 const BASE_API = import.meta.env.VITE_REACT_BASE_API_URL;
 
 export const appointmentApi = createApi({
     reducerPath:"appointmentApi",
-    tagTypes:["ServicesOffered"],
+    tagTypes:["ServicesOffered","ConsultantByService"],
     baseQuery: fetchBaseQuery({
         baseUrl: BASE_API
     }),
@@ -14,8 +14,16 @@ export const appointmentApi = createApi({
         getServices: builder.query<GetServiceResponse[],void>({
             query: () => '/services/name',
             providesTags:["ServicesOffered"]
-        })
-    })
+        }),
+        getConsultants: builder.query<GetConsultantsResponse[], string | void>({
+            query: (services) => (
+                {
+                    url:"/consultant/view",
+                    params: services ? {services} : {}
+                }),
+            providesTags:["ConsultantByService"]
+        }),
+    }),
 });
 
-export const { useGetServicesQuery } = appointmentApi;
+export const { useGetServicesQuery, useGetConsultantsQuery } = appointmentApi;

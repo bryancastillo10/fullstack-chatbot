@@ -9,6 +9,8 @@ interface CustomSelectProps<T> {
   value: T | null;
   option: { value: T; label: string }[];
   onChange: (value: T | null) => void;
+  isLoading?:boolean;
+  disabled?:boolean;
 }
 
 
@@ -18,7 +20,9 @@ const CustomSelect = <T,>({
   validationMessage,
   value,
   option,
-  onChange
+  onChange,
+  isLoading = false,
+  disabled = false,
 }:CustomSelectProps<T>) => {
 
     return (
@@ -38,6 +42,8 @@ const CustomSelect = <T,>({
             value={option.find(opt => opt.value === value) || null}
             onChange={(newValue) => onChange(newValue ? (newValue as { value: T }).value : null)}
             styles={selectStyles}
+            isLoading={isLoading}
+            isDisabled={disabled || isLoading}
         />
         <div className="mt-1">
           <p className="indent-2 text-xs">{validationMessage}</p>
