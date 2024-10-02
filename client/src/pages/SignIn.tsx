@@ -79,7 +79,8 @@ const SignIn = () => {
   const formBody = (
     <>
         <Input 
-          id="username"  
+          id="username"
+          value={signInData.username}  
           type="text" 
           label="Username"
           onChange={handleSignInInput}  
@@ -88,7 +89,8 @@ const SignIn = () => {
 
         <Input 
           id="password" 
-          type="password" 
+          type="password"
+          value={signInData.password}   
           label="Password"
           onChange={handleSignInInput} 
           icon={Key} 

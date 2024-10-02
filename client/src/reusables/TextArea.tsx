@@ -1,10 +1,11 @@
+import { ChangeEvent } from "react";
 import { Icon } from "@phosphor-icons/react";
 interface TextAreaProps{
     id:string;
     icon: Icon;
     label:string;
     value:string;
-    onChange:()=>void;
+    onChange:(e: ChangeEvent<HTMLTextAreaElement>)=>void;
 }
 
 const TextArea = ({

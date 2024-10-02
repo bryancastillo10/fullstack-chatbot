@@ -10,7 +10,7 @@ const TimeSelector = ({
     onSelect
 }:TimeSelectorProps) => {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="flex flex-wrap justify-center xl:justify-start gap-2">
         {timeSlots.map((slot)=>(
                 <div
                     key={slot}

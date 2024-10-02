@@ -84,6 +84,7 @@ const SignUp = () => {
         <Input 
           id="username"  
           type="text" 
+          value={signUpData.username}
           label="Username"
           disabled={isLoading}
           onChange={handleSignUpInput}  
@@ -94,6 +95,7 @@ const SignUp = () => {
         <Input 
           id="email" 
           type="email" 
+          value={signUpData.email}
           label="Email"
           disabled={isLoading}
           onChange={handleSignUpInput} 
@@ -103,7 +105,8 @@ const SignUp = () => {
 
         <Input 
           id="password" 
-          type="password" 
+          type="password"
+          value={signUpData.password} 
           label="Password"
           disabled={isLoading}
           onChange={handleSignUpInput}   
@@ -115,6 +118,7 @@ const SignUp = () => {
         <Input 
           id="confirmPassword" 
           type="password" 
+          value={signUpData.confirmPassword}
           label="Confirm Password"
           disabled={isLoading}
           onChange={handleSignUpInput}  
