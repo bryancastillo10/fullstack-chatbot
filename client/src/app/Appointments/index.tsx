@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
-import { Input, CustomSelect, TextArea, Button } from "../../reusables";
-
+import { Range, RangeKeyDict } from "react-date-range";
+import { Input, CustomSelect, TextArea, Button, Calendar } from "../../reusables";
 import { Cloud, BookOpen, ChatDots, HardHat } from "@phosphor-icons/react";
 import { useGetServicesQuery, useGetConsultantsQuery } from "../../api/appointment";
 import { GetConsultantsResponse, GetServiceResponse } from "../../types/appointment";
@@ -12,8 +12,19 @@ const Appointments = () => {
   const [selectedService, setSelectedService] = useState<string | null>(null);
   const [selectedConsultant, setSelectedConsultant] = useState<string|null>(null);
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(null);
-  // const [startDate, setStartDate] = useState<Date | null>(null);
-  // const [endDate, setEndDate] = useState<Date | null>(null);
+  
+  const initialDateRange = {
+    startDate: new Date(),
+    endDate: new Date(),
+    key: 'selection'
+  };
+
+  const [dateRange, setDateRange] = useState<Range>(initialDateRange);
+
+  const handleDateChange = (ranges: RangeKeyDict) => {
+    const selection = ranges.selection;
+    setDateRange(selection as Range);
+  };
 
   const timeSlots = [
     "9:00 am to 10:00 am",
@@ -96,7 +107,11 @@ const Appointments = () => {
                 <div>
                     <div className="my-4 flex flex-col items-center">
                       <h1 className="font-semibold">Schedule</h1>
-                   
+                      <Calendar
+                            value={dateRange} 
+                            onChange={handleDateChange} 
+                            disabledDates={[new Date(2024, 0, 1)]} 
+                      />
                     </div>
                     <div className="my-4">
                       <h1 className="font-semibold">Time Slot</h1>

@@ -30,7 +30,11 @@ const HomePage = () => {
             <div className="w-full h-[50%] grid grid-cols-2">
                 <div className="bg-blue-500">Table Here</div>
                 <div className="bg-indigo-500 flex flex-col place-content-center">
-                <Calendar value={dateRange} onChange={handleDateChange} disabledDates={[new Date(2024, 0, 1)]} />
+                <Calendar 
+                    value={dateRange} 
+                    onChange={handleDateChange} 
+                    disabledDates={[new Date(2024, 0, 1)]} 
+                    />
                     <p>Start Date: {dateRange.startDate?.toLocaleDateString()}</p>
                     <p>End Date: {dateRange.endDate?.toLocaleDateString()}</p>
                 </div>
