@@ -25,12 +25,11 @@ body{
 }
 
 /* Custom styles for react-calendar */
-.react-calendar__tile--active {
-    background-color: #0E8173 !important; 
+.custom-calendar .rdrDayToday .rdrDayNumber span:after {
+    background-color: #E4D7CF !important; 
     color: white !important; 
   }
 
-  .react-calendar__tile:hover {
-    background-color: #F9EEE7 !important; 
-    color:"#403F4C" !important;
+  .custom-calendar .rdrCalendarWrapper {
+    background-color: #E4D7CF !important;
   }

@@ -1,10 +1,25 @@
+import { useState } from "react";
 import Weather from "./Weather";
 import { useAppSelector } from "../../redux/Provider";
-import Calendar from "react-calendar";
-import 'react-calendar/dist/Calendar.css';
+import { RangeKeyDict, Range } from 'react-date-range';
+import Calendar from '../../reusables/Calendar';
 
 const HomePage = () => {
     const currentUser = useAppSelector((state)=>state.global.user);
+    
+    const initialDateRange = {
+        startDate: new Date(),
+        endDate: new Date(),
+        key: 'selection'
+    };
+
+    const [dateRange, setDateRange] = useState<Range>(initialDateRange);
+    
+    const handleDateChange = (ranges: RangeKeyDict) => {
+        const selection = ranges.selection;
+        setDateRange(selection as Range);
+      };
+
   return (
     <section className="grid grid-cols-3">
         <main className="col-span-2 h-screen">
@@ -14,13 +29,10 @@ const HomePage = () => {
             </div>
             <div className="w-full h-[50%] grid grid-cols-2">
                 <div className="bg-blue-500">Table Here</div>
-                <div className="bg-indigo-500 flex place-content-center">
-                    <Calendar 
-                    className="calendar"
-                    tileClassName="calendar-tiles"
-                    tileContent=""
-                    value={new Date()}
-                    />
+                <div className="bg-indigo-500 flex flex-col place-content-center">
+                <Calendar value={dateRange} onChange={handleDateChange} disabledDates={[new Date(2024, 0, 1)]} />
+                    <p>Start Date: {dateRange.startDate?.toLocaleDateString()}</p>
+                    <p>End Date: {dateRange.endDate?.toLocaleDateString()}</p>
                 </div>
             </div>
             <div className="bg-stone-500 h-[10%]">Categories</div>

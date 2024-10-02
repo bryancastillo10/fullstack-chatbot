@@ -4,7 +4,7 @@ import { Input, CustomSelect, TextArea, Button } from "../../reusables";
 import { Cloud, BookOpen, ChatDots, HardHat } from "@phosphor-icons/react";
 import { useGetServicesQuery, useGetConsultantsQuery } from "../../api/appointment";
 import { GetConsultantsResponse, GetServiceResponse } from "../../types/appointment";
-import Calendar from "react-calendar";
+
 import TimeSelector from "./TimeSelector";
 
 const Appointments = () => {
@@ -96,13 +96,7 @@ const Appointments = () => {
                 <div>
                     <div className="my-4 flex flex-col items-center">
                       <h1 className="font-semibold">Schedule</h1>
-                      <Calendar 
-                        className="calendar"
-                        tileClassName="calendar-tiles"
-                        tileContent=""
-                        selectRange
-                        defaultValue={undefined}
-                      />
+                   
                     </div>
                     <div className="my-4">
                       <h1 className="font-semibold">Time Slot</h1>
