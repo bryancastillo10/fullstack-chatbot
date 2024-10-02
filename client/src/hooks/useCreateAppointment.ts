@@ -23,12 +23,12 @@ const useCreateAppointment = () => {
     }
 
     // Service and Consultant ID
-    const setService = (service_id:string) => {
-        handleFormStateChange('service_id',service_id);
+    const setService = (service_id:string | null) => {
+        handleFormStateChange('service_id',service_id!);
     };
 
-    const setConsultant = (consultant_id:string) => {
-        handleFormStateChange('consultant_id',consultant_id);
+    const setConsultant = (consultant_id:string | null) => {
+        handleFormStateChange('consultant_id',consultant_id!);
     };
 
     // Time Slot

@@ -1,25 +1,20 @@
-import { useState, useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Input, CustomSelect, TextArea, Button, Calendar } from "../../reusables";
 import { Cloud, BookOpen, ChatDots, HardHat } from "@phosphor-icons/react";
 import { useGetServicesQuery, useGetConsultantsQuery } from "../../api/appointment";
 import { GetConsultantsResponse, GetServiceResponse } from "../../types/appointment";
-
 import TimeSelector from "./TimeSelector";
-// import useCreateAppointment from "../../hooks/useCreateAppointment";
+import useCreateAppointment from "../../hooks/useCreateAppointment";
 
 const Appointments = () => {
-  const  [topic,setTopic] = useState<string|null>(null);
-  const [message,setMessage] = useState<string|null>(null);
-  const [selectedService, setSelectedService] = useState<string | null>(null);
-  const [selectedConsultant, setSelectedConsultant] = useState<string|null>(null);
-  const [selectedTimeSlot, setSelectedTimeSlot] = useState<string | null>(null);
-  
-  // const {appointmentForm, 
-  //         setService, 
-  //         setConsultant, 
-  //         setTimeSlot,
-  //         handleFormStateChange,
-  //         handleDateChange} = useCreateAppointment();
+  const {
+    appointmentForm,
+    setService,
+    setConsultant,
+    setTimeSlot,
+    handleFormStateChange,
+    handleDateChange
+  } = useCreateAppointment();
 
   const timeSlots = [
     "9:00 am to 10:00 am",
@@ -32,8 +27,8 @@ const Appointments = () => {
 
 
   const queryTerm = useMemo(() => {
-    return selectedService ? selectedService.split(' ')[0] : undefined;
-  }, [selectedService]);
+    return appointmentForm.service_id ? appointmentForm.service_id.split(' ')[0] : undefined;
+  }, [appointmentForm.service_id]);
 
   const {data:services } = useGetServicesQuery();
   const { data: consultants, isLoading: isConsultantsLoading} = useGetConsultantsQuery(queryTerm|| undefined, {
@@ -50,10 +45,14 @@ const Appointments = () => {
       label:consultant.name
   }))|| [];
 
+  const dateRange = {
+    startDate: appointmentForm.startDate,
+    endDate: appointmentForm.endDate
+  }
 
   useEffect(()=>{
-    setSelectedConsultant(null);
-  }, [selectedService])
+    setConsultant("");
+  }, [appointmentForm.service_id, setConsultant])
 
   return (
     <section className="w-full p-4">
@@ -66,13 +65,14 @@ const Appointments = () => {
                   type="text"
                   label="Topic" 
                   icon={Cloud}
-                  onChange={()=>setTopic(topic)} 
+                  value={appointmentForm.topic}
+                  onChange={(e)=> handleFormStateChange('topic', e.target.value)} 
                   />
 
                 <TextArea 
-                  onChange={()=>setMessage(message)}
                   id="message" 
-                  value={message!}
+                  value={appointmentForm.message}
+                  onChange={(e)=> handleFormStateChange('message',e.target.value)}
                   label="Message" 
                   icon={ChatDots}
                 />
@@ -80,22 +80,21 @@ const Appointments = () => {
                 <CustomSelect<string>
                   label="Services Offered"
                   icon={BookOpen}
-                  value={selectedService}
+                  value={appointmentForm.service_id}
                   option={serviceOptions}
-                  onChange={(value:string|null)=>{setSelectedService(value)}}
+                  onChange={setService}
                   validationMessage="Test message to describe select component"
                 />
 
                 <CustomSelect<string>
                   label="Consultants"
                   icon={HardHat}
-                  value={selectedConsultant}
+                  value={appointmentForm.consultant_id}
                   option={consultantOptions}
-                  onChange={(value: string | null) => setSelectedConsultant(value)}
+                  onChange={setConsultant}
                   validationMessage="Please select a consultant"
                   isLoading={isConsultantsLoading}
-
-                  disabled={!selectedService}
+                  disabled={!appointmentForm.service_id}
                 />
                 </div>
 
@@ -114,8 +113,8 @@ const Appointments = () => {
                       <h1 className="pl-2 font-semibold text-lg">Select Time Slot</h1>
                       <TimeSelector
                           timeSlots={timeSlots}
-                          selectedSlot={selectedTimeSlot}
-                          onSelect={setSelectedTimeSlot}
+                          selectedSlot={appointmentForm.appointmentTime}
+                          onSelect={setTimeSlot}
                         />
                     </div>
                 </div>
