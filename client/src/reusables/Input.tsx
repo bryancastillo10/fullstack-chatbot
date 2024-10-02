@@ -7,6 +7,7 @@ interface InputProps{
     label:string;
     disabled?:boolean;
     required?:boolean;
+    value:string | number;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
     isPassword?:boolean;
     icon?:Icon;
@@ -18,6 +19,7 @@ const Input = ({
     id,
     type="text",
     label,
+    value,
     onChange, 
     disabled,
     isPassword=false,
@@ -37,6 +39,7 @@ const Input = ({
         <input
             id={id}
             type={type === "password" ? ( isVisible ? "text":"password") : type}
+            value={value}
             onChange={onChange}
             disabled={disabled}
             required={required}
