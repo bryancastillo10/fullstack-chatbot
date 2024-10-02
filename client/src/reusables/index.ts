@@ -6,6 +6,7 @@ import DropDown from "./DropDown";
 import Input from "./Input";
 import CustomSelect from "./CustomSelect";
 import TextArea from './TextArea';
+import Calendar from './Calendar';
 
 export {Button, 
         Linker, 
@@ -14,5 +15,6 @@ export {Button,
         DropDown, 
         Input,
         CustomSelect,
-        TextArea
+        TextArea,
+        Calendar
         };
