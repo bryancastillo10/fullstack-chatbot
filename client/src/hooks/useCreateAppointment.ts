@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useState, useCallback } from "react";
 import {  RangeKeyDict } from "react-date-range";
 import { AppointmentRequest } from "../types/appointment";
+
 
 const useCreateAppointment = () => {
     const [appointmentForm, setAppointmentForm] = useState<AppointmentRequest>({
@@ -11,40 +12,40 @@ const useCreateAppointment = () => {
         consultant_id: "",
         appointmentTime:"",
         startDate: new Date(),
-        endDate: new Date(),
+        endDate: new Date()
     });
 
     // Input Field
-    const handleFormStateChange = (key: keyof typeof appointmentForm, value: string | never) => {
+    const handleFormStateChange = useCallback((key: keyof typeof appointmentForm, value: string | never) => {
         setAppointmentForm((prev)=> ({
             ...prev,
             [key]:value
         }));
-    }
+    },[])
 
     // Service and Consultant ID
-    const setService = (service_id:string | null) => {
+    const setService = useCallback((service_id:string | null) => {
         handleFormStateChange('service_id',service_id!);
-    };
+    },[handleFormStateChange]);
 
-    const setConsultant = (consultant_id:string | null) => {
+    const setConsultant = useCallback((consultant_id:string | null) => {
         handleFormStateChange('consultant_id',consultant_id!);
-    };
+    },[handleFormStateChange]);
 
     // Time Slot
-    const setTimeSlot = (timeSlot: string) => {
+    const setTimeSlot = useCallback((timeSlot: string) => {
         handleFormStateChange('appointmentTime',timeSlot)
-    };
+    },[handleFormStateChange]);
     
-    const handleDateChange = (ranges: RangeKeyDict) => {
-        const selection = ranges.selection;
+    const handleDateChange = useCallback((ranges:RangeKeyDict) => {
+        const {selectedDate} = ranges;
         setAppointmentForm((prev)=> ({
             ...prev,
-            startDate: selection.startDate as Date,
-            endDate: selection.endDate as Date
+            startDate: selectedDate.startDate as Date,
+            endDate: selectedDate.endDate as Date
         }))
-      };
-    
+    }
+    ,[])
 
     return {
         appointmentForm,

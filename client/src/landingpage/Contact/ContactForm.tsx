@@ -10,12 +10,13 @@ interface ContactFormProps{
 }
 
 const ContactForm = () => {
-    const [contactFormData, setContactFormData] = useState<ContactFormProps>({        name:"",
+    const [contactFormData, setContactFormData] = useState<ContactFormProps>({ 
+        name:"",
         email:"",
         subject:"",
         message:""
     });
-  
+
     const handleContactForm = (e:ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const {id,value} = e.target;
         setContactFormData((prev)=> ({
@@ -34,7 +35,7 @@ const ContactForm = () => {
             icon={User} 
         />
         <Input 
-            onChange={()=>{}} 
+            onChange={handleContactForm} 
             id="email" 
             value={contactFormData.email} 
             label="Email" 
@@ -42,7 +43,7 @@ const ContactForm = () => {
         />
 
         <Input 
-            onChange={()=>{}} 
+            onChange={handleContactForm} 
             id="subject" 
             value={contactFormData.subject}
             label="Subject" 
@@ -50,7 +51,7 @@ const ContactForm = () => {
         />
 
         <TextArea 
-            onChange={()=>{}}
+            onChange={handleContactForm}
             id="message" 
             value={contactFormData.message}
             label="Message" 

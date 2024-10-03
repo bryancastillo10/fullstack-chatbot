@@ -25,14 +25,22 @@ const Appointments = () => {
     "3:00 pm to 4:00 pm",
   ];
 
+  const dateRange = {
+    startDate: appointmentForm.startDate,
+    endDate: appointmentForm.endDate,
+    key:"selectedDate"
+  }
 
-  const queryTerm = useMemo(() => {
-    return appointmentForm.service_id ? appointmentForm.service_id.split(' ')[0] : undefined;
-  }, [appointmentForm.service_id]);
+  const { data: services } = useGetServicesQuery();
+  const selectedService = useMemo(() => {
+    return appointmentForm.service_id 
+      ? services?.find(serve => serve.service_id === appointmentForm.service_id)?.name 
+      : undefined;
+  }, [appointmentForm.service_id, services]);
 
-  const {data:services } = useGetServicesQuery();
-  const { data: consultants, isLoading: isConsultantsLoading} = useGetConsultantsQuery(queryTerm|| undefined, {
-    skip: !queryTerm
+
+  const { data: consultants, isLoading: isConsultantsLoading } = useGetConsultantsQuery(selectedService || undefined, {
+    skip: !selectedService
   });
 
   const serviceOptions = services?.map((service: GetServiceResponse) => ({
@@ -45,11 +53,6 @@ const Appointments = () => {
       label:consultant.name
   }))|| [];
 
-  const dateRange = {
-    startDate: appointmentForm.startDate,
-    endDate: appointmentForm.endDate
-  }
-
   useEffect(()=>{
     setConsultant("");
   }, [appointmentForm.service_id, setConsultant])
@@ -59,7 +62,7 @@ const Appointments = () => {
           <h1 className="font-semibold text-2xl my-2">Book an Appointment</h1>
           <form action="" onSubmit={()=>{}}>
             <div className="grid grid-cols-1 xl:grid-cols-2 items-start gap-4">
-              <div className="">
+              <div className="flex flex-col">
                 <Input 
                   id="topic" 
                   type="text"
@@ -67,6 +70,7 @@ const Appointments = () => {
                   icon={Cloud}
                   value={appointmentForm.topic}
                   onChange={(e)=> handleFormStateChange('topic', e.target.value)} 
+                  validationMessage="Short title about your environmental concern"
                   />
 
                 <TextArea 
@@ -83,7 +87,7 @@ const Appointments = () => {
                   value={appointmentForm.service_id}
                   option={serviceOptions}
                   onChange={setService}
-                  validationMessage="Test message to describe select component"
+                  validationMessage="Select the relevant service category offered"
                 />
 
                 <CustomSelect<string>
@@ -92,21 +96,24 @@ const Appointments = () => {
                   value={appointmentForm.consultant_id}
                   option={consultantOptions}
                   onChange={setConsultant}
-                  validationMessage="Please select a consultant"
+                  validationMessage="Please select from our lists of experts"
                   isLoading={isConsultantsLoading}
                   disabled={!appointmentForm.service_id}
                 />
                 </div>
-
                 <div>
-                    <div className="my-4 flex flex-col items-center xl:items-start">
+                    <div className="my-4 ">
                       <h1 className="pl-2 font-semibold text-lg mb-2">Select Schedule</h1>
-                      <div className="w-fit">
+                      <div className="w-fit flex flex-col xl:flex-row gap-4">
                         <Calendar
                           value={dateRange} 
                           onChange={handleDateChange} 
                           disabledDates={[new Date(2024, 0, 1)]} 
                         />
+                        <div className="mt-4 xl:mt-2 flex items-center h-fit gap-4">
+                          <p>Price:</p>
+                          <p className="text-xl"> 200 </p>
+                        </div>
                       </div>
                     </div>
                     <div className="my-8">
