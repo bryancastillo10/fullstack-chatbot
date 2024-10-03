@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import {  RangeKeyDict } from "react-date-range";
-import { AppointmentRequest } from "../types/appointment";
+import { AppointmentRequest } from "../../types/appointment";
 
 
 const useCreateAppointment = () => {

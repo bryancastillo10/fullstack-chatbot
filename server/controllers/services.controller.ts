@@ -24,7 +24,8 @@ export const getServicesName = async(req:Request, res:Response) => {
         const servicesName = await prisma.service.findMany({
             select:{
                 service_id: true,
-                name:true
+                name:true, 
+                price:true
             }
         });
 

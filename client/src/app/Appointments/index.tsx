@@ -1,10 +1,10 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { Input, CustomSelect, TextArea, Button, Calendar } from "../../reusables";
 import { Cloud, BookOpen, ChatDots, HardHat } from "@phosphor-icons/react";
-import { useGetServicesQuery, useGetConsultantsQuery } from "../../api/appointment";
-import { GetConsultantsResponse, GetServiceResponse } from "../../types/appointment";
 import TimeSelector from "./TimeSelector";
-import useCreateAppointment from "../../hooks/useCreateAppointment";
+import useCreateAppointment from "../../hooks/appointment/useCreateAppointment";
+import useAppointmentForm from "../../hooks/appointment/useAppointmentForm";
+import { formatCurrency } from "../../utils/formatPrice";
 
 const Appointments = () => {
   const {
@@ -16,47 +16,36 @@ const Appointments = () => {
     handleDateChange
   } = useCreateAppointment();
 
-  const timeSlots = [
-    "9:00 am to 10:00 am",
-    "10:00 am to 11:00 am",
-    "11:00 am to 12:00 pm",
-    "1:00 pm to 2:00 pm",
-    "2:00 pm to 3:00 pm",
-    "3:00 pm to 4:00 pm",
-  ];
-
   const dateRange = {
     startDate: appointmentForm.startDate,
     endDate: appointmentForm.endDate,
     key:"selectedDate"
   }
 
-  const { data: services } = useGetServicesQuery();
-  const selectedService = useMemo(() => {
-    return appointmentForm.service_id 
-      ? services?.find(serve => serve.service_id === appointmentForm.service_id)?.name 
-      : undefined;
-  }, [appointmentForm.service_id, services]);
 
+  const {
+    timeSlots,
+    serviceOptions,
+    consultantOptions,
+    isConsultantsLoading,
+    servicePrice,       
+    totalPrice,
+  } = useAppointmentForm({appointmentForm, dateRange});
 
-  const { data: consultants, isLoading: isConsultantsLoading } = useGetConsultantsQuery(selectedService || undefined, {
-    skip: !selectedService
-  });
-
-  const serviceOptions = services?.map((service: GetServiceResponse) => ({
-    value: service.service_id, 
-    label: service.name,
-  })) || [];
-
-  const consultantOptions = consultants?.map((consultant: GetConsultantsResponse)=>({
-      value: consultant.consultant_id,
-      label:consultant.name
-  }))|| [];
 
   useEffect(()=>{
     setConsultant("");
-  }, [appointmentForm.service_id, setConsultant])
+  }, [appointmentForm.service_id, setConsultant]);
 
+  const noServiceTag = (
+    <span className="text-xs bg-secondary text-primary px-2 py-1 rounded-2xl shadow-md">No services selected</span>
+  )
+
+  const priceTag = (price:number)=>{ 
+    return(
+      <span className="font-semibold text-xl">{formatCurrency(price)}</span>
+    )}
+  
   return (
     <section className="w-full p-4">
           <h1 className="font-semibold text-2xl my-2">Book an Appointment</h1>
@@ -111,8 +100,16 @@ const Appointments = () => {
                           disabledDates={[new Date(2024, 0, 1)]} 
                         />
                         <div className="mt-4 xl:mt-2 flex items-center h-fit gap-4">
-                          <p>Price:</p>
-                          <p className="text-xl"> 200 </p>
+                          <div className="grid grid-cols-1 items-center">
+                            <p>Session Price:</p>
+                            <p className="ml-8 mb-4">
+                              {servicePrice ? priceTag(servicePrice): noServiceTag}
+                            </p>
+                            <p>Total Price:</p>
+                            <p className="ml-8 mb-4">
+                              {totalPrice ? priceTag(totalPrice) : noServiceTag}
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
