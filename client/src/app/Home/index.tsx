@@ -22,15 +22,15 @@ const HomePage = () => {
       };
 
   return (
-    <section className="grid grid-cols-3">
+    <section className="grid grid-cols-2 xl:grid-cols-[2fr_1fr_0.5fr] gap-x-4 ">
         <main className="col-span-2">
             <div className="flex items-center gap-4 text-4xl mb-2">
             <h1 className="font-semibold  text-secondary">Welcome!</h1>
             <p>{currentUser?.username} 👋</p>
             </div>
-            <div className="w-full grid grid-cols-2">
+            <div className="w-full flex flex-col xl:flex-row gap-x-4 ">
                 <AppointmentTable/>
-                <div className="flex flex-col place-content-center">
+                <div className="flex flex-col gap-y-2 w-fit place-content-center">
                 <Calendar 
                     value={dateRange} 
                     onChange={handleDateChange} 

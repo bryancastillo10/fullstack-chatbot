@@ -30,7 +30,16 @@ body{
     color: #E9D417 !important; 
   }
 
-  .rdrCalendarWrapper {
+.rdrCalendarWrapper {
     background-color: #E4D7CF !important;
     @apply rounded-2xl shadow-md;
-  }
+}
+
+/* Custom Material UI Data Grid  */
+.custom-header {
+  @apply bg-secondary text-primary font-semibold;
+}
+
+.custom-cell {
+  @apply p-2 border-b border-black bg-cream;
+}

@@ -2,6 +2,7 @@ import { useGetAppointmentQuery } from "../../api/appointment";
 import { PencilSimple, TrashSimple } from "@phosphor-icons/react";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { CreateGetAppointment } from "../../types/appointment";
+import { formatDate } from "../../utils/formatDate";
 
 const AppointmentTable = () => {
   const { data: appointments } = useGetAppointmentQuery();
@@ -10,7 +11,8 @@ const AppointmentTable = () => {
   Array.isArray(appointments) ? appointments.map((appointment) => ({
       ...appointment,
       consultant: appointment.consultant?.name ?? "",
-      service: appointment.service?.name ?? ""       
+      service: appointment.service?.name ?? "",
+      createdAt: formatDate(appointment.createdAt)
     }))
   : [];
 
@@ -19,22 +21,25 @@ const AppointmentTable = () => {
       field: 'createdAt',
       headerName: "Date Appointed",
       flex: 1,
-      valueFormatter: ({ value }) => new Date(value as string).toLocaleDateString()
+      minWidth: 110,
     },
     {
       field: 'consultant',
       headerName: 'Consultant',
       flex: 1,
+      minWidth: 100,
     },
     {
       field: 'service',
       headerName: 'Service',
       flex: 1,
+      minWidth: 100,
     },
     {
       field: 'topic',
       headerName: 'Topic',
-      flex: 2,
+      flex: 1,
+      minWidth: 100,
       renderCell: (params: GridRenderCellParams<CreateGetAppointment>) => {
         const topic = params.value as string;
         return topic.length > 10 ? `${topic.slice(0, 10)}...` : topic;
@@ -44,16 +49,18 @@ const AppointmentTable = () => {
       field: 'status',
       headerName: 'Status',
       flex: 1,
+      minWidth:100,
     },
     {
       field: 'actions',
       headerName: 'Actions',
       flex: 1,
+      minWidth:90,
       sortable: false,
       renderCell: (params: GridRenderCellParams<CreateGetAppointment>) => (
-        <div style={{ display: 'flex', gap: '10px' }}>
-          <PencilSimple size={24} style={{ cursor: 'pointer' }} onClick={() => handleEdit(params.row)} />
-          <TrashSimple size={24} style={{ cursor: 'pointer' }} onClick={() => handleDelete(params.row)} />
+        <div style={{ display: 'flex', gap: '10px', marginTop:'12px' }}>
+          <PencilSimple size={20} className="cursor-pointer hover:text-secondary" onClick={() => handleEdit(params.row)} />
+          <TrashSimple size={20} className="cursor-pointer hover:text-secondary" onClick={() => handleDelete(params.row)} />
         </div>
       ),
     },
@@ -69,11 +76,18 @@ const AppointmentTable = () => {
 
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <div className="w-full h-fit overflow-auto">
+      <h1 className="mb-2">Your Appointments</h1>
       <DataGrid
         rows={reducedAppointment}
         columns={appointmentColumn}
         getRowId={(row) => row.appointment_id}
+        classes={{
+          root: 'border border-gray-300',         
+          columnHeader: 'custom-header',          
+          cell: 'custom-cell',                    
+          row: 'custom-hover-row',               
+        }}
       />
     </div>
   );
