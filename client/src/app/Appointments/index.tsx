@@ -1,10 +1,10 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import { Input, CustomSelect, TextArea, Button, Calendar } from "../../reusables";
 import { Cloud, BookOpen, ChatDots, HardHat } from "@phosphor-icons/react";
-import { useGetServicesQuery, useGetConsultantsQuery } from "../../api/appointment";
-import { GetConsultantsResponse, GetServiceResponse } from "../../types/appointment";
 import TimeSelector from "./TimeSelector";
-import useCreateAppointment from "../../hooks/useCreateAppointment";
+import useCreateAppointment from "../../hooks/appointment/useCreateAppointment";
+import useAppointmentForm from "../../hooks/appointment/useAppointmentForm";
+import { formatCurrency } from "../../utils/formatPrice";
 
 const Appointments = () => {
   const {
@@ -16,50 +16,42 @@ const Appointments = () => {
     handleDateChange
   } = useCreateAppointment();
 
-  const timeSlots = [
-    "9:00 am to 10:00 am",
-    "10:00 am to 11:00 am",
-    "11:00 am to 12:00 pm",
-    "1:00 pm to 2:00 pm",
-    "2:00 pm to 3:00 pm",
-    "3:00 pm to 4:00 pm",
-  ];
-
-
-  const queryTerm = useMemo(() => {
-    return appointmentForm.service_id ? appointmentForm.service_id.split(' ')[0] : undefined;
-  }, [appointmentForm.service_id]);
-
-  const {data:services } = useGetServicesQuery();
-  const { data: consultants, isLoading: isConsultantsLoading} = useGetConsultantsQuery(queryTerm|| undefined, {
-    skip: !queryTerm
-  });
-
-  const serviceOptions = services?.map((service: GetServiceResponse) => ({
-    value: service.service_id, 
-    label: service.name,
-  })) || [];
-
-  const consultantOptions = consultants?.map((consultant: GetConsultantsResponse)=>({
-      value: consultant.consultant_id,
-      label:consultant.name
-  }))|| [];
-
   const dateRange = {
     startDate: appointmentForm.startDate,
-    endDate: appointmentForm.endDate
+    endDate: appointmentForm.endDate,
+    key:"selectedDate"
   }
+
+
+  const {
+    timeSlots,
+    serviceOptions,
+    consultantOptions,
+    isConsultantsLoading,
+    servicePrice,       
+    totalPrice,
+  } = useAppointmentForm({appointmentForm, dateRange});
+
 
   useEffect(()=>{
     setConsultant("");
-  }, [appointmentForm.service_id, setConsultant])
+  }, [appointmentForm.service_id, setConsultant]);
 
+  const noServiceTag = (
+    <span className="text-xs bg-secondary text-primary px-2 py-1 rounded-2xl shadow-md">No services selected</span>
+  )
+
+  const priceTag = (price:number)=>{ 
+    return(
+      <span className="font-semibold text-xl">{formatCurrency(price)}</span>
+    )}
+  
   return (
     <section className="w-full p-4">
           <h1 className="font-semibold text-2xl my-2">Book an Appointment</h1>
           <form action="" onSubmit={()=>{}}>
             <div className="grid grid-cols-1 xl:grid-cols-2 items-start gap-4">
-              <div className="">
+              <div className="flex flex-col">
                 <Input 
                   id="topic" 
                   type="text"
@@ -67,6 +59,7 @@ const Appointments = () => {
                   icon={Cloud}
                   value={appointmentForm.topic}
                   onChange={(e)=> handleFormStateChange('topic', e.target.value)} 
+                  validationMessage="Short title about your environmental concern"
                   />
 
                 <TextArea 
@@ -83,7 +76,7 @@ const Appointments = () => {
                   value={appointmentForm.service_id}
                   option={serviceOptions}
                   onChange={setService}
-                  validationMessage="Test message to describe select component"
+                  validationMessage="Select the relevant service category offered"
                 />
 
                 <CustomSelect<string>
@@ -92,21 +85,32 @@ const Appointments = () => {
                   value={appointmentForm.consultant_id}
                   option={consultantOptions}
                   onChange={setConsultant}
-                  validationMessage="Please select a consultant"
+                  validationMessage="Please select from our lists of experts"
                   isLoading={isConsultantsLoading}
                   disabled={!appointmentForm.service_id}
                 />
                 </div>
-
                 <div>
-                    <div className="my-4 flex flex-col items-center xl:items-start">
+                    <div className="my-4 ">
                       <h1 className="pl-2 font-semibold text-lg mb-2">Select Schedule</h1>
-                      <div className="w-fit">
+                      <div className="w-fit flex flex-col xl:flex-row gap-4">
                         <Calendar
                           value={dateRange} 
                           onChange={handleDateChange} 
                           disabledDates={[new Date(2024, 0, 1)]} 
                         />
+                        <div className="mt-4 xl:mt-2 flex items-center h-fit gap-4">
+                          <div className="grid grid-cols-1 items-center">
+                            <p>Session Price:</p>
+                            <p className="ml-8 mb-4">
+                              {servicePrice ? priceTag(servicePrice): noServiceTag}
+                            </p>
+                            <p>Total Price:</p>
+                            <p className="ml-8 mb-4">
+                              {totalPrice ? priceTag(totalPrice) : noServiceTag}
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                     <div className="my-8">

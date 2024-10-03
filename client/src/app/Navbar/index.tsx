@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { List, ChatCircle, Gear, Bell } from "@phosphor-icons/react";
+import { ChatCircle, Gear, Bell, CaretDoubleLeft, CaretDoubleRight } from "@phosphor-icons/react";
 
 // Children Components
 import NavIcons from "./NavIcons";
@@ -14,11 +14,12 @@ import { clearCurrentUser } from "../../redux/reducer";
 import { toast } from "sonner";
 
 interface AppNavbarProps{
+  isSidebarCollapsed:boolean;
   toggleSidebar: () => void;
 }
 
 // AppNavbar Component
-const AppNavbar = ({toggleSidebar}:AppNavbarProps) => {
+const AppNavbar = ({isSidebarCollapsed,toggleSidebar}:AppNavbarProps) => {
   // Hooks
   const [signOut] = useSignOutMutation();
   const navigate = useNavigate();
@@ -79,11 +80,21 @@ const AppNavbar = ({toggleSidebar}:AppNavbarProps) => {
           className="p-3.5 cursor-pointer bg-primary text-black rounded-full hover:bg-cream"
           onClick={toggleSidebar}
           >            
-           <List className="size-5" /> 
+           {isSidebarCollapsed ? <CaretDoubleRight size={20} />:<CaretDoubleLeft size={20} />}
           </div>
           
       </div>
+      
       <div className="flex justify-between items-center pr-4">
+          <div className="md:hidden">
+            <NavIcons
+                MenuContent={avatarMenu}
+                pointerPos="top-12 right-3"
+                bodyPos="top-[50px] right-[5px]"
+                isMenuOpen={openMenuIndex === 4}
+                toggle={()=>toggleMenu(4)}
+              />
+          </div>
         <ul className="hidden md:flex items-center gap-5">
           <NavIcons
             MenuIcon={Gear}
