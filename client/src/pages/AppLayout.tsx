@@ -20,8 +20,8 @@ const AppLayout = () => {
       <section 
                 onClick={toggleSidebar}
                 className={`${isSidebarCollapsed ? 'hidden': 'fixed '} inset-0 z-30 bg-teal-main 
-                bg-transparent backdrop-blur-[2px]`}/>
-        <AppNavbar toggleSidebar={toggleSidebar}/>
+                bg-transparent backdrop-blur-[1px]`}/>
+        <AppNavbar isSidebarCollapsed={isSidebarCollapsed} toggleSidebar={toggleSidebar}/>
         <section className="my-4 mx-4 xl:mx-10">
           <Outlet/>
         </section>
