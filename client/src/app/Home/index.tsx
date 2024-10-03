@@ -3,6 +3,7 @@ import Weather from "./Weather";
 import { useAppSelector } from "../../redux/Provider";
 import { RangeKeyDict, Range } from 'react-date-range';
 import Calendar from '../../reusables/Calendar';
+import AppointmentTable from "./AppointmentTable";
 
 const HomePage = () => {
     const currentUser = useAppSelector((state)=>state.global.user);
@@ -22,14 +23,14 @@ const HomePage = () => {
 
   return (
     <section className="grid grid-cols-3">
-        <main className="col-span-2 h-screen">
+        <main className="col-span-2">
             <div className="flex items-center gap-4 text-4xl mb-2">
             <h1 className="font-semibold  text-secondary">Welcome!</h1>
             <p>{currentUser?.username} 👋</p>
             </div>
-            <div className="w-full h-[50%] grid grid-cols-2">
-                <div className="bg-blue-500">Table Here</div>
-                <div className="bg-indigo-500 flex flex-col place-content-center">
+            <div className="w-full grid grid-cols-2">
+                <AppointmentTable/>
+                <div className="flex flex-col place-content-center">
                 <Calendar 
                     value={dateRange} 
                     onChange={handleDateChange} 
@@ -44,7 +45,7 @@ const HomePage = () => {
                 News Feed
             </div>
        </main>
-       <aside className="flex flex-col h-full">
+       <aside className="w-fit  flex flex-col h-full">
         <Weather/>
         <div className="bg-slate-500 text-primary h-[8%]">
             Clock

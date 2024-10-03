@@ -14,7 +14,8 @@ export const appointmentApi = createApi({
     reducerPath:"appointmentApi",
     tagTypes:["ServicesOffered","ConsultantByService","AppointmentByUser"],
     baseQuery: fetchBaseQuery({
-        baseUrl: BASE_API
+        baseUrl: BASE_API,
+        credentials:'include'
     }),
     endpoints: (builder) => ({
         getServices: builder.query<GetServiceResponse[],void>({
@@ -32,14 +33,14 @@ export const appointmentApi = createApi({
         // CRUD Operation
         createAppointment: builder.mutation<CreateGetAppointment, AppointmentRequest>({
             query: (appointment) =>({
-                url:"appointments/create",
+                url:'/appointments/create',
                 method:"POST",
                 body: appointment
             })
         }),
         getAppointment: builder.query<CreateGetAppointment,void>({
             query: () => ({
-                url:"appointments/view",
+                url:'/appointments/view',
                 provideTags:["AppointmentByUser"]
             })
         }),
@@ -68,5 +69,7 @@ export const {
         useGetServicesQuery, 
         useGetConsultantsQuery,
         useCreateAppointmentMutation,
-        useGetAppointmentQuery  
+        useGetAppointmentQuery,
+        useUpdateAppointmentMutation,
+        useDeleteAppointmentMutation  
     } = appointmentApi;
