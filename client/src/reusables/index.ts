@@ -8,6 +8,7 @@ import CustomSelect from "./CustomSelect";
 import TextArea from './TextArea';
 import Calendar from './Calendar';
 import BigSpinner from "./BigSpinner";
+import Modal from "./Modal";
 
 export {Button, 
         Linker, 
@@ -18,5 +19,6 @@ export {Button,
         CustomSelect,
         TextArea,
         Calendar,
-        BigSpinner
+        BigSpinner,
+        Modal
         };
