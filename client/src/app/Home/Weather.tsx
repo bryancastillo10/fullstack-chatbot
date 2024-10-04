@@ -40,6 +40,7 @@ const Weather = () => {
   
   useEffect(()=> {
     weatherAPI(city);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
 
 

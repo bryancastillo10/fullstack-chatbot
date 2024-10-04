@@ -3,6 +3,8 @@ import { PencilSimple, TrashSimple } from "@phosphor-icons/react";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { CreateGetAppointment } from "../../types/appointment";
 import { formatDate } from "../../utils/formatDate";
+import { useAppDispatch } from "../../redux/Provider";
+import { openModal } from "../../redux/modal";
 
 const AppointmentTable = () => {
   const { data: appointments } = useGetAppointmentQuery();
@@ -57,21 +59,22 @@ const AppointmentTable = () => {
       flex: 1,
       minWidth:90,
       sortable: false,
-      renderCell: (params: GridRenderCellParams<CreateGetAppointment>) => (
+      renderCell: () => (
         <div style={{ display: 'flex', gap: '10px', marginTop:'12px' }}>
-          <PencilSimple size={20} className="cursor-pointer hover:text-secondary" onClick={() => handleEdit(params.row)} />
-          <TrashSimple size={20} className="cursor-pointer hover:text-secondary" onClick={() => handleDelete(params.row)} />
+          <PencilSimple size={20} className="cursor-pointer hover:text-secondary" onClick={() => handleEdit()} />
+          <TrashSimple size={20} className="cursor-pointer hover:text-secondary" onClick={() => handleDelete()} />
         </div>
       ),
     },
   ];
 
-  const handleEdit = (appointment: CreateGetAppointment) => {
-    console.log('Edit appointment', appointment);
+  const dispatch = useAppDispatch();
+  const handleEdit = () => {
+    dispatch(openModal("updateAppointment"))
   };
 
-  const handleDelete = (appointment: CreateGetAppointment) => {
-    console.log('Delete appointment', appointment);
+  const handleDelete = () => {
+    console.log('Delete appointment');
   };
 
 
