@@ -32,7 +32,7 @@ const Weather = () => {
   const {weatherAPI, weatherData, loading} = useWeatherAPI();
 
   
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     weatherAPI(city);
 
@@ -43,8 +43,10 @@ const Weather = () => {
   },[]);
 
 
-  if(!loading){
-    <BigSpinner/>
+  if(loading){
+    <div className="flex justify-center items-center">
+      <BigSpinner/>
+    </div>
   }
 
   return (
@@ -57,7 +59,7 @@ const Weather = () => {
                 <h1 className="text-2xl">{weatherData.temperature} &deg;C</h1>
               </div>
             </div>
-            <form onSubmit={handleSearch} className="grid grid-cols-1 w-fit items-center gap-4">
+            <form onSubmit={handleSubmitSearch} className="grid grid-cols-1 w-fit items-center gap-4">
                 <div className="relative w-[100%]">
                   <input
                     className="bg-primary text-sm px-2 py-1 w-full
@@ -86,7 +88,7 @@ const Weather = () => {
             />
           </>
         ):
-          <div className="font-semibold"> 
+          <div className="font-semibold text-center my-10"> 
             Failed to retrieve the weather data, reload th page to try again.
           </div>
       }
