@@ -11,7 +11,6 @@ import {
   } from "react-redux";
 
 
-
 /* REDUX TYPES */
 export type AppStore = ReturnType<typeof makeStore>;
 export type RootState = ReturnType<AppStore["getState"]>;
@@ -19,23 +18,17 @@ export type AppDispatch = AppStore["dispatch"];
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
-
-
 export default function StoreProvider({
     children,
   }: {
     children: React.ReactNode;
   }) {
-    const storeRef = useRef<AppStore>();
-    if (!storeRef.current) {
-      storeRef.current = makeStore();
+      const storeRef = useRef<AppStore>(makeStore());
+      const persistorRef= useRef(persistStore(storeRef.current));
       setupListeners(storeRef.current.dispatch);
-    }
-    const persistor = persistStore(storeRef.current);
-  
     return (
-      <Provider store={storeRef.current}> {/* Ensure this is treated as a component */}
-        <PersistGate loading={null} persistor={persistor}>
+      <Provider store={storeRef.current}> 
+        <PersistGate loading={null} persistor={persistorRef.current}>
           {children}
         </PersistGate>
       </Provider>

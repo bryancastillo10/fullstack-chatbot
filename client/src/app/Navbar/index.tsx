@@ -10,7 +10,7 @@ import NotificationBox from "./NotificationBox";
 // State Management
 import { useSignOutMutation } from "../../api/auth";
 import { useAppDispatch } from "../../redux/Provider";
-import { clearCurrentUser } from "../../redux/reducer";
+import { clearCurrentUser } from "../../redux/global";
 import { toast } from "sonner";
 
 interface AppNavbarProps{
