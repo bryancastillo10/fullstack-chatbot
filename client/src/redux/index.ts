@@ -1,6 +1,7 @@
 
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import globalReducer from "./reducer";
+import globalReducer from "./global";
+import modalReducer from "./modal";
 import { authApi, appointmentApi } from "../api";
 
 import {
@@ -44,6 +45,7 @@ const persistConfig = {
 };
 const rootReducer = combineReducers({
   global: globalReducer,
+  modal: modalReducer,
   [authApi.reducerPath]: authApi.reducer,
   [appointmentApi.reducerPath]: appointmentApi.reducer,
 });

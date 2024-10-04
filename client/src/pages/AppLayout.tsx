@@ -3,7 +3,7 @@ import Sidebar from "../app/Sidebar";
 import { Outlet } from "react-router-dom";
 
 import { useAppSelector, useAppDispatch } from "../redux/Provider";
-import { setSidebarCollapsed } from "../redux/reducer";
+import { setSidebarCollapsed } from "../redux/global";
 
 const AppLayout = () => {
   const dispatch = useAppDispatch();
