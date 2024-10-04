@@ -7,6 +7,7 @@ import Input from "./Input";
 import CustomSelect from "./CustomSelect";
 import TextArea from './TextArea';
 import Calendar from './Calendar';
+import BigSpinner from "./BigSpinner";
 
 export {Button, 
         Linker, 
@@ -16,5 +17,6 @@ export {Button,
         Input,
         CustomSelect,
         TextArea,
-        Calendar
+        Calendar,
+        BigSpinner
         };
