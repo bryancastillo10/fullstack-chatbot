@@ -79,7 +79,7 @@ const Modal = ({
             <div className="relative flex flex-col items-center px-4 py-2 justify-center rounded-t">
               <button
                 onClick={handleClose}
-                className="p-1 hover:opacity-70 transition absolute top-3 rounded-full border border-black  right-6 hover:text-rose-500"
+                className="p-1 hover:opacity-70 transition absolute top-3 rounded-full border border-black  right-6 hover:bg-rose-500 hover:text-primary hover:border-primary"
               >
                 <X size={18} />
               </button>
