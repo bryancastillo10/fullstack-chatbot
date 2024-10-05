@@ -21,6 +21,8 @@ const UpdateAppointmentModal = () => {
       onSubmit={handleSubmit}
       title="Update Appointment"
       actionLabel="Update"
+      secondaryAction={handleCloseModal}
+      secondaryActionLabel="Cancel"
       body={<p>Test Body</p>}
     />
   );
