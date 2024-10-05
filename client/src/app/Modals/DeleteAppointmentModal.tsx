@@ -21,6 +21,8 @@ const DeleteAppointmentModal = () => {
       onSubmit={handleSubmit}
       title="Delete Appointment"
       actionLabel="Delete"
+      secondaryAction={handleCloseModal}
+      secondaryActionLabel="Cancel"
       body={<p>Test Body</p>}
     />
   );
