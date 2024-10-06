@@ -3,8 +3,8 @@ import { CreateGetAppointment } from "../types/appointment";
 import { PencilSimple, TrashSimple } from "@phosphor-icons/react";
 
 const getAppointmentColumn = (
-  handleUpdate: () => void,
-  handleDelete: () => void
+  handleUpdate: (selectedId: string) => void,
+  handleDelete: (selectedId: string) => void
 ): GridColDef[] => [
   {
     field: "createdAt",
@@ -41,24 +41,24 @@ const getAppointmentColumn = (
     minWidth: 100,
   },
   {
-    field: "actions",
+    field: "appointment_id",
     headerName: "Actions",
     flex: 1,
     minWidth: 90,
     sortable: false,
-    renderCell: () => (
+    renderCell: (params: GridRenderCellParams<CreateGetAppointment>) => (
       <div style={{ display: "flex", gap: "10px", marginTop: "12px" }}>
         <PencilSimple
           size={18}
           weight="fill"
           className="cursor-pointer hover:text-secondary"
-          onClick={() => handleUpdate()}
+          onClick={() => handleUpdate(params.value)}
         />
         <TrashSimple
           size={18}
           weight="fill"
           className="cursor-pointer hover:text-secondary"
-          onClick={() => handleDelete()}
+          onClick={() => handleDelete(params.value)}
         />
       </div>
     ),
