@@ -21,6 +21,9 @@ const Appointments = () => {
     setTimeSlot,
     handleFormStateChange,
     handleDateChange,
+    handleSubmit,
+    isError,
+    isLoading,
   } = useCreateAppointment();
 
   const dateRange = {
@@ -144,7 +147,12 @@ const Appointments = () => {
           </Button>
         </div>
       </form>
-      <ConfirmAppointmentModal appointmentData={appointmentForm} />
+      <ConfirmAppointmentModal
+        appointmentData={appointmentForm}
+        handleSubmit={handleSubmit}
+        isLoading={isLoading}
+        isError={isError}
+      />
     </section>
   );
 };
