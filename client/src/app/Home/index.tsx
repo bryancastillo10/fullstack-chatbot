@@ -1,6 +1,9 @@
 import { useState } from "react";
 import Weather from "./Weather";
 import { useAppSelector } from "../../redux/Provider";
+import { useGetAppointmentQuery } from "../../api/appointment";
+import { CreateGetAppointment } from "../../types/appointment";
+import { formatDate } from "../../utils/formatDate";
 import { RangeKeyDict, Range } from "react-date-range";
 import Calendar from "../../reusables/Calendar";
 
@@ -10,6 +13,17 @@ import DeleteAppointmentModal from "../Modals/DeleteAppointmentModal";
 
 const HomePage = () => {
   const currentUser = useAppSelector((state) => state.global.user);
+  const { data: appointments, isError } = useGetAppointmentQuery();
+
+  // Data Row Configuration
+  const reducedAppointment: CreateGetAppointment[] = Array.isArray(appointments)
+    ? appointments.map((appointment) => ({
+        ...appointment,
+        consultant: appointment.consultant?.name ?? "",
+        service: appointment.service?.name ?? "",
+        createdAt: formatDate(appointment.createdAt),
+      }))
+    : [];
 
   const initialDateRange = {
     startDate: new Date(),
@@ -32,7 +46,10 @@ const HomePage = () => {
           <p>{currentUser?.username} 👋</p>
         </div>
         <div className="w-full flex flex-col xl:flex-row gap-x-4 ">
-          <AppointmentTable />
+          <AppointmentTable
+            appointmentData={reducedAppointment}
+            isError={isError}
+          />
           <div className="flex flex-col gap-y-2 w-fit place-content-center">
             <Calendar
               value={dateRange}
