@@ -11,23 +11,23 @@ export interface SignInRequest {
 }
 
 export interface AuthSuccessResponse {
-    message?: string;
-    user?: {
-      user_id: string;
-      username: string;
-      email: string;
-      profilePicture: string;
-      createdAt: string;
-      updatedAt: string;
-    };
-    error?:string;
-  }
+  message?: string;
+  user?: {
+    id: string;
+    username: string;
+    email: string;
+    profilePicture: string;
+    createdAt: string;
+    updatedAt: string;
+  };
+  error?: string;
+}
 export interface LogoutResponse {
-    message: string;
-  }
+  message: string;
+}
 export interface AuthError {
-  status?:number;
-  data?:{
-    error?:string;
-  }
+  status?: number;
+  data?: {
+    error?: string;
+  };
 }

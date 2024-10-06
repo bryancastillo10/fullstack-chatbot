@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export interface User {
-  user_id: string;
+  id: string;
   username: string;
   email: string;
   profilePicture: string;
@@ -18,11 +18,11 @@ export interface InitialStateTypes {
 const initialState: InitialStateTypes = {
   isAuthenticated: false,
   isSidebarCollapsed: false,
-  user: null
+  user: null,
 };
 
 export const globalSlice = createSlice({
-  name: 'global',
+  name: "global",
   initialState,
   reducers: {
     setCurrentUser: (state, action: PayloadAction<User>) => {
@@ -35,9 +35,10 @@ export const globalSlice = createSlice({
     },
     setSidebarCollapsed: (state, action: PayloadAction<boolean>) => {
       state.isSidebarCollapsed = action.payload;
-    }
-  }
+    },
+  },
 });
 
-export const { setCurrentUser, setSidebarCollapsed, clearCurrentUser } = globalSlice.actions;
+export const { setCurrentUser, setSidebarCollapsed, clearCurrentUser } =
+  globalSlice.actions;
 export default globalSlice.reducer;
