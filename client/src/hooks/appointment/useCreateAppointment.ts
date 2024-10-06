@@ -2,9 +2,13 @@ import { useState, useEffect, useCallback } from "react";
 import { RangeKeyDict } from "react-date-range";
 import { AppointmentRequest } from "../../types/appointment";
 import { useAppSelector } from "../../redux/Provider";
+import { useCreateAppointmentMutation } from "../../api/appointment";
+import { toast } from "sonner";
 
 const useCreateAppointment = () => {
   const currentUser = useAppSelector((state) => state.global.user);
+  const [createAppointment, { isLoading, isError }] =
+    useCreateAppointmentMutation();
 
   const [appointmentForm, setAppointmentForm] = useState<AppointmentRequest>({
     topic: "",
@@ -69,6 +73,16 @@ const useCreateAppointment = () => {
     }));
   }, []);
 
+  const handleSubmit = async () => {
+    try {
+      await createAppointment(appointmentForm);
+      toast.success("Appointment has been booked successfully");
+    } catch (error) {
+      toast.error("Failed to submit the appointment");
+      console.error(error);
+    }
+  };
+
   return {
     appointmentForm,
     setService,
@@ -76,6 +90,9 @@ const useCreateAppointment = () => {
     setTimeSlot,
     handleFormStateChange,
     handleDateChange,
+    handleSubmit,
+    isLoading,
+    isError,
   };
 };
 
