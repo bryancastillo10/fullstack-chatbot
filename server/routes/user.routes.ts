@@ -1,4 +1,5 @@
 import express from "express";
+import multer from "multer";
 import {
     updateUserProfile,
     updateProfilePicture,
@@ -8,10 +9,10 @@ import {
 import protectRoute from "../middleware/protectRoute";
 
 const router = express.Router();
-
+const upload = multer({ storage: multer.memoryStorage() });
 // Endpoints
 router.put("/update/:user_id",protectRoute,updateUserProfile);
-router.put("/updatepicture/:user_id",protectRoute, updateProfilePicture);
+router.post("/updatepicture/:user_id",upload.single("file"), updateProfilePicture);
 router.delete("/delete/:user_id",protectRoute, deleteProfile)
 
 
