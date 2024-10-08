@@ -56,10 +56,15 @@ export const updateProfilePicture = async (
       throw new Error(`Supabase upload error: ${uploadError.message}`);
     }
 
+    const username = await prisma.user.findFirst({
+      where: { user_id },
+      select: { username: true },
+    });
+
     const { data: publicURLData, error: urlError }: SupabaseUploadResponse =
       supabase.storage
         .from("profile-pictures")
-        .getPublicUrl(`public/${user_id}/${file.originalname}`);
+        .getPublicUrl(`public/${username}/${user_id}==${file.originalname}`);
 
     if (urlError || !publicURLData?.publicUrl) {
       throw new Error("Failed to retrieve the public image URL");
