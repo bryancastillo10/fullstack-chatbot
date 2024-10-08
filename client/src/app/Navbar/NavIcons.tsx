@@ -23,7 +23,8 @@ const NavIcons = ({
 }: NavIconProps) => {
   const currentUser = useAppSelector((state) => state.global.user);
   const BASE_API = import.meta.env.VITE_REACT_BASE_API_URL;
-  console.log(currentUser?.profilePicture);
+  const SUPABASE_URL = import.meta.env.VITE_REACT_APP_SUPABASE_URL;
+
   return (
     <li className="relative text-primary">
       {MenuIcon ? (
@@ -41,7 +42,7 @@ const NavIcons = ({
           onClick={toggle}
           src={
             currentUser?.profilePicture
-              ? currentUser.profilePicture
+              ? `${SUPABASE_URL}/storage/v1/object/public/profile-pictures/${currentUser.profilePicture}`
               : `${BASE_API}/default-avatar.png`
           }
           className="size-10 cursor-pointer"
