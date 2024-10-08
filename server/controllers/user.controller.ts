@@ -43,8 +43,7 @@ export const updateProfilePicture = async (
 
   const file = req.file;
   if (!file) {
-    res.status(404).json({ error: "No file has been uploaded" });
-    return;
+    return res.status(400).json({ error: "No file has been uploaded" });
   }
 
   try {
@@ -56,37 +55,29 @@ export const updateProfilePicture = async (
       throw new Error(`Supabase upload error: ${uploadError.message}`);
     }
 
-    const username = await prisma.user.findFirst({
-      where: { user_id },
-      select: { username: true },
-    });
-
-    const { data: publicURLData, error: urlError }: SupabaseUploadResponse =
-      supabase.storage
+    const { data: signedUrlData, error: signedUrlError } =
+      await supabase.storage
         .from("profile-pictures")
-        .getPublicUrl(`public/${username}/${user_id}==${file.originalname}`);
+        .createSignedUrl(`public/${user_id}/${file.originalname}`, 60 * 60); // 1 hour validity
 
-    if (urlError || !publicURLData?.publicUrl) {
-      throw new Error("Failed to retrieve the public image URL");
+    if (signedUrlError || !signedUrlData?.signedUrl) {
+      throw new Error("Failed to generate a signed URL for the image");
     }
 
-    const publicURL = publicURLData.publicUrl;
+    const signedUrl = signedUrlData.signedUrl;
 
     const updatedUser = await prisma.user.update({
       where: { user_id },
-      data: { profilePicture: publicURL },
+      data: { profilePicture: signedUrl },
     });
 
     res.json({
-      message: "Profile picture has been changed successfully",
-      profilePicture: publicURL,
+      message: "Profile picture has been updated successfully",
+      profilePicture: signedUrl,
       user: updatedUser,
     });
   } catch (error) {
-    console.error(
-      "Error at the updateProfilePicture controller",
-      error.message
-    );
+    console.error("Error in updateProfilePicture:", error.message);
     res.status(500).json({ error: "Something went wrong" });
   }
 };
