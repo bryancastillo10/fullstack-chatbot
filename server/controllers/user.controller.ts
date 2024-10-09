@@ -91,8 +91,8 @@ export const getProfilePicture = async (req: Request, res: Response) => {
     if (!userProfile || !userProfile.profilePicture) {
       return res.status(404).json({ error: "Profile picture path not found" });
     }
-
-    const profilePictureUrl = `${process.env.SUPABASE_URL}/storage/v1/object/public/${userProfile.profilePicture}`;
+    const bucketName = "profile-pictures";
+    const profilePictureUrl = `${process.env.SUPABASE_URL}/storage/v1/object/public/${bucketName}/${userProfile.profilePicture}`;
 
     res.status(200).json({
       message: "Profile picture path has been successfully retrieved",
