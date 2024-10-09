@@ -1,8 +1,7 @@
-
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import globalReducer from "./global";
 import modalReducer from "./modal";
-import { authApi, appointmentApi } from "../api";
+import { authApi, appointmentApi, userApi } from "../api";
 
 import {
   persistReducer,
@@ -48,6 +47,7 @@ const rootReducer = combineReducers({
   modal: modalReducer,
   [authApi.reducerPath]: authApi.reducer,
   [appointmentApi.reducerPath]: appointmentApi.reducer,
+  [userApi.reducerPath]: userApi.reducer,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
@@ -60,6 +60,10 @@ export const makeStore = () => {
         serializableCheck: {
           ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
         },
-      }).concat(authApi.middleware, appointmentApi.middleware),
+      }).concat(
+        authApi.middleware,
+        appointmentApi.middleware,
+        userApi.middleware
+      ),
   });
 };
