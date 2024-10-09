@@ -21,7 +21,7 @@ export const userApi = createApi({
       { id: string; data: UpdateProfileInfoRequest }
     >({
       query: ({ id, data }) => ({
-        url: `/update/${id}`,
+        url: `/user/update/${id}`,
         method: "PUT",
         body: data,
       }),
@@ -35,7 +35,7 @@ export const userApi = createApi({
         const formData = new FormData();
         formData.append("file", file);
         return {
-          url: `/profile-picture/update/${id}`,
+          url: `/user/profile-picture/update/${id}`,
           method: "POST",
           body: formData,
         };
@@ -43,12 +43,12 @@ export const userApi = createApi({
     }),
     getProfilePicture: builder.query<UpdateProfileInfoResponse, string>({
       query: (id) => ({
-        url: `/getpicture/${id}`,
+        url: `/user/getpicture/${id}`,
       }),
     }),
     deleteProfile: builder.mutation<DeleteProfileResponse, string>({
       query: (id) => ({
-        url: `/delete/${id}`,
+        url: `/user/delete/${id}`,
         method: "DELETE",
       }),
     }),

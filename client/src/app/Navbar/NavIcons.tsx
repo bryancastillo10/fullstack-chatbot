@@ -1,6 +1,7 @@
 import { FC, ReactNode } from "react";
 import { Icon } from "@phosphor-icons/react";
 import { useAppSelector } from "../../redux/Provider";
+import { useGetProfilePictureQuery } from "../../api/user";
 
 type MessageBox = FC<{ content: string }>;
 
@@ -22,8 +23,15 @@ const NavIcons = ({
   MenuContent,
 }: NavIconProps) => {
   const currentUser = useAppSelector((state) => state.global.user);
-  const BASE_API = import.meta.env.VITE_REACT_BASE_API_URL;
+  const { data: profilePicture } = useGetProfilePictureQuery(currentUser?.id!);
+
   const SUPABASE_URL = import.meta.env.VITE_REACT_APP_SUPABASE_URL;
+  const isDefault =
+    currentUser?.profilePicture === "/default/defaultprofilepic.png";
+
+  const profilePicUrl = isDefault
+    ? `${SUPABASE_URL}/storage/v1/object/public/profile-pictures/public${currentUser?.profilePicture}`
+    : `${profilePicture?.profilePicture}`;
 
   return (
     <li className="relative text-primary">
@@ -40,11 +48,7 @@ const NavIcons = ({
       ) : (
         <img
           onClick={toggle}
-          src={
-            currentUser?.profilePicture
-              ? `${SUPABASE_URL}/storage/v1/object/public/profile-pictures/${currentUser.profilePicture}`
-              : `${BASE_API}/default-avatar.png`
-          }
+          src={profilePicUrl}
           className="size-10 cursor-pointer"
           alt="avatar-pic"
         />
