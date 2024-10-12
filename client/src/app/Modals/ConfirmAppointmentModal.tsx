@@ -5,20 +5,13 @@ import {
   Leaf,
   ChatDots,
   HardHat,
-  Icon,
 } from "@phosphor-icons/react";
-
-import { BigSpinner, Modal } from "../../reusables";
+import { BigSpinner, Modal, AppointmentRow } from "../../reusables";
 import { useAppSelector, useAppDispatch } from "../../redux/Provider";
 import { closeModal } from "../../redux/modal";
-import { AppointmentRequest } from "../../types/appointment";
-import { formatDate } from "../../utils/formatDate";
 import { toast } from "sonner";
-
-import {
-  useGetServicesQuery,
-  useGetConsultantsQuery,
-} from "../../api/appointment";
+import { AppointmentRequest } from "../../types/appointment";
+import useFormatAppointmentDetails from "../../hooks/appointment/useFormatAppointmentDetails";
 
 interface ConfirmAppointmentModalProps {
   appointmentData: AppointmentRequest;
@@ -27,23 +20,6 @@ interface ConfirmAppointmentModalProps {
   handleSubmit: () => void;
 }
 
-interface AppointmentRowProps {
-  icon: Icon;
-  label: string;
-  value: string | undefined;
-}
-
-const AppointmentRow = ({ icon: Icon, label, value }: AppointmentRowProps) => {
-  return (
-    <div className="grid grid-cols-2 items-center space-y-2">
-      <p className="flex items-center font-semibold gap-x-2">
-        {<Icon size={20} />} {label}
-      </p>
-      <p className="italic">{value}</p>
-    </div>
-  );
-};
-
 const ConfirmAppointmentModal = ({
   appointmentData,
   handleSubmit,
@@ -51,28 +27,11 @@ const ConfirmAppointmentModal = ({
   isLoading,
 }: ConfirmAppointmentModalProps) => {
   const dispatch = useAppDispatch();
-  const { data: services } = useGetServicesQuery();
-  const { data: consultants } = useGetConsultantsQuery();
-
   const isModalOpen = useAppSelector((state) => state.modal.isOpen);
   const confirmModal = useAppSelector((state) => state.modal.modalType);
 
-  const selectedService = services
-    ? services.find(
-        (service) => service.service_id === appointmentData.service_id
-      )?.name
-    : "No services selected";
-
-  const selectedConsultant = consultants
-    ? consultants.find(
-        (consult) => consult.consultant_id === appointmentData.consultant_id
-      )?.name
-    : "No consultant selected";
-
-  const viewDate = `${formatDate(
-    appointmentData?.startDate.toISOString()
-  )} to ${formatDate(appointmentData?.endDate.toISOString())}`;
-
+  const { selectedService, selectedConsultant, viewDate } =
+    useFormatAppointmentDetails({ appointmentData });
   const handleCloseModal = () => {
     dispatch(closeModal());
   };
@@ -83,12 +42,12 @@ const ConfirmAppointmentModal = ({
         <AppointmentRow
           icon={BookOpen}
           label="Service"
-          value={selectedService}
+          value={selectedService!}
         />
         <AppointmentRow
           icon={HardHat}
           label="Consultant"
-          value={selectedConsultant}
+          value={selectedConsultant!}
         />
         <AppointmentRow
           icon={Calendar}
@@ -109,16 +68,14 @@ const ConfirmAppointmentModal = ({
           <p className="flex items-center font-semibold gap-x-2">
             <ChatDots /> Message
           </p>
-          <p className="mt-1 border border-black rounded-xl px-2 py-1 text-sm">
-            {appointmentData.message}
-          </p>
+          <p className="mt-1  px-2 py-1 text-sm">{appointmentData.message}</p>
         </div>
       </div>
     </section>
   );
 
   if (isError) {
-    toast.error("Failed to create the appointment");
+    toast.error("Failed to create the appointment, check the required fields");
   }
 
   return (

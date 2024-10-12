@@ -10,6 +10,7 @@ import Calendar from "../../reusables/Calendar";
 import AppointmentTable from "./AppointmentTable";
 import UpdateAppointmentModal from "../Modals/UpdateAppointmentModal";
 import DeleteAppointmentModal from "../Modals/DeleteAppointmentModal";
+import useAppointmentModal from "../../hooks/appointment/useAppointmentModal";
 
 const HomePage = () => {
   const currentUser = useAppSelector((state) => state.global.user);
@@ -25,6 +26,11 @@ const HomePage = () => {
       }))
     : [];
 
+  // appointment modal hook
+  const { selectedAppointment, handleUpdate, handleDelete, handleCloseModal } =
+    useAppointmentModal({ appointmentData: reducedAppointment });
+
+  // date range
   const initialDateRange = {
     startDate: new Date(),
     endDate: new Date(),
@@ -48,6 +54,8 @@ const HomePage = () => {
         <div className="w-full flex flex-col xl:flex-row gap-x-4 ">
           <AppointmentTable
             appointmentData={reducedAppointment}
+            handleUpdate={handleUpdate}
+            handleDelete={handleDelete}
             isError={isError}
           />
           <div className="flex flex-col gap-y-2 w-fit place-content-center">
@@ -76,8 +84,14 @@ const HomePage = () => {
           <h1>Icons and Badges</h1>
         </div>
       </aside>
-      <UpdateAppointmentModal />
-      <DeleteAppointmentModal />
+      <UpdateAppointmentModal
+        selectedAppointment={selectedAppointment!}
+        handleCloseModal={handleCloseModal}
+      />
+      <DeleteAppointmentModal
+        selectedAppointment={selectedAppointment!}
+        handleCloseModal={handleCloseModal}
+      />
     </section>
   );
 };

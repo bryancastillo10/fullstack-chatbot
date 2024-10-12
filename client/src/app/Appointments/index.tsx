@@ -6,7 +6,7 @@ import {
   Button,
   Calendar,
 } from "../../reusables";
-import { Cloud, BookOpen, ChatDots, HardHat } from "@phosphor-icons/react";
+import { Leaf, BookOpen, ChatDots, HardHat } from "@phosphor-icons/react";
 import TimeSelector from "./TimeSelector";
 import useCreateAppointment from "../../hooks/appointment/useCreateAppointment";
 import useAppointmentForm from "../../hooks/appointment/useAppointmentForm";
@@ -68,7 +68,7 @@ const Appointments = () => {
               id="topic"
               type="text"
               label="Topic"
-              icon={Cloud}
+              icon={Leaf}
               value={appointmentForm.topic}
               onChange={(e) => handleFormStateChange("topic", e.target.value)}
               validationMessage="Short title about your environmental concern"

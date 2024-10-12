@@ -49,7 +49,10 @@ const Modal = ({
       return;
     }
     onSubmit();
-  }, [disabled, onSubmit]);
+    setTimeout(() => {
+      onClose();
+    }, 300);
+  }, [disabled, onSubmit, onClose]);
 
   // Secondary Action
   const handleSecondaryAction = useCallback(() => {
