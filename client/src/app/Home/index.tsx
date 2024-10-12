@@ -84,7 +84,10 @@ const HomePage = () => {
           <h1>Icons and Badges</h1>
         </div>
       </aside>
-      <UpdateAppointmentModal />
+      <UpdateAppointmentModal
+        selectedAppointment={selectedAppointment!}
+        handleCloseModal={handleCloseModal}
+      />
       <DeleteAppointmentModal
         selectedAppointment={selectedAppointment!}
         handleCloseModal={handleCloseModal}

@@ -9,14 +9,9 @@ import {
 import { BigSpinner, Modal, AppointmentRow } from "../../reusables";
 import { useAppSelector, useAppDispatch } from "../../redux/Provider";
 import { closeModal } from "../../redux/modal";
-import { AppointmentRequest } from "../../types/appointment";
-import { formatDate } from "../../utils/formatDate";
 import { toast } from "sonner";
-
-import {
-  useGetServicesQuery,
-  useGetConsultantsQuery,
-} from "../../api/appointment";
+import { AppointmentRequest } from "../../types/appointment";
+import useFormatAppointmentDetails from "../../hooks/appointment/useFormatAppointmentDetails";
 
 interface ConfirmAppointmentModalProps {
   appointmentData: AppointmentRequest;
@@ -32,28 +27,11 @@ const ConfirmAppointmentModal = ({
   isLoading,
 }: ConfirmAppointmentModalProps) => {
   const dispatch = useAppDispatch();
-  const { data: services } = useGetServicesQuery();
-  const { data: consultants } = useGetConsultantsQuery();
-
   const isModalOpen = useAppSelector((state) => state.modal.isOpen);
   const confirmModal = useAppSelector((state) => state.modal.modalType);
 
-  const selectedService = services
-    ? services.find(
-        (service) => service.service_id === appointmentData.service_id
-      )?.name
-    : "No services selected";
-
-  const selectedConsultant = consultants
-    ? consultants.find(
-        (consult) => consult.consultant_id === appointmentData.consultant_id
-      )?.name
-    : "No consultant selected";
-
-  const viewDate = `${formatDate(
-    appointmentData?.startDate.toISOString()
-  )} to ${formatDate(appointmentData?.endDate.toISOString())}`;
-
+  const { selectedService, selectedConsultant, viewDate } =
+    useFormatAppointmentDetails({ appointmentData });
   const handleCloseModal = () => {
     dispatch(closeModal());
   };
