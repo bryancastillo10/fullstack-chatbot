@@ -1,15 +1,22 @@
 import { Modal } from "../../reusables";
 import { useAppSelector, useAppDispatch } from "../../redux/Provider";
 import { closeModal } from "../../redux/modal";
+import { CreateGetAppointment } from "../../types/appointment";
 
-const DeleteAppointmentModal = () => {
+interface DeleteAppointmentModalProps {
+  selectedAppointment: CreateGetAppointment;
+  handleCloseModal: () => void;
+}
+
+const DeleteAppointmentModal = ({
+  selectedAppointment,
+  handleCloseModal,
+}: DeleteAppointmentModalProps) => {
   const dispatch = useAppDispatch();
   const isModalOpen = useAppSelector((state) => state.modal.isOpen);
   const deleteModal = useAppSelector((state) => state.modal.modalType);
 
-  const handleCloseModal = () => {
-    dispatch(closeModal());
-  };
+  console.log(selectedAppointment);
 
   const handleSubmit = () => {
     dispatch(closeModal());

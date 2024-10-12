@@ -1,23 +1,21 @@
-import useAppointmentModal from "../../hooks/appointment/useAppointmentModal";
 import { DataGrid } from "@mui/x-data-grid";
-
 import { CreateGetAppointment } from "../../types/appointment";
-
 import getAppointmentColumn from "../../config/getAppointmentColumn";
 
 interface AppointmentTableProps {
   appointmentData: CreateGetAppointment[];
+  handleUpdate: (selectedId: string) => void;
+  handleDelete: (selectedId: string) => void;
   isError: boolean;
 }
 
 const AppointmentTable = ({
   appointmentData,
   isError,
+  handleUpdate,
+  handleDelete,
 }: AppointmentTableProps) => {
   // Column Configuration
-  const { handleUpdate, handleDelete } = useAppointmentModal({
-    appointmentData,
-  });
   const appointmentColumn = getAppointmentColumn(handleUpdate, handleDelete);
 
   if (isError) {

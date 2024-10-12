@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useAppDispatch } from "../../redux/Provider";
-import { openModal } from "../../redux/modal";
+import { openModal, closeModal } from "../../redux/modal";
 import { CreateGetAppointment } from "../../types/appointment";
 
 interface UseAppointmentProps {
@@ -28,9 +28,15 @@ const useAppointmentModal = ({ appointmentData }: UseAppointmentProps) => {
     setSelectedAppointment(appointmentToDelete!);
   };
 
+  const handleCloseModal = () => {
+    dispatch(closeModal());
+    setSelectedAppointment(null);
+  };
+
   return {
     handleUpdate,
     handleDelete,
+    handleCloseModal,
     selectedAppointment,
   };
 };
