@@ -11,11 +11,15 @@ const UpdateAppointmentModal = ({
   const isModalOpen = useAppSelector((state) => state.modal.isOpen);
   const updateModal = useAppSelector((state) => state.modal.modalType);
 
-  console.log(selectedAppointment);
-
   const handleSubmit = () => {
     dispatch(closeModal());
   };
+
+  const updateAppointmentForm = (
+    <div className="grid grid-cols-2 items-center">
+      {selectedAppointment?.topic}
+    </div>
+  );
   return (
     <Modal
       openModal={isModalOpen && updateModal === "updateAppointment"}
@@ -25,7 +29,7 @@ const UpdateAppointmentModal = ({
       actionLabel="Update"
       secondaryAction={handleCloseModal}
       secondaryActionLabel="Cancel"
-      body={<p>Test Body</p>}
+      body={updateAppointmentForm}
     />
   );
 };
