@@ -14,7 +14,13 @@ import useAppointmentModal from "../../hooks/appointment/useAppointmentModal";
 
 const HomePage = () => {
   const currentUser = useAppSelector((state) => state.global.user);
-  const { data: appointments, isError } = useGetAppointmentQuery();
+  const {
+    data: appointments,
+    isError,
+    refetch,
+  } = useGetAppointmentQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
 
   // Data Row Configuration
   const reducedAppointment: CreateGetAppointment[] = Array.isArray(appointments)
@@ -28,7 +34,10 @@ const HomePage = () => {
 
   // appointment modal hook
   const { selectedAppointment, handleUpdate, handleDelete, handleCloseModal } =
-    useAppointmentModal({ appointmentData: reducedAppointment });
+    useAppointmentModal({
+      appointmentData: reducedAppointment,
+      onAppointmentChange: refetch,
+    });
 
   // date range
   const initialDateRange = {
@@ -87,10 +96,12 @@ const HomePage = () => {
       <UpdateAppointmentModal
         selectedAppointment={selectedAppointment!}
         handleCloseModal={handleCloseModal}
+        onAppointmentChange={refetch}
       />
       <DeleteAppointmentModal
         selectedAppointment={selectedAppointment!}
         handleCloseModal={handleCloseModal}
+        onAppointmentChange={refetch}
       />
     </section>
   );

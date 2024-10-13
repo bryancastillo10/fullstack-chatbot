@@ -2,28 +2,34 @@ import {
   Clock,
   BookOpen,
   Leaf,
+  Calendar,
   ChatDots,
   HardHat,
 } from "@phosphor-icons/react";
-import { Modal, AppointmentRow } from "../../reusables";
+import { Modal, AppointmentRow, BigSpinner } from "../../reusables";
 import { useAppSelector, useAppDispatch } from "../../redux/Provider";
 import { closeModal } from "../../redux/modal";
 import { AppointmentModalProps } from "../../types/modal";
 import {
   useGetServicesQuery,
   useGetConsultantsQuery,
+  useDeleteAppointmentMutation,
 } from "../../api/appointment";
-// import { formatDate } from "../../utils/formatDate";
+import { formatDate } from "../../utils/formatDate";
+import { toast } from "sonner";
 
 const DeleteAppointmentModal = ({
   selectedAppointment,
   handleCloseModal,
+  onAppointmentChange,
 }: AppointmentModalProps) => {
   const dispatch = useAppDispatch();
   const isModalOpen = useAppSelector((state) => state.modal.isOpen);
   const deleteModal = useAppSelector((state) => state.modal.modalType);
   const { data: services } = useGetServicesQuery();
   const { data: consultants } = useGetConsultantsQuery();
+  const [deleteAppointment, { isError, isLoading }] =
+    useDeleteAppointmentMutation();
 
   const selectedService = services
     ? services.find(
@@ -31,7 +37,19 @@ const DeleteAppointmentModal = ({
       )?.name
     : "No services selected";
 
-  // Date range view still needs to be fixed
+  const startDate = selectedAppointment?.startDate
+    ? new Date(selectedAppointment.startDate)
+    : null;
+  const endDate = selectedAppointment?.endDate
+    ? new Date(selectedAppointment.endDate)
+    : null;
+
+  const viewDate =
+    startDate && endDate
+      ? `${formatDate(startDate.toISOString())} to ${formatDate(
+          endDate.toISOString()
+        )}`
+      : "No date selected";
 
   const selectedConsultant = consultants
     ? consultants.find(
@@ -40,9 +58,19 @@ const DeleteAppointmentModal = ({
       )?.name
     : "No consultant selected";
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    await deleteAppointment({
+      appointment_id: selectedAppointment?.appointment_id || "No id selected",
+    });
+    onAppointmentChange();
     dispatch(closeModal());
+    toast.success("The appointment has been deleted");
   };
+
+  if (isError) {
+    toast.error("Failed to delete the selected appointment!");
+    return;
+  }
 
   const appointmentDetails = (
     <section className="w-full">
@@ -57,6 +85,8 @@ const DeleteAppointmentModal = ({
           label="Consultant"
           value={selectedConsultant!}
         />
+        <AppointmentRow icon={Calendar} label="Date" value={viewDate} />
+
         <AppointmentRow
           icon={Clock}
           label="Time Slot"
@@ -88,7 +118,15 @@ const DeleteAppointmentModal = ({
       actionLabel="Delete"
       secondaryAction={handleCloseModal}
       secondaryActionLabel="Cancel"
-      body={appointmentDetails}
+      body={
+        isLoading ? (
+          <div className="flex justify-center">
+            <BigSpinner />
+          </div>
+        ) : (
+          appointmentDetails
+        )
+      }
     />
   );
 };

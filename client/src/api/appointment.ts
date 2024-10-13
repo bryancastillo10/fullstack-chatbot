@@ -63,7 +63,6 @@ export const appointmentApi = createApi({
       DeleteAppointment,
       {
         appointment_id: string;
-        appointmentData: AppointmentRequest;
       }
     >({
       query: ({ appointment_id }) => ({

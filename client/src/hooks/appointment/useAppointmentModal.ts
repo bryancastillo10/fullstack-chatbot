@@ -5,19 +5,24 @@ import { CreateGetAppointment } from "../../types/appointment";
 
 interface UseAppointmentProps {
   appointmentData: CreateGetAppointment[];
+  onAppointmentChange: () => void;
 }
 
-const useAppointmentModal = ({ appointmentData }: UseAppointmentProps) => {
+const useAppointmentModal = ({
+  appointmentData,
+  onAppointmentChange,
+}: UseAppointmentProps) => {
   const dispatch = useAppDispatch();
   const [selectedAppointment, setSelectedAppointment] =
     useState<CreateGetAppointment | null>(null);
 
-  const handleUpdate = (selectedId: string) => {
+  const handleUpdate = async (selectedId: string) => {
     dispatch(openModal("updateAppointment"));
     const appoinmentToUpdate = appointmentData.find(
       (appoint) => appoint.appointment_id === selectedId
     );
     setSelectedAppointment(appoinmentToUpdate!);
+    onAppointmentChange();
   };
 
   const handleDelete = (selectedId: string) => {
@@ -26,6 +31,7 @@ const useAppointmentModal = ({ appointmentData }: UseAppointmentProps) => {
       (appoint) => appoint.appointment_id === selectedId
     );
     setSelectedAppointment(appointmentToDelete!);
+    onAppointmentChange();
   };
 
   const handleCloseModal = () => {
