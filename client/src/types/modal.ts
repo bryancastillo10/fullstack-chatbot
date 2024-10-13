@@ -1,7 +1,7 @@
 import { CreateGetAppointment } from "./appointment";
 
 export interface AppointmentModalProps {
-  selectedAppointment: CreateGetAppointment | null;
+  selectedAppointment: CreateGetAppointment;
   handleCloseModal: () => void;
   onAppointmentChange: () => void;
 }
