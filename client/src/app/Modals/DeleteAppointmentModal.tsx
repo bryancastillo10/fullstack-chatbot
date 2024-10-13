@@ -10,13 +10,9 @@ import { Modal, AppointmentRow, BigSpinner } from "../../reusables";
 import { useAppSelector, useAppDispatch } from "../../redux/Provider";
 import { closeModal } from "../../redux/modal";
 import { AppointmentModalProps } from "../../types/modal";
-import {
-  useGetServicesQuery,
-  useGetConsultantsQuery,
-  useDeleteAppointmentMutation,
-} from "../../api/appointment";
-import { formatDate } from "../../utils/formatDate";
+import { useDeleteAppointmentMutation } from "../../api/appointment";
 import { toast } from "sonner";
+import useFormatAppointmentDetails from "../../hooks/appointment/useFormatAppointmentDetails";
 
 const DeleteAppointmentModal = ({
   selectedAppointment,
@@ -26,37 +22,11 @@ const DeleteAppointmentModal = ({
   const dispatch = useAppDispatch();
   const isModalOpen = useAppSelector((state) => state.modal.isOpen);
   const deleteModal = useAppSelector((state) => state.modal.modalType);
-  const { data: services } = useGetServicesQuery();
-  const { data: consultants } = useGetConsultantsQuery();
   const [deleteAppointment, { isError, isLoading }] =
     useDeleteAppointmentMutation();
 
-  const selectedService = services
-    ? services.find(
-        (service) => service.service_id === selectedAppointment?.service_id
-      )?.name
-    : "No services selected";
-
-  const startDate = selectedAppointment?.startDate
-    ? new Date(selectedAppointment.startDate)
-    : null;
-  const endDate = selectedAppointment?.endDate
-    ? new Date(selectedAppointment.endDate)
-    : null;
-
-  const viewDate =
-    startDate && endDate
-      ? `${formatDate(startDate.toISOString())} to ${formatDate(
-          endDate.toISOString()
-        )}`
-      : "No date selected";
-
-  const selectedConsultant = consultants
-    ? consultants.find(
-        (consult) =>
-          consult.consultant_id === selectedAppointment?.consultant_id
-      )?.name
-    : "No consultant selected";
+  const { selectedService, selectedConsultant, viewDate } =
+    useFormatAppointmentDetails({ selectedAppointment });
 
   const handleSubmit = async () => {
     await deleteAppointment({

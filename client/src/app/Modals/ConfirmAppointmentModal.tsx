@@ -11,8 +11,11 @@ import { useAppSelector, useAppDispatch } from "../../redux/Provider";
 import { closeModal } from "../../redux/modal";
 import { toast } from "sonner";
 import { AppointmentRequest } from "../../types/appointment";
-import useFormatAppointmentDetails from "../../hooks/appointment/useFormatAppointmentDetails";
-
+import {
+  useGetServicesQuery,
+  useGetConsultantsQuery,
+} from "../../api/appointment";
+import { formatDate } from "../../utils/formatDate";
 interface ConfirmAppointmentModalProps {
   appointmentData: AppointmentRequest;
   isError: boolean;
@@ -30,8 +33,24 @@ const ConfirmAppointmentModal = ({
   const isModalOpen = useAppSelector((state) => state.modal.isOpen);
   const confirmModal = useAppSelector((state) => state.modal.modalType);
 
-  const { selectedService, selectedConsultant, viewDate } =
-    useFormatAppointmentDetails({ appointmentData });
+  const { data: services } = useGetServicesQuery();
+  const { data: consultants } = useGetConsultantsQuery();
+
+  const selectedService = services
+    ? services.find(
+        (service) => service.service_id === appointmentData.service_id
+      )?.name
+    : "No services selected";
+
+  const selectedConsultant = consultants
+    ? consultants.find(
+        (consult) => consult.consultant_id === appointmentData.consultant_id
+      )?.name
+    : "No consultant selected";
+
+  const viewDate = `${formatDate(
+    appointmentData?.startDate.toISOString()
+  )} to ${formatDate(appointmentData?.endDate.toISOString())}`;
   const handleCloseModal = () => {
     dispatch(closeModal());
   };
@@ -64,6 +83,7 @@ const ConfirmAppointmentModal = ({
           label="Topic"
           value={appointmentData?.topic}
         />
+
         <div className="grid grid-cols-1 mt-4">
           <p className="flex items-center font-semibold gap-x-2">
             <ChatDots /> Message
