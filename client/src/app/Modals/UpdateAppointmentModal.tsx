@@ -1,4 +1,5 @@
-import { Modal } from "../../reusables";
+import { Leaf, Clock } from "@phosphor-icons/react";
+import { Modal, Input, CustomSelect } from "../../reusables";
 import { useAppSelector, useAppDispatch } from "../../redux/Provider";
 import { closeModal } from "../../redux/modal";
 import { AppointmentModalProps } from "../../types/modal";
@@ -15,10 +16,41 @@ const UpdateAppointmentModal = ({
     dispatch(closeModal());
   };
 
+  const statusOptions = [
+    {
+      value: "scheduled",
+      label: "Scheduled",
+    },
+    {
+      value: "pending",
+      label: "Pending",
+    },
+    {
+      value: "completed",
+      label: "Completed",
+    },
+  ];
+
   const updateAppointmentForm = (
-    <div className="grid grid-cols-2 items-center">
-      {selectedAppointment?.topic}
-    </div>
+    <section className="w-full flex flex-col">
+      <Input
+        id="topic"
+        type="text"
+        label="Topic"
+        icon={Leaf}
+        value={selectedAppointment?.topic}
+        onChange={() => {}}
+        validationMessage="Short title about your environmental concern"
+      />
+      <CustomSelect<string>
+        label="Appointment Status"
+        icon={Clock}
+        value={selectedAppointment?.status}
+        option={statusOptions}
+        onChange={() => {}}
+        validationMessage="Select the current status of the appointment"
+      />
+    </section>
   );
   return (
     <Modal

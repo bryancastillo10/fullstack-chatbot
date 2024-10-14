@@ -56,40 +56,34 @@ const ConfirmAppointmentModal = ({
   };
 
   const appointmentDetails = (
-    <section className="w-full">
-      <div className="flex flex-col">
-        <AppointmentRow
-          icon={BookOpen}
-          label="Service"
-          value={selectedService!}
-        />
-        <AppointmentRow
-          icon={HardHat}
-          label="Consultant"
-          value={selectedConsultant!}
-        />
-        <AppointmentRow
-          icon={Calendar}
-          label="Selected Date"
-          value={viewDate}
-        />
-        <AppointmentRow
-          icon={Clock}
-          label="Time Slot"
-          value={appointmentData?.appointmentTime}
-        />
-        <AppointmentRow
-          icon={Leaf}
-          label="Topic"
-          value={appointmentData?.topic}
-        />
+    <section className="grid grid-cols-2 ">
+      <AppointmentRow
+        icon={BookOpen}
+        label="Service"
+        value={selectedService!}
+      />
+      <AppointmentRow
+        icon={HardHat}
+        label="Consultant"
+        value={selectedConsultant!}
+      />
+      <AppointmentRow icon={Calendar} label="Selected Date" value={viewDate} />
+      <AppointmentRow
+        icon={Clock}
+        label="Time Slot"
+        value={appointmentData?.appointmentTime}
+      />
+      <AppointmentRow
+        icon={Leaf}
+        label="Topic"
+        value={appointmentData?.topic}
+      />
 
-        <div className="grid grid-cols-1 mt-4">
-          <p className="flex items-center font-semibold gap-x-2">
-            <ChatDots /> Message
-          </p>
-          <p className="mt-1  px-2 py-1 text-sm">{appointmentData.message}</p>
-        </div>
+      <div className="grid grid-cols-1 mt-4">
+        <p className="flex items-center font-semibold gap-x-2">
+          <ChatDots /> Message
+        </p>
+        <p className="mt-1  px-2 py-1 text-sm">{appointmentData.message}</p>
       </div>
     </section>
   );
