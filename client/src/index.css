@@ -1,38 +1,41 @@
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;600&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300;500;600&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-*{
-    @apply font-quicksand font-base scroll-smooth;
+* {
+  @apply font-quicksand font-base scroll-smooth;
 }
 
-body{
-    @apply bg-primary text-black;
+body {
+  @apply bg-primary text-black;
 }
 
-@layer utilities{
-    .text-hover-link {
+@layer utilities {
+  .text-hover-link {
     @apply leading-loose relative before:content-[''] 
     before:w-0 before:h-0.5  before:absolute before:bottom-[-0.3rem] before:bg-secondary
     before:transition-[width] before:duration-[0.2s,left] before:delay-[0.5s] 
     before:rounded-sm before:left-[0.2] hover:before:w-full hover:before:left-0;
   }
-  .custom-calendar{
+  .green-gradient {
+    @apply bg-gradient-to-bl from-black to-secondary;
+  }
+  .custom-calendar {
     @apply bg-primary;
   }
 }
 
 /* Custom styles for react-calendar */
 .custom-calendar .rdrDayToday .rdrDayNumber span:after {
-    background-color: #E4D7CF !important; 
-    color: #E9D417 !important; 
-  }
+  background-color: #e4d7cf !important;
+  color: #e9d417 !important;
+}
 
 .rdrCalendarWrapper {
-    background-color: #E4D7CF !important;
-    @apply rounded-2xl shadow-md;
+  background-color: #e4d7cf !important;
+  @apply rounded-2xl shadow-md;
 }
 
 /* Custom Material UI Data Grid  */
