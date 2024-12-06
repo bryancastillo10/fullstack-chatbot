@@ -3,6 +3,7 @@ import type { INotesData } from "@/data/interface";
 
 import TrashIcon from "@/assets/icons/TrashIcon";
 import { autoGrow, bodyParser, handleZIndex, setNewOffset } from "@/utils";
+import saveData from "@/actions/saveData";
 
 interface NoteCardProps{
     note: INotesData;
@@ -66,6 +67,9 @@ const NoteCard = ({ note }: NoteCardProps) => {
     const mouseUp = () => {
         document.removeEventListener("mousemove", mouseMove);
         document.removeEventListener("mouseup", mouseUp);
+
+        const newPosition = setNewOffset({card: cardRef}); 
+        saveData("position", newPosition, note.$id);
     };
 
     // Styling
