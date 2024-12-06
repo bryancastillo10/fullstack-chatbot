@@ -1,8 +1,15 @@
+import { mockData as notesData } from "@/api/mockData";
+import NoteCard from "@/components/NoteCard";
 
 const NotesPage = () => {
   return (
     <div>
-      <h1>Some Notes</h1>
+      {notesData.map((note) => (
+        <NoteCard
+          key={note.$id}
+          note={note}
+        />
+      ))}
     </div>
   )
 }
