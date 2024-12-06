@@ -1,6 +1,6 @@
-import type { INotesData } from "@/data/interface";
 
-export const mockData: INotesData[] = [
+
+export const mockData = [
     {
         $id: 1,
         body: JSON.stringify(
