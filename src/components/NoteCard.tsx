@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import type { INotesData } from "@/data/interface";
 
 import TrashIcon from "@/assets/icons/TrashIcon";
-import { autoGrow, handleZIndex, setNewOffset } from "@/utils";
+import { autoGrow, bodyParser, handleZIndex, setNewOffset } from "@/utils";
 
 interface NoteCardProps{
     note: INotesData;
@@ -71,7 +71,7 @@ const NoteCard = ({ note }: NoteCardProps) => {
     // Styling
     const colors = JSON.parse(note.colors);
 
-    const body = JSON.parse(note.body);
+    const body = bodyParser(note.body);
  
     return (
         <div
