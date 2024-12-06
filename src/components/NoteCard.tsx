@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
-import type { INotesData } from "@/api/interface";
+import type { INotesData } from "@/data/interface";
 
 import TrashIcon from "@/assets/icons/TrashIcon";
 import { autoGrow, handleZIndex, setNewOffset } from "@/utils";

@@ -1,4 +1,4 @@
-import { mockData as notesData } from "@/api/mockData";
+import { mockData as notesData } from "@/data/mockData";
 import NoteCard from "@/components/NoteCard";
 
 const NotesPage = () => {

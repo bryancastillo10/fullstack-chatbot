@@ -1,4 +1,4 @@
-import type { INotesData } from "@/api/interface";
+import type { INotesData } from "@/data/interface";
 
 export const mockData: INotesData[] = [
     {
