@@ -24,6 +24,7 @@ const NotesPage = () => {
         <NoteCard
           key={note.$id}
           note={note}
+          setNotes={setNotes}
         />
       ))}
     </div>

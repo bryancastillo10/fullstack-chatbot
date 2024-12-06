@@ -1,18 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
 import type { INotesData } from "@/data/interface";
 
-import TrashIcon from "@/assets/icons/TrashIcon";
+
 import Spinner from "@/assets/icons/Spinner";
 
 import { autoGrow, bodyParser, handleZIndex, setNewOffset } from "@/utils";
 import saveData from "@/actions/saveData";
+import DeleteButton from "@/components/DeleteButton";
 
 
 interface NoteCardProps{
     note: INotesData;
+    setNotes: React.Dispatch<React.SetStateAction<INotesData[]>>
 }
 
-const NoteCard = ({ note }: NoteCardProps) => {
+const NoteCard = ({ note, setNotes }: NoteCardProps) => {
     // Position Reference
     const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
     const cardRef = useRef<HTMLDivElement|null>(null);
@@ -31,13 +33,15 @@ const NoteCard = ({ note }: NoteCardProps) => {
 
         // Mouse Down
     const mouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        mouseStartPos.x = e.clientX;
-        mouseStartPos.y = e.clientY;
-
-        handleZIndex(cardRef);
-
-        document.addEventListener("mousemove", mouseMove);
-        document.addEventListener("mouseup", mouseUp);
+        if (e.target instanceof HTMLElement && e.target.className === "card-header") {
+            mouseStartPos.x = e.clientX;
+            mouseStartPos.y = e.clientY;
+    
+            handleZIndex(cardRef);
+    
+            document.addEventListener("mousemove", mouseMove);
+            document.addEventListener("mouseup", mouseUp);
+        }
     };
 
 
@@ -113,7 +117,11 @@ const NoteCard = ({ note }: NoteCardProps) => {
                 style={{ backgroundColor: colors.colorHeader }}
                 onMouseDown={mouseDown}
             >
-                <TrashIcon />      
+                <DeleteButton
+                    noteId={note.$id}
+                    setNotes={setNotes}
+                    collectionName="notes"
+                />    
                 {saving && (
                     <div className="card-saving">
                         <span style={{ color: colors.colorText }}>Saving</span>
