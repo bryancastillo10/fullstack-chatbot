@@ -2,8 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import type { INotesData } from "@/api/interface";
 
 import TrashIcon from "@/assets/icons/TrashIcon";
-import { setNewOffset } from "@/utils/setNewOffset";
-import { autoGrow } from "@/utils/autoGrow";
+import { autoGrow, handleZIndex, setNewOffset } from "@/utils";
 
 interface NoteCardProps{
     note: INotesData;
@@ -26,6 +25,8 @@ const NoteCard = ({ note }: NoteCardProps) => {
     const mouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         mouseStartPos.x = e.clientX;
         mouseStartPos.y = e.clientY;
+
+        handleZIndex(cardRef);
 
         document.addEventListener("mousemove", mouseMove);
         document.addEventListener("mouseup", mouseUp);
@@ -68,7 +69,7 @@ const NoteCard = ({ note }: NoteCardProps) => {
     };
 
     // Styling
-    const colors = JSON.parse(note.body);
+    const colors = JSON.parse(note.colors);
 
     const body = JSON.parse(note.body);
  
@@ -95,6 +96,7 @@ const NoteCard = ({ note }: NoteCardProps) => {
                     ref={textAreaRef}
                     style={{ color: colors.colorText }}
                     onInput={() => autoGrow(textAreaRef)}
+                    onFocus={() => handleZIndex(cardRef)}
                     defaultValue={body}
                 />    
            </div>
