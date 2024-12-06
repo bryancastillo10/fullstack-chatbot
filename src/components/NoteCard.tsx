@@ -1,4 +1,5 @@
 import type { INotesData } from "@/api/interface";
+import TrashIcon from "@/assets/icons/TrashIcon";
 
 interface NoteCardProps{
     note: INotesData;
@@ -16,7 +17,18 @@ const NoteCard = ({ note }: NoteCardProps) => {
             className="card"
             style={{ backgroundColor: colors.colorBody}}
         >
-            {body}
+            <div
+                className="card-header"
+                style={{backgroundColor: colors.colorHeader}}
+            >
+                <TrashIcon/>
+            </div>
+            <div className="card-body">
+                <textarea
+                    style={{ color: colors.colorText }}
+                    defaultValue={body}
+                />    
+           </div>
         </div>
     );
 };
