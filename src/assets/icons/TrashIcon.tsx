@@ -1,20 +1,12 @@
 const TrashIcon = ({ size = "24" }) => {
     return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 24 24"
-            width={size}
-            height={size}
-            stroke="#000000"
-            fill="none"
-            strokeWidth="1.5"
-        >
-            <path d="m6 8 .668 8.681c.148 1.924.222 2.885.84 3.423.068.06.14.115.217.165.685.449 1.63.26 3.522-.118.36-.072.54-.108.721-.111h.064c.182.003.361.039.72.11 1.892.379 2.838.568 3.523.12.076-.05.15-.106.218-.166.617-.538.691-1.5.84-3.423L18 8"></path>
-            <path
-                strokeLinecap="round"
-                d="m10.151 12.5.245 3.492M13.849 12.5l-.245 3.492M4 8s4.851 1 8 1 8-1 8-1M8 5l.447-.894A2 2 0 0 1 10.237 3h3.527a2 2 0 0 1 1.789 1.106L16 5"
-            ></path>
-        </svg>
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 6H20L18.4199 20.2209C18.3074 21.2337 17.4512 22 16.4321 22H7.56786C6.54876 22 5.69264 21.2337 5.5801 20.2209L4 6Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M7.34491 3.14716C7.67506 2.44685 8.37973 2 9.15396 2H14.846C15.6203 2 16.3249 2.44685 16.6551 3.14716L18 6H6L7.34491 3.14716Z" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M2 6H22" stroke="#111000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M10 11V16" stroke="#111000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M14 11V16" stroke="#111000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
     );
 };
 

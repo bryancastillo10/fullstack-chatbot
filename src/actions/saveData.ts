@@ -4,7 +4,8 @@ import type { INotesData } from "@/data/interface";
 const saveData = async (
     key: keyof Omit<INotesData, '$id' | '$createdAt' | '$updatedAt' | '$permissions'>, 
     value: any, 
-    noteId: string
+    noteId: string,
+    setSaving: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
     const payload = { [key]: JSON.stringify(value) }
     try {
@@ -12,6 +13,7 @@ const saveData = async (
     } catch (error) {
         console.error(error);
     }
+    setSaving(false);
 };
 
 export default saveData;

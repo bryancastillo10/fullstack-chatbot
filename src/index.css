@@ -11,8 +11,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%;
+    --spinner-animation-speed: 2s;
 }
- 
+
 body {
     padding: 0;
     margin: 0;
@@ -27,6 +28,20 @@ body {
     position: relative;
     overflow: auto;
 }
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+ 
+.spinner {
+    animation: spin var(--spinner-animation-speed) linear infinite;
+}
+ 
 
 .card {
     width: 400px;
@@ -58,6 +73,12 @@ body {
     height: 100%;
     resize: none;
     font-size: 16px;
+}
+
+.card-saving {
+    display: flex;
+    align-items: center;
+    gap: 5px;
 }
 
 textarea:focus {

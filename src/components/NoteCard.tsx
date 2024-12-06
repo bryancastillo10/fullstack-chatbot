@@ -2,8 +2,11 @@ import React, { useState, useRef, useEffect } from "react";
 import type { INotesData } from "@/data/interface";
 
 import TrashIcon from "@/assets/icons/TrashIcon";
+import Spinner from "@/assets/icons/Spinner";
+
 import { autoGrow, bodyParser, handleZIndex, setNewOffset } from "@/utils";
 import saveData from "@/actions/saveData";
+
 
 interface NoteCardProps{
     note: INotesData;
@@ -14,7 +17,11 @@ const NoteCard = ({ note }: NoteCardProps) => {
     const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
     const cardRef = useRef<HTMLDivElement|null>(null);
     const [position, setPosition] = useState(JSON.parse(note.position));
-    
+
+    // Auto-saving Reference
+    const [saving, setSaving] = useState<boolean>(false);
+    const keyUpTimer = useRef<number | null>(null);
+
     useEffect(() => {
         autoGrow(textAreaRef);
     }, []);
@@ -69,8 +76,21 @@ const NoteCard = ({ note }: NoteCardProps) => {
         document.removeEventListener("mouseup", mouseUp);
 
         const newPosition = setNewOffset({card: cardRef}); 
-        saveData("position", newPosition, note.$id);
+        saveData("position", newPosition, note.$id, setSaving);
     };
+
+    // Handle Auto-saving of input data
+    const handleKeyUp = () => {
+        setSaving(true);
+
+        if (keyUpTimer.current) {
+            clearTimeout(keyUpTimer.current);
+        }
+
+        keyUpTimer.current = window.setTimeout(() => {
+            saveData("body", textAreaRef?.current!.value, note.$id, setSaving);
+        }, 2500);
+    }
 
     // Styling
     const colors = JSON.parse(note.colors);
@@ -93,7 +113,13 @@ const NoteCard = ({ note }: NoteCardProps) => {
                 style={{ backgroundColor: colors.colorHeader }}
                 onMouseDown={mouseDown}
             >
-                <TrashIcon/>
+                <TrashIcon />      
+                {saving && (
+                    <div className="card-saving">
+                        <span style={{ color: colors.colorText }}>Saving</span>
+                        <Spinner/>
+                    </div>
+                )}
             </div>
             <div className="card-body">
                 <textarea
@@ -101,6 +127,7 @@ const NoteCard = ({ note }: NoteCardProps) => {
                     style={{ color: colors.colorText }}
                     onInput={() => autoGrow(textAreaRef)}
                     onFocus={() => handleZIndex(cardRef)}
+                    onKeyUp={handleKeyUp}
                     defaultValue={body}
                 />    
            </div>
