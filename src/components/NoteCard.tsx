@@ -1,6 +1,7 @@
+import type { INotesData } from "@/api/interface";
 
 interface NoteCardProps{
-    note: any;
+    note: INotesData;
 }
 
 const NoteCard = ({ note }: NoteCardProps) => {

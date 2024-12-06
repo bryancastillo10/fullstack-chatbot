@@ -1,23 +1,4 @@
-
-export type ColorTypes<T> = {
-    id: T;
-    colorHeader: T;
-    colorBody: T;
-    colorText: T;
-}
-
-export type CoordTypes = {
-    x: number;
-    y: number;
-}
-
-
-export interface INotesData{
-    $id: number;
-    body: string;
-    colors: string;
-    position: string;
-}
+import type { INotesData } from "@/api/interface";
 
 export const mockData: INotesData[] = [
     {
