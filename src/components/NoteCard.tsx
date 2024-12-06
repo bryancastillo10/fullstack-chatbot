@@ -2,7 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import type { INotesData } from "@/data/interface";
 
 import TrashIcon from "@/assets/icons/TrashIcon";
-import { autoGrow, handleZIndex, setNewOffset } from "@/utils";
+import { autoGrow, bodyParser, handleZIndex, setNewOffset } from "@/utils";
+import saveData from "@/actions/saveData";
 
 interface NoteCardProps{
     note: INotesData;
@@ -66,12 +67,15 @@ const NoteCard = ({ note }: NoteCardProps) => {
     const mouseUp = () => {
         document.removeEventListener("mousemove", mouseMove);
         document.removeEventListener("mouseup", mouseUp);
+
+        const newPosition = setNewOffset({card: cardRef}); 
+        saveData("position", newPosition, note.$id);
     };
 
     // Styling
     const colors = JSON.parse(note.colors);
 
-    const body = JSON.parse(note.body);
+    const body = bodyParser(note.body);
  
     return (
         <div

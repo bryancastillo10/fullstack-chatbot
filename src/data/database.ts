@@ -6,7 +6,7 @@ const db: Record<string, INotesRepository>  = {};
 
 collections.forEach((coll) => {
     db[coll.name] = {
-        create: async (payload: INotesData, id = ID.unique()) => {
+        create: async (payload: Omit<INotesData, keyof Models.Document>, id = ID.unique()) => {
             const result = await databases.createDocument<INotesData & Models.Document>(
                 coll.dbId,
                 coll.id,
