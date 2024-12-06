@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from "react";
 import type { INotesData } from "@/api/interface";
 
 import TrashIcon from "@/assets/icons/TrashIcon";
+import { setNewOffset } from "@/utils/setNewOffset";
+import { autoGrow } from "@/utils/autoGrow";
 
 interface NoteCardProps{
     note: INotesData;
@@ -13,15 +15,6 @@ const NoteCard = ({ note }: NoteCardProps) => {
     const cardRef = useRef<HTMLDivElement|null>(null);
     const [position, setPosition] = useState(JSON.parse(note.position));
     
-    // TextArea AutoGrow
-    const autoGrow = (textAreaRef: React.MutableRefObject<HTMLTextAreaElement | null>) => {
-        const { current } = textAreaRef;
-        if (current) {
-            current.style.height = "auto";
-            current.style.height = current.scrollHeight + "px";
-        }
-    }
-
     useEffect(() => {
         autoGrow(textAreaRef);
     }, []);
@@ -49,6 +42,15 @@ const NoteCard = ({ note }: NoteCardProps) => {
         // 2 to update the starting position on the next move
         mouseStartPos.x = e.clientX;
         mouseStartPos.y = e.clientY;
+
+        mouseStartPos.x = e.clientX;
+        mouseStartPos.y = e.clientY;
+
+        const newPosition = setNewOffset({
+            card: cardRef,
+            mouseMoveDir: mouseMoveDirection
+        });
+        setPosition(newPosition);
 
         // 3 to update the actual card in reference to the change in the position coords
         if (cardRef.current) {
