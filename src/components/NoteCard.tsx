@@ -11,10 +11,9 @@ import DeleteButton from "@/components/DeleteButton";
 
 interface NoteCardProps{
     note: INotesData;
-    setNotes: React.Dispatch<React.SetStateAction<INotesData[]>>
 }
 
-const NoteCard = ({ note, setNotes }: NoteCardProps) => {
+const NoteCard = ({ note }: NoteCardProps) => {
     // Position Reference
     const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
     const cardRef = useRef<HTMLDivElement|null>(null);
@@ -119,7 +118,6 @@ const NoteCard = ({ note, setNotes }: NoteCardProps) => {
             >
                 <DeleteButton
                     noteId={note.$id}
-                    setNotes={setNotes}
                     collectionName="notes"
                 />    
                 {saving && (

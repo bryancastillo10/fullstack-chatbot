@@ -1,15 +1,17 @@
-import React from "react";
+import { useContext } from "react";
+import { NoteContext } from "@/context/NoteContext";
 import TrashIcon from "@/assets/icons/TrashIcon";
 import db from "@/data/database";
-import type { INotesData } from "@/data/interface";
+
 
 interface DeleteButtonProps {
   noteId: string;
-  setNotes: React.Dispatch<React.SetStateAction<INotesData[]>>; 
   collectionName: string; 
 }
 
-const DeleteButton = ({ noteId, setNotes, collectionName  }: DeleteButtonProps) => {
+const DeleteButton = ({ noteId, collectionName }: DeleteButtonProps) => {
+  const { setNotes } = useContext(NoteContext);
+  
   const handleDelete = async () => {
       try {
         const collection = db[collectionName];
