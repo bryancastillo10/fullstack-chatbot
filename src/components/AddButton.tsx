@@ -36,7 +36,7 @@ const addNote = async () => {
         setNotes((prevState) => [res, ...prevState]);
         showToast({
           status: "success",
-          message:"A New Notes has been created"
+          message:"New note has been created"
         })
     }
     catch (error) {
@@ -44,7 +44,7 @@ const addNote = async () => {
       
         showToast({
           status: "error",
-          message:"Failed to add notes"
+          message:"Failed to add note"
         })
     }
   }

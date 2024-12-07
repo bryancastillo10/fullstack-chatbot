@@ -34,7 +34,7 @@ const DeleteButton = ({ noteId, collectionName }: DeleteButtonProps) => {
               
       showToast({
         status: "error",
-        message: "Failed to delete notes"
+        message: "Failed to delete note"
       })
     }
   };

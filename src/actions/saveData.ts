@@ -7,13 +7,17 @@ const saveData = async (
     noteId: string,
     setSaving: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
-    const payload = { [key]: JSON.stringify(value) }
+    const payload = { [key]: JSON.stringify(value) };
     try {
         await db.notes?.update(noteId, payload);
+        return true; 
     } catch (error) {
-        console.error(error);
+        console.error("Save failed:", error);
+        return false; 
+    } finally {
+        setSaving(false);
     }
-    setSaving(false);
 };
+
 
 export default saveData;

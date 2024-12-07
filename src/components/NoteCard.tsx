@@ -4,6 +4,7 @@ import type { INotesData } from "@/data/interface";
 
 
 import Spinner from "@/assets/icons/Spinner";
+import CircleCheck from "@/assets/icons/CircleCheck";
 
 import { autoGrow, bodyParser, handleZIndex, setNewOffset } from "@/utils";
 import saveData from "@/actions/saveData";
@@ -25,7 +26,9 @@ const NoteCard = ({ note }: NoteCardProps) => {
 
     // Auto-saving Reference
     const [saving, setSaving] = useState<boolean>(false);
+    const [savedSuccess, setSavedSuccess] = useState<boolean>(false);
     const keyUpTimer = useRef<number | null>(null);
+    const savedSuccessTimer = useRef<number | null>(null);
 
     useEffect(() => {
         autoGrow(textAreaRef);
@@ -80,27 +83,50 @@ const NoteCard = ({ note }: NoteCardProps) => {
     };
 
         // Mouse Up
-    const mouseUp = () => {
-        document.removeEventListener("mousemove", mouseMove);
-        document.removeEventListener("mouseup", mouseUp);
-
-        const newPosition = setNewOffset({card: cardRef}); 
-        saveData("position", newPosition, note.$id, setSaving);
-    };
+        const mouseUp = () => {
+            document.removeEventListener("mousemove", mouseMove);
+            document.removeEventListener("mouseup", mouseUp);
+        
+            const newPosition = setNewOffset({ card: cardRef });
+            setSaving(true);
+            saveData("position", newPosition, note.$id, setSaving)
+                .then((success) => {
+                    if (success) {
+                        setSavedSuccess(true);
+                        if (savedSuccessTimer.current) {
+                            clearTimeout(savedSuccessTimer.current);
+                        }
+                        savedSuccessTimer.current = window.setTimeout(() => {
+                            setSavedSuccess(false);
+                        }, 1000); 
+                    }
+                });
+        };
 
     // Handle Auto-saving of input data
     const handleKeyUp = () => {
         setSaving(true);
-
+    
         if (keyUpTimer.current) {
             clearTimeout(keyUpTimer.current);
         }
-
+    
         keyUpTimer.current = window.setTimeout(() => {
-            saveData("body", textAreaRef?.current!.value, note.$id, setSaving);
-        }, 2500);
+            saveData("body", textAreaRef?.current!.value, note.$id, setSaving)
+                .then((success) => {
+                    if (success) {
+                        setSavedSuccess(true);
+                        if (savedSuccessTimer.current) {
+                            clearTimeout(savedSuccessTimer.current);
+                        }
+                        savedSuccessTimer.current = window.setTimeout(() => {
+                            setSavedSuccess(false);
+                        }, 1000);
+                    }
+                });
+        }, 2000);
     }
-
+    
     // Styling
     const colors = JSON.parse(note.colors);
 
@@ -126,12 +152,17 @@ const NoteCard = ({ note }: NoteCardProps) => {
                     noteId={note.$id}
                     collectionName="notes"
                 />    
-                {saving && (
+              {saving ? (
                     <div className="card-saving">
                         <span style={{ color: colors.colorText }}>Saving</span>
-                        <Spinner/>
+                        <Spinner />
                     </div>
-                )}
+                ) : savedSuccess ? (
+                    <div className="card-saving">
+                        <span style={{ color: colors.colorText }}>Saved</span>
+                        <CircleCheck />
+                    </div>
+                ) : null}
             </div>
             <div className="card-body">
                 <textarea
