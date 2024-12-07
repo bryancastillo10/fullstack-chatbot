@@ -1,4 +1,6 @@
 import { useContext } from "react";
+import { useToast } from "@/context/CustomToastProvider";
+
 import { NoteContext } from "@/context/NoteContext";
 import type { INotesData } from "@/data/interface";
 import db from "@/data/database";
@@ -14,10 +16,14 @@ interface ColorShadeProps<T>{
 
 const ColorShade = ({ color }: ColorShadeProps<string>) => {
     const { notes, setNotes, selectedNote } = useContext(NoteContext);
+    const { showToast } = useToast();
 
     const changeColor = async (selectedNote: INotesData | null) => {
         if (!selectedNote) {
-            alert("Select a note first before changing colors");
+          showToast({
+            status: "warning",
+            message: "Select a note first before changing colors"
+            });
             return;
           }
       

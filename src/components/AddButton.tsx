@@ -6,8 +6,10 @@ import db from "@/data/database";
 import type { INotesData } from "@/data/interface";
 import type { Models } from "appwrite";
 import colors from "@/assets/jsondata/colors.json";
+import { useToast } from "@/context/CustomToastProvider";
 
 const AddButton = ({ collectionName }: { collectionName: string }) => {
+  const { showToast } = useToast();
   const { setNotes } = useContext(NoteContext);
   const startingPos = useRef<number>(10); 
   
@@ -32,9 +34,18 @@ const addNote = async () => {
         const res = await collection.create(payload);
       
         setNotes((prevState) => [res, ...prevState]);
+        showToast({
+          status: "success",
+          message:"A New Notes has been created"
+        })
     }
     catch (error) {
-        console.error("Error adding note:", error);
+      console.error("Error adding note:", error);
+      
+        showToast({
+          status: "error",
+          message:"Failed to add notes"
+        })
     }
   }
   return (

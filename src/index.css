@@ -138,3 +138,55 @@ textarea:focus {
     height: 45px;
     width: 45px;
 }
+
+.toast {
+    position: fixed;
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    min-width: 20%;
+    max-width: 50%;
+    margin: 0;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-size: 0.875rem;
+    font-weight: 500;
+    top: 1rem;
+    right: -100%;
+    opacity: 0;
+    transition: 
+        right 0.5s ease-in-out,
+        opacity 0.5s ease-in-out;
+}
+
+.toast.show {
+    right: 1rem;
+    opacity: 1;
+}
+
+.toast-success {
+    background-color: #86efac;
+    color: #14532d;
+}
+
+.toast-error {
+    background-color: #fca5a5;
+    color: #7f1d1d;
+}
+
+.toast-warning {
+    background-color: #fde047;
+    color: #854d0e;
+}
+
+.toast-close-icon {
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.toast-close-icon:hover {
+    transform: scale(1.1);
+}

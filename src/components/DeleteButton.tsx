@@ -3,6 +3,8 @@ import { NoteContext } from "@/context/NoteContext";
 import TrashIcon from "@/assets/icons/TrashIcon";
 import db from "@/data/database";
 
+import { useToast } from "@/context/CustomToastProvider";
+
 
 interface DeleteButtonProps {
   noteId: string;
@@ -10,6 +12,7 @@ interface DeleteButtonProps {
 }
 
 const DeleteButton = ({ noteId, collectionName }: DeleteButtonProps) => {
+  const { showToast } = useToast();
   const { setNotes } = useContext(NoteContext);
   
   const handleDelete = async () => {
@@ -21,8 +24,18 @@ const DeleteButton = ({ noteId, collectionName }: DeleteButtonProps) => {
       await collection.delete(noteId);
 
       setNotes((prev) => prev.filter((note) => note.$id !== noteId));
+      
+      showToast({
+        status: "success",
+        message: "Note has been deleted"
+      })
     } catch (error) {
       console.error("Error deleting note:", error);
+              
+      showToast({
+        status: "error",
+        message: "Failed to delete notes"
+      })
     }
   };
 
