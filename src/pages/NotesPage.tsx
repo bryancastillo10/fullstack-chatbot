@@ -1,8 +1,9 @@
 import { useContext } from "react";
 // import { mockData as notesData } from "@/data/mockData";
 import NoteCard from "@/components/NoteCard";
-import { NoteContext } from "@/context/NoteContext";
+import Controls from "@/components/Controls";
 
+import { NoteContext } from "@/context/NoteContext";
 
 const NotesPage = () => {
   const { notes } = useContext(NoteContext);
@@ -15,6 +16,7 @@ const NotesPage = () => {
           note={note}
         />
       ))}
+      <Controls/>
     </div>
   )
 }

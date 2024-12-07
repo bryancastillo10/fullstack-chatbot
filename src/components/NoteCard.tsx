@@ -25,6 +25,7 @@ const NoteCard = ({ note }: NoteCardProps) => {
 
     useEffect(() => {
         autoGrow(textAreaRef);
+        handleZIndex(cardRef);
     }, []);
 
     // Mouse Movement
