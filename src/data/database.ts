@@ -1,6 +1,6 @@
 import { databases, collections } from "@/lib/appwriteconfig";
 import { ID, type Models } from "appwrite";
-import type { INotesRepository, INotesData } from "./interface";
+import type { INotesRepository, INotesData } from "@/data/interface";
 
 const db: Record<string, INotesRepository>  = {};
 

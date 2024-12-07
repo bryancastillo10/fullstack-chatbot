@@ -1,22 +1,12 @@
-import { useEffect, useState } from "react";
-import db from "@/data/database";
-
+import { useContext } from "react";
 // import { mockData as notesData } from "@/data/mockData";
 import NoteCard from "@/components/NoteCard";
-import type { INotesData } from "@/data/interface";
+import Controls from "@/components/Controls";
+
+import { NoteContext } from "@/context/NoteContext";
 
 const NotesPage = () => {
-  const [notes, setNotes] = useState<INotesData[]>([]);
-
-  const init = async () => {
-      const res = await db.notes?.list() || [];
-      setNotes(res);
-  };
-
-  useEffect(() => {
-    init();
-  }, []);
-
+  const { notes } = useContext(NoteContext);
 
   return (
     <div>
@@ -26,6 +16,7 @@ const NotesPage = () => {
           note={note}
         />
       ))}
+      <Controls/>
     </div>
   )
 }

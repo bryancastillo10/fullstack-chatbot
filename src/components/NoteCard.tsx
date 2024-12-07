@@ -1,22 +1,38 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
+import { NoteContext } from "@/context/NoteContext";
 import type { INotesData } from "@/data/interface";
 
-import TrashIcon from "@/assets/icons/TrashIcon";
+
+import Spinner from "@/assets/icons/Spinner";
+import CircleCheck from "@/assets/icons/CircleCheck";
+
 import { autoGrow, bodyParser, handleZIndex, setNewOffset } from "@/utils";
 import saveData from "@/actions/saveData";
+import DeleteButton from "@/components/DeleteButton";
+
 
 interface NoteCardProps{
     note: INotesData;
 }
 
 const NoteCard = ({ note }: NoteCardProps) => {
+    // NoteContext 
+    const { setSelectedNote } = useContext(NoteContext);
+
     // Position Reference
     const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
     const cardRef = useRef<HTMLDivElement|null>(null);
     const [position, setPosition] = useState(JSON.parse(note.position));
-    
+
+    // Auto-saving Reference
+    const [saving, setSaving] = useState<boolean>(false);
+    const [savedSuccess, setSavedSuccess] = useState<boolean>(false);
+    const keyUpTimer = useRef<number | null>(null);
+    const savedSuccessTimer = useRef<number | null>(null);
+
     useEffect(() => {
         autoGrow(textAreaRef);
+        handleZIndex(cardRef);
     }, []);
 
     // Mouse Movement
@@ -24,13 +40,16 @@ const NoteCard = ({ note }: NoteCardProps) => {
 
         // Mouse Down
     const mouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        mouseStartPos.x = e.clientX;
-        mouseStartPos.y = e.clientY;
-
-        handleZIndex(cardRef);
-
-        document.addEventListener("mousemove", mouseMove);
-        document.addEventListener("mouseup", mouseUp);
+        if (e.target instanceof HTMLElement && e.target.className === "card-header") {
+            setSelectedNote(note);
+            mouseStartPos.x = e.clientX;
+            mouseStartPos.y = e.clientY;
+    
+            handleZIndex(cardRef);
+    
+            document.addEventListener("mousemove", mouseMove);
+            document.addEventListener("mouseup", mouseUp);
+        }
     };
 
 
@@ -64,14 +83,50 @@ const NoteCard = ({ note }: NoteCardProps) => {
     };
 
         // Mouse Up
-    const mouseUp = () => {
-        document.removeEventListener("mousemove", mouseMove);
-        document.removeEventListener("mouseup", mouseUp);
+        const mouseUp = () => {
+            document.removeEventListener("mousemove", mouseMove);
+            document.removeEventListener("mouseup", mouseUp);
+        
+            const newPosition = setNewOffset({ card: cardRef });
+            setSaving(true);
+            saveData("position", newPosition, note.$id, setSaving)
+                .then((success) => {
+                    if (success) {
+                        setSavedSuccess(true);
+                        if (savedSuccessTimer.current) {
+                            clearTimeout(savedSuccessTimer.current);
+                        }
+                        savedSuccessTimer.current = window.setTimeout(() => {
+                            setSavedSuccess(false);
+                        }, 1000); 
+                    }
+                });
+        };
 
-        const newPosition = setNewOffset({card: cardRef}); 
-        saveData("position", newPosition, note.$id);
-    };
-
+    // Handle Auto-saving of input data
+    const handleKeyUp = () => {
+        setSaving(true);
+    
+        if (keyUpTimer.current) {
+            clearTimeout(keyUpTimer.current);
+        }
+    
+        keyUpTimer.current = window.setTimeout(() => {
+            saveData("body", textAreaRef?.current!.value, note.$id, setSaving)
+                .then((success) => {
+                    if (success) {
+                        setSavedSuccess(true);
+                        if (savedSuccessTimer.current) {
+                            clearTimeout(savedSuccessTimer.current);
+                        }
+                        savedSuccessTimer.current = window.setTimeout(() => {
+                            setSavedSuccess(false);
+                        }, 1000);
+                    }
+                });
+        }, 2000);
+    }
+    
     // Styling
     const colors = JSON.parse(note.colors);
 
@@ -93,14 +148,29 @@ const NoteCard = ({ note }: NoteCardProps) => {
                 style={{ backgroundColor: colors.colorHeader }}
                 onMouseDown={mouseDown}
             >
-                <TrashIcon/>
+                <DeleteButton
+                    noteId={note.$id}
+                    collectionName="notes"
+                />    
+              {saving ? (
+                    <div className="card-saving">
+                        <span style={{ color: colors.colorText }}>Saving</span>
+                        <Spinner />
+                    </div>
+                ) : savedSuccess ? (
+                    <div className="card-saving">
+                        <span style={{ color: colors.colorText }}>Saved</span>
+                        <CircleCheck />
+                    </div>
+                ) : null}
             </div>
             <div className="card-body">
                 <textarea
                     ref={textAreaRef}
                     style={{ color: colors.colorText }}
                     onInput={() => autoGrow(textAreaRef)}
-                    onFocus={() => handleZIndex(cardRef)}
+                    onFocus={() => {handleZIndex(cardRef); setSelectedNote(note);}}
+                    onKeyUp={handleKeyUp}
                     defaultValue={body}
                 />    
            </div>
