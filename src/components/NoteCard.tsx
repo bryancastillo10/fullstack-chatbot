@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
+import { NoteContext } from "@/context/NoteContext";
 import type { INotesData } from "@/data/interface";
 
 
@@ -14,6 +15,9 @@ interface NoteCardProps{
 }
 
 const NoteCard = ({ note }: NoteCardProps) => {
+    // NoteContext 
+    const { setSelectedNote } = useContext(NoteContext);
+
     // Position Reference
     const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
     const cardRef = useRef<HTMLDivElement|null>(null);
@@ -34,6 +38,7 @@ const NoteCard = ({ note }: NoteCardProps) => {
         // Mouse Down
     const mouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
         if (e.target instanceof HTMLElement && e.target.className === "card-header") {
+            setSelectedNote(note);
             mouseStartPos.x = e.clientX;
             mouseStartPos.y = e.clientY;
     
@@ -133,7 +138,7 @@ const NoteCard = ({ note }: NoteCardProps) => {
                     ref={textAreaRef}
                     style={{ color: colors.colorText }}
                     onInput={() => autoGrow(textAreaRef)}
-                    onFocus={() => handleZIndex(cardRef)}
+                    onFocus={() => {handleZIndex(cardRef); setSelectedNote(note);}}
                     onKeyUp={handleKeyUp}
                     defaultValue={body}
                 />    
