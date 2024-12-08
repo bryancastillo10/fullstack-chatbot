@@ -1,14 +1,15 @@
-import { useState, useRef, useEffect, useContext } from "react";
-import { NoteContext } from "@/context/NoteContext";
 import type { INotesData } from "@/data/interface";
 
 
 import Spinner from "@/assets/icons/Spinner";
 import CircleCheck from "@/assets/icons/CircleCheck";
 
-import { autoGrow, bodyParser, handleZIndex, setNewOffset } from "@/utils";
+import { autoGrow, handleZIndex, setNewOffset } from "@/utils";
 import saveData from "@/actions/saveData";
+
 import DeleteButton from "@/components/DeleteButton";
+import useMouseEvent from "@/hooks/useMouseEvent";
+import type React from "react";
 
 
 interface NoteCardProps{
@@ -16,122 +17,86 @@ interface NoteCardProps{
 }
 
 const NoteCard = ({ note }: NoteCardProps) => {
-    // NoteContext 
-    const { setSelectedNote } = useContext(NoteContext);
+    const {
+        textAreaRef,
+        cardRef,
+        position,
+        saving,
+        savedSuccess,
+        colors,
+        body,
+        savedSuccessTimer,
+        setPosition,
+        setSaving,
+        setSavedSuccess,
+        setSelectedNote,
+        mouseDown,
+        handleKeyUp
+    } = useMouseEvent({ note });
 
-    // Position Reference
-    const textAreaRef = useRef<HTMLTextAreaElement | null>(null);
-    const cardRef = useRef<HTMLDivElement|null>(null);
-    const [position, setPosition] = useState(JSON.parse(note.position));
+    let touchStartPos = { x: 0, y: 0 };
 
-    // Auto-saving Reference
-    const [saving, setSaving] = useState<boolean>(false);
-    const [savedSuccess, setSavedSuccess] = useState<boolean>(false);
-    const keyUpTimer = useRef<number | null>(null);
-    const savedSuccessTimer = useRef<number | null>(null);
-
-    useEffect(() => {
-        autoGrow(textAreaRef);
-        handleZIndex(cardRef);
-    }, []);
-
-    // Mouse Movement
-    let mouseStartPos = { x: 0, y: 0 };
-
-        // Mouse Down
-    const mouseDown = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const touchStart = (e: React.TouchEvent<HTMLDivElement>) => {
         if (e.target instanceof HTMLElement && e.target.className === "card-header") {
             setSelectedNote(note);
-            mouseStartPos.x = e.clientX;
-            mouseStartPos.y = e.clientY;
-    
+
+            const touch = e.touches[0];
+            touchStartPos.x = touch?.clientX!;
+            touchStartPos.y = touch?.clientY!;
+
             handleZIndex(cardRef);
-    
-            document.addEventListener("mousemove", mouseMove);
-            document.addEventListener("mouseup", mouseUp);
+
+            document.addEventListener("touchmove", touchMove);
+            document.addEventListener("touchend", touchEnd);
         }
     };
 
-
-    const mouseMove = (e: MouseEvent) => {
-        // 1 to calculate the movement direction
-        let mouseMoveDirection = {
-            x: mouseStartPos.x - e.clientX,
-            y: mouseStartPos.y - e.clientY
+    // Touch Move
+    const touchMove = (e: TouchEvent) => {
+        const touch = e.touches[0];
+        const touchMoveDirection = {
+            x: touchStartPos.x - touch?.clientX!,
+            y: touchStartPos.y - touch?.clientY!,
         };
-
-        // 2 to update the starting position on the next move
-        mouseStartPos.x = e.clientX;
-        mouseStartPos.y = e.clientY;
-
-        mouseStartPos.x = e.clientX;
-        mouseStartPos.y = e.clientY;
-
+    
+        touchStartPos.x = touch?.clientX!;
+        touchStartPos.y = touch?.clientY!;
+    
         const newPosition = setNewOffset({
             card: cardRef,
-            mouseMoveDir: mouseMoveDirection
+            mouseMoveDir: touchMoveDirection,
         });
         setPosition(newPosition);
 
-        // 3 to update the actual card in reference to the change in the position coords
         if (cardRef.current) {
             setPosition({
-                x: cardRef.current.offsetLeft - mouseMoveDirection.x,
-                y: cardRef.current.offsetTop - mouseMoveDirection.y
+                x: cardRef.current.offsetLeft - touchMoveDirection.x,
+                y: cardRef.current.offsetTop - touchMoveDirection.y,
             });
         }
     };
 
-        // Mouse Up
-        const mouseUp = () => {
-            document.removeEventListener("mousemove", mouseMove);
-            document.removeEventListener("mouseup", mouseUp);
-        
-            const newPosition = setNewOffset({ card: cardRef });
-            setSaving(true);
-            saveData("position", newPosition, note.$id, setSaving)
-                .then((success) => {
-                    if (success) {
-                        setSavedSuccess(true);
-                        if (savedSuccessTimer.current) {
-                            clearTimeout(savedSuccessTimer.current);
-                        }
-                        savedSuccessTimer.current = window.setTimeout(() => {
-                            setSavedSuccess(false);
-                        }, 1000); 
-                    }
-                });
-        };
+    // Touch End
+    const touchEnd = () => {
+        document.removeEventListener("touchmove", touchMove);
+        document.removeEventListener("touchend", touchEnd);
 
-    // Handle Auto-saving of input data
-    const handleKeyUp = () => {
+        const newPosition = setNewOffset({ card: cardRef });
         setSaving(true);
-    
-        if (keyUpTimer.current) {
-            clearTimeout(keyUpTimer.current);
-        }
-    
-        keyUpTimer.current = window.setTimeout(() => {
-            saveData("body", textAreaRef?.current!.value, note.$id, setSaving)
-                .then((success) => {
-                    if (success) {
-                        setSavedSuccess(true);
-                        if (savedSuccessTimer.current) {
-                            clearTimeout(savedSuccessTimer.current);
-                        }
-                        savedSuccessTimer.current = window.setTimeout(() => {
-                            setSavedSuccess(false);
-                        }, 1000);
+        saveData("position", newPosition, note.$id, setSaving)
+            .then((success) => {
+                if (success) {
+                    setSavedSuccess(true);
+                    if (savedSuccessTimer.current) {
+                        clearTimeout(savedSuccessTimer.current);
                     }
-                });
-        }, 2000);
-    }
+                    savedSuccessTimer.current = window.setTimeout(() => {
+                        setSavedSuccess(false);
+                    }, 1000);
+                }
+            });
+    };
     
-    // Styling
-    const colors = JSON.parse(note.colors);
-
-    const body = bodyParser(note.body);
- 
     return (
         <div
             className="card"
@@ -147,6 +112,7 @@ const NoteCard = ({ note }: NoteCardProps) => {
                 className="card-header"
                 style={{ backgroundColor: colors.colorHeader }}
                 onMouseDown={mouseDown}
+                onTouchStart={touchStart}
             >
                 <DeleteButton
                     noteId={note.$id}
